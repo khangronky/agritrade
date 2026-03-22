@@ -37,10 +37,10 @@ import {
 import { createClient } from '@/lib/supabase/client';
 
 const navItems = [
-  { label: 'Bảng giao dịch', href: '/' },
-  { label: 'Chợ nông sản', href: '/' },
-  { label: 'Nông dân', href: '/' },
-  { label: 'Về nền tảng', href: '/' },
+  { label: 'About', href: '/#about' },
+  { label: 'Marketplace', href: '/' },
+  { label: 'Farmers', href: '/' },
+  { label: 'Transactions', href: '/' },
 ];
 
 type NavbarProps = {
@@ -77,13 +77,21 @@ export function Navbar({ user }: NavbarProps) {
   const renderDesktopAuth = () => {
     if (!isLoggedIn) {
       return (
-        <Button
-          asChild
-          variant="outline"
-          className="border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
-        >
-          <Link href="/login">Get Started</Link>
-        </Button>
+        <>
+          <Button
+            asChild
+            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
+          >
+            <Link href="/login">Sign In</Link>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+          >
+            <Link href="/signup">Sign Up</Link>
+          </Button>
+        </>
       );
     }
 
@@ -128,7 +136,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 border-zinc-800 border-b bg-zinc-950/95 text-zinc-100 backdrop-blur">
+    <header className="fixed top-0 z-30 w-full text-zinc-100 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -154,12 +162,6 @@ export function Navbar({ user }: NavbarProps) {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button
-            asChild
-            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
-          >
-            <Link href="/dashboard">Upload Crops</Link>
-          </Button>
           {renderDesktopAuth()}
         </div>
 
@@ -169,12 +171,11 @@ export function Navbar({ user }: NavbarProps) {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     className="gap-2 px-2 text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
                   >
                     <Menu className="size-4" />
-                    Menu
                   </Button>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -203,25 +204,26 @@ export function Navbar({ user }: NavbarProps) {
             </nav>
 
             <div className="mt-auto flex flex-col gap-2 px-4 pb-6">
-              <SheetClose asChild>
-                <Button
-                  asChild
-                  className="w-full bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
-                >
-                  <Link href="/dashboard">Upload Crops</Link>
-                </Button>
-              </SheetClose>
-
               {!isLoggedIn ? (
-                <SheetClose asChild>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
-                  >
-                    <Link href="/login">Get Started</Link>
-                  </Button>
-                </SheetClose>
+                <>
+                  <SheetClose asChild>
+                    <Button
+                      asChild
+                      className="w-full bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
+                    >
+                      <Link href="/login">Sign In</Link>
+                    </Button>
+                  </SheetClose>
+                  <SheetClose>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="w-full border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+                    >
+                      <Link href="/signup">Sign Up</Link>
+                    </Button>
+                  </SheetClose>
+                </>
               ) : (
                 <>
                   <SheetClose asChild>
