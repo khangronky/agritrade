@@ -8,6 +8,7 @@
     "devx": "bun sb:start && bun dev",
     "build": "bun --bun next build --turbopack",
     "start": "bun --bun next start",
+    "type-check": "tsc --build",
     "format": "biome format",
     "format:fix": "biome format --write",
     "lint": "biome lint",
