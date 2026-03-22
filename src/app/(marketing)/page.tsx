@@ -1,7 +1,13 @@
+import { AboutSection } from './about-section';
+import { HeroSection } from './hero-section';
+import { SolutionsSection } from './solutions-section';
+
 export default function MarketingPage() {
   return (
-    <div>
-      <p>Welcome to the Marketing Page</p>
+    <div className="bg-background">
+      <HeroSection />
+      <AboutSection />
+      <SolutionsSection />
     </div>
   );
 }
