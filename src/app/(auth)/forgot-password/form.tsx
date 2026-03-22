@@ -310,9 +310,7 @@ export function ForgotPasswordForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-green-900">
-                    New Password
-                  </FormLabel>
+                  <FormLabel className="text-green-900">New Password</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
