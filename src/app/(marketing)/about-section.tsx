@@ -21,7 +21,10 @@ const aboutImages = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="bg-amber-50 py-16 sm:py-20">
+    <section
+      id="about"
+      className="bg-linear-to-b from-amber-50 to-green-50 py-16 sm:py-20"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-12">
           <div className="grid grid-cols-2 gap-4">

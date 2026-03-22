@@ -1,7 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
@@ -39,10 +38,6 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(163,230,53,0.3),transparent_45%)]" />
 
         <div className="relative mx-auto max-w-7xl px-4 pt-14 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-20">
-          <Badge className="border-lime-300/60 bg-lime-300/20 text-lime-100 hover:bg-lime-300/20">
-            Agriculture Market Reset
-          </Badge>
-
           <h1 className="mt-6 max-w-3xl font-semibold text-4xl text-white leading-tight sm:text-5xl lg:text-6xl">
             Farmers should not lose value before their crops reach the market.
           </h1>
@@ -121,15 +116,19 @@ export function HeroSection() {
           {trustSignals.map((signal) => (
             <div
               key={signal.metric}
-              className="rounded-xl border border-green-900/15 bg-white/35 p-4 shadow-sm backdrop-blur"
+              className="rounded-xl border border-lime-100/20 bg-linear-to-br from-green-900/70 via-emerald-900/62 to-green-950/58 p-4 shadow-[0_12px_28px_rgba(3,22,15,0.35)] backdrop-blur-md"
             >
-              <p className="font-semibold text-green-300 text-md uppercase">
+              <p className="font-semibold text-base text-lime-100 uppercase tracking-wide">
                 {signal.metric}
               </p>
-              <p className="mt-1 text-green-950/85 text-sm">{signal.detail}</p>
+              <p className="mt-2 text-green-50/90 text-sm leading-relaxed">
+                {signal.detail}
+              </p>
             </div>
           ))}
         </div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-linear-to-b from-transparent via-amber-50/12 to-amber-50/55" />
       </div>
     </section>
   );
