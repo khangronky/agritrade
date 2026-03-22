@@ -9,7 +9,13 @@ const queryClient = new QueryClient();
 export default function ClientProviders({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="light">
+      <ThemeProvider
+        attribute="class"
+        themes={['system', 'light', 'dark']}
+        defaultTheme="dark"
+        forcedTheme="dark"
+        enableSystem
+      >
         {children}
       </ThemeProvider>
     </QueryClientProvider>
