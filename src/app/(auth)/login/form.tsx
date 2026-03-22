@@ -56,12 +56,12 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="border-neutral-200 bg-white shadow-sm">
+    <Card className="border-green-200/70 bg-white/90 shadow-[0_20px_48px_rgba(5,46,22,0.12)] backdrop-blur">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-neutral-900">
+        <CardTitle className="text-2xl text-green-950">
           Welcome Back
         </CardTitle>
-        <CardDescription className="text-neutral-600">
+        <CardDescription className="text-green-800/80">
           Sign in to your AgriTrade account
         </CardDescription>
       </CardHeader>
@@ -73,12 +73,12 @@ export function LoginForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-neutral-700">Email</FormLabel>
+                  <FormLabel className="text-green-900">Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
                       placeholder="you@example.com"
-                      className="border-neutral-300 bg-white"
+                      className="border-green-200 bg-white/95 focus-visible:border-green-300 focus-visible:ring-green-200"
                       {...field}
                     />
                   </FormControl>
@@ -92,10 +92,10 @@ export function LoginForm() {
               render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center justify-between">
-                    <FormLabel className="text-neutral-700">Password</FormLabel>
+                    <FormLabel className="text-green-900">Password</FormLabel>
                     <Link
                       href="/forgot-password"
-                      className="text-neutral-600 text-sm hover:text-neutral-900 hover:underline"
+                      className="text-green-800/80 text-sm transition-colors hover:text-green-950 hover:underline"
                     >
                       Forgot password?
                     </Link>
@@ -105,14 +105,14 @@ export function LoginForm() {
                       <Input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Enter your password"
-                        className="border-neutral-300 bg-white pr-10"
+                        className="border-green-200 bg-white/95 pr-10 focus-visible:border-green-300 focus-visible:ring-green-200"
                         {...field}
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-0 right-0 h-full px-3 text-neutral-500 hover:text-neutral-700"
+                        className="absolute top-0 right-0 h-full px-3 text-green-700/70 hover:text-green-900"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? (
@@ -129,7 +129,7 @@ export function LoginForm() {
             />
             <Button
               type="submit"
-              className="w-full bg-neutral-900 text-white hover:bg-neutral-800"
+              className="w-full bg-brand-lime font-semibold text-green-950 transition-colors hover:bg-lime-300"
               disabled={loginMutation.isPending}
             >
               {loginMutation.isPending ? (
@@ -144,12 +144,12 @@ export function LoginForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex justify-center border-neutral-100 border-t pt-6">
-        <p className="text-neutral-600 text-sm">
+      <CardFooter className="flex justify-center border-green-100/90 border-t pt-6">
+        <p className="text-green-800/85 text-sm">
           Don&apos;t have an account?{' '}
           <Link
             href="/register"
-            className="font-medium text-neutral-900 hover:underline"
+            className="font-medium text-green-950 hover:underline"
           >
             Sign up
           </Link>
