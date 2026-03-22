@@ -53,7 +53,7 @@ export function HeroSection() {
             <Button
               asChild
               size="lg"
-              className="bg-brand-lime font-semibold text-green-950 hover:bg-lime-300"
+              className="bg-brand-lime font-semibold text-green-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-lime-300"
             >
               <Link href="/register">
                 Get Started
@@ -65,7 +65,7 @@ export function HeroSection() {
               asChild
               size="lg"
               variant="outline"
-              className="border-lime-200/60 bg-green-950/30 text-lime-100 backdrop-blur-sm hover:bg-lime-100/15 hover:text-lime-50"
+              className="border-lime-200/60 bg-green-950/30 text-lime-100 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-lime-100/15 hover:text-lime-50"
             >
               <Link href="/login">Sign In</Link>
             </Button>
@@ -116,7 +116,7 @@ export function HeroSection() {
           {trustSignals.map((signal) => (
             <div
               key={signal.metric}
-              className="rounded-xl border border-lime-100/20 bg-linear-to-br from-green-900/70 via-emerald-900/62 to-green-950/58 p-4 shadow-[0_12px_28px_rgba(3,22,15,0.35)] backdrop-blur-md"
+              className="rounded-xl border border-lime-100/20 bg-linear-to-br from-green-900/70 via-emerald-900/62 to-green-950/58 p-4 shadow-[0_12px_28px_rgba(3,22,15,0.35)] backdrop-blur-md transition-all duration-500 ease-out hover:-translate-y-1 hover:border-lime-100/35 hover:from-green-900/78 hover:via-emerald-900/70 hover:to-green-950/64 hover:shadow-[0_18px_36px_rgba(3,22,15,0.45)]"
             >
               <p className="font-semibold text-base text-lime-100 uppercase tracking-wide">
                 {signal.metric}

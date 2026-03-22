@@ -32,13 +32,13 @@ export function AboutSection() {
               {aboutImages.slice(0, 2).map((image) => (
                 <div
                   key={image.alt}
-                  className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-green-200/70 bg-green-100 shadow-sm"
+                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-green-200/70 bg-green-100 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-green-300/80 hover:shadow-lg"
                 >
                   <Image
                     src="/farm.jpg"
                     alt={image.alt}
                     fill
-                    className={`object-cover ${image.objectPosition}`}
+                    className={`object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${image.objectPosition}`}
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 40vw, 22vw"
                   />
                 </div>
@@ -49,13 +49,13 @@ export function AboutSection() {
               {aboutImages.slice(2).map((image) => (
                 <div
                   key={image.alt}
-                  className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-green-200/70 bg-green-100 shadow-sm"
+                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-green-200/70 bg-green-100 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-green-300/80 hover:shadow-lg"
                 >
                   <Image
                     src="/farm.jpg"
                     alt={image.alt}
                     fill
-                    className={`object-cover ${image.objectPosition}`}
+                    className={`object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${image.objectPosition}`}
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 40vw, 22vw"
                   />
                 </div>
