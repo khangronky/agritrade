@@ -58,9 +58,7 @@ export function LoginForm() {
   return (
     <Card className="border-green-200/70 bg-white/90 shadow-[0_20px_48px_rgba(5,46,22,0.12)] backdrop-blur">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-green-950">
-          Welcome Back
-        </CardTitle>
+        <CardTitle className="text-2xl text-green-950">Welcome Back</CardTitle>
         <CardDescription className="text-green-800/80">
           Sign in to your AgriTrade account
         </CardDescription>
