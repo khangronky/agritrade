@@ -13,6 +13,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { type StoryImageFrame, StoryImageSlot } from './story-image-slot';
 
 type StoryCard = {
   title: string;
@@ -80,7 +81,30 @@ const futureCommitments = [
   'Accelerating agricultural modernization and productivity growth.',
 ];
 
-function StoryImageSlot({
+const challengeSlotImages: StoryImageFrame[] = [
+  {
+    src: '/about-us/slide-5.jpg',
+    alt: 'Field conditions showing pressure on farm output.',
+    objectPosition: 'object-[center_56%]',
+  },
+  {
+    src: '/about-us/slide-6.jpg',
+    alt: 'Crop rows reflecting fluctuating demand and pricing.',
+    objectPosition: 'object-[center_44%]',
+  },
+  {
+    src: '/about-us/slide-7.jpg',
+    alt: 'Agricultural production scene highlighting uncertainty.',
+    objectPosition: 'object-[center_52%]',
+  },
+  {
+    src: '/about-us/slide-8.jpg',
+    alt: 'Close-up harvest imagery related to market quality standards.',
+    objectPosition: 'object-[center_38%]',
+  },
+];
+
+function StaticImageSlot({
   title,
   hint,
   objectPosition,
@@ -144,7 +168,7 @@ export default function AboutUsPage() {
             </div>
           </div>
 
-          <StoryImageSlot
+          <StaticImageSlot
             title="Image placeholder: Your farmer community story"
             hint="Replace with your own team/farmer impact photo."
             objectPosition="object-[center_42%]"
@@ -201,7 +225,7 @@ export default function AboutUsPage() {
               <StoryImageSlot
                 title="Image placeholder: Market pressure in the field"
                 hint="Replace with a real scene that reflects pricing pressure and uncertainty."
-                objectPosition="object-[center_58%]"
+                images={challengeSlotImages}
               />
             </div>
 
@@ -320,7 +344,7 @@ export default function AboutUsPage() {
               </p>
             </div>
 
-            <StoryImageSlot
+            <StaticImageSlot
               title="Image placeholder: Future-ready agriculture"
               hint="Replace with a hopeful image of farmers, cooperatives, or harvest outcomes."
               objectPosition="object-[center_36%]"
