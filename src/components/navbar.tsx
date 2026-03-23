@@ -39,7 +39,7 @@ import { createClient } from '@/lib/supabase/client';
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/#about' },
-  { label: 'Marketplace', href: '/' },
+  { label: 'Marketplace', href: '/marketplace' },
   { label: 'Farmers', href: '/' },
   { label: 'Transactions', href: '/' },
 ];
@@ -137,7 +137,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full text-zinc-100 backdrop-blur">
+    <header className="fixed top-0 z-30 w-full border-zinc-800/70 border-b bg-black/88 text-zinc-100 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -155,7 +155,7 @@ export function Navbar({ user }: NavbarProps) {
             <Link
               key={item.label}
               href={item.href}
-              className="text-sm text-zinc-300 transition-colors hover:text-zinc-50"
+              className="font-semibold text-sm text-zinc-100 transition-colors hover:text-brand-lime"
             >
               {item.label}
             </Link>
