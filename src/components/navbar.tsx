@@ -38,7 +38,7 @@ import { createClient } from '@/lib/supabase/client';
 
 const navItems = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/#about' },
+  { label: 'About Us', href: '/about-us' },
   { label: 'Marketplace', href: '/marketplace' },
   { label: 'Forum', href: '/' },
 ];
