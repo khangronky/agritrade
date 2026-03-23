@@ -39,7 +39,7 @@ import { createClient } from '@/lib/supabase/client';
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/#about' },
-  { label: 'Marketplace', href: '/' },
+  { label: 'Marketplace', href: '/marketplace' },
   { label: 'Farmers', href: '/' },
   { label: 'Transactions', href: '/' },
 ];
@@ -81,14 +81,14 @@ export function Navbar({ user }: NavbarProps) {
         <>
           <Button
             asChild
-            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
+            className="bg-brand-lime font-semibold text-foreground hover:bg-brand-lime/90"
           >
             <Link href="/login">Sign In</Link>
           </Button>
           <Button
             asChild
             variant="outline"
-            className="border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+            className="border-zinc-700 bg-transparent text-foreground hover:bg-zinc-800 hover:text-zinc-50"
           >
             <Link href="/signup">Sign Up</Link>
           </Button>
@@ -155,7 +155,7 @@ export function Navbar({ user }: NavbarProps) {
             <Link
               key={item.label}
               href={item.href}
-              className="text-sm text-zinc-300 transition-colors hover:text-zinc-50"
+              className="font-semibold text-foreground text-sm transition-colors hover:text-foreground/80"
             >
               {item.label}
             </Link>

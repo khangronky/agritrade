@@ -47,15 +47,6 @@ export function HeroSection() {
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
-
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="border-lime-200/60 bg-green-950/30 text-lime-100 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-lime-100/15 hover:text-lime-50"
-                >
-                  <Link href="/login">Sign In</Link>
-                </Button>
               </div>
 
               <div className="mt-10 max-w-3xl rounded-2xl border border-lime-200/30 bg-green-950/55 p-4 text-green-100 backdrop-blur-sm sm:p-5">
