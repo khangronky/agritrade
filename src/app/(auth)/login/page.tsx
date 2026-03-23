@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { LoginForm } from './form';
 
 export const metadata: Metadata = {
-  title: 'Login | AgriTrade',
+  title: 'Login',
   description: 'Sign in to your AgriTrade account',
 };
 

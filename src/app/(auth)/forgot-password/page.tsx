@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ForgotPasswordForm } from './form';
 
 export const metadata: Metadata = {
-  title: 'Forgot Password | AgriTrade',
+  title: 'Forgot Password',
   description: 'Reset your AgriTrade password',
 };
 
