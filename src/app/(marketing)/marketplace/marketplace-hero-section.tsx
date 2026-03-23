@@ -96,7 +96,7 @@ function LivePriceBoard({
             Live price board
           </CardTitle>
           <CardDescription className="text-slate-500 text-xs sm:text-sm">
-            Filtered by country and currency
+            Snapshot of featured commodities
           </CardDescription>
         </div>
       </CardHeader>
@@ -129,7 +129,7 @@ function LivePriceBoard({
           ))
         ) : (
           <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 px-4 py-5 text-center text-slate-600 text-sm">
-            No commodities match the current filters.
+            No featured commodities available right now.
           </div>
         )}
 

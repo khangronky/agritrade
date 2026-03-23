@@ -320,10 +320,10 @@ const exchangeCards: ExchangeCard[] = [
 ];
 
 export default function MarketplacePage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedCountry, setSelectedCountry] = useState('all');
-  const [selectedCurrency, setSelectedCurrency] = useState<CurrencyCode>('VND');
+  const [trendSearchQuery, setTrendSearchQuery] = useState('');
+  const [trendCategory, setTrendCategory] = useState('all');
+  const [trendCountry, setTrendCountry] = useState('all');
+  const [trendCurrency, setTrendCurrency] = useState<CurrencyCode>('VND');
   const [selectedCommodity, setSelectedCommodity] = useState('auto');
 
   const countries = useMemo(
@@ -334,25 +334,25 @@ export default function MarketplacePage() {
     []
   );
 
-  const activeCurrency =
-    aseanCurrencies.find((currency) => currency.code === selectedCurrency) ??
+  const activeTrendCurrency =
+    aseanCurrencies.find((currency) => currency.code === trendCurrency) ??
     aseanCurrencies[0];
 
-  const filteredListings = useMemo(() => {
-    const normalizedQuery = searchQuery.trim().toLowerCase();
+  const marketplaceCurrency = aseanCurrencies[0];
+
+  const trendFilteredListings = useMemo(() => {
+    const normalizedQuery = trendSearchQuery.trim().toLowerCase();
 
     return listings.filter((listing) => {
       const matchesCategory =
-        selectedCategory === 'all' ||
-        (selectedCategory === 'grains' && listing.category === 'Grain') ||
-        (selectedCategory === 'fruits' && listing.category === 'Fruit') ||
-        (selectedCategory === 'vegetables' &&
-          listing.category === 'Vegetable') ||
-        (selectedCategory === 'aquaculture' &&
-          listing.category === 'Aquaculture');
+        trendCategory === 'all' ||
+        (trendCategory === 'grains' && listing.category === 'Grain') ||
+        (trendCategory === 'fruits' && listing.category === 'Fruit') ||
+        (trendCategory === 'vegetables' && listing.category === 'Vegetable') ||
+        (trendCategory === 'aquaculture' && listing.category === 'Aquaculture');
 
       const matchesCountry =
-        selectedCountry === 'all' || listing.country === selectedCountry;
+        trendCountry === 'all' || listing.country === trendCountry;
 
       const matchesQuery =
         normalizedQuery.length === 0 ||
@@ -362,31 +362,28 @@ export default function MarketplacePage() {
 
       return matchesCategory && matchesCountry && matchesQuery;
     });
-  }, [searchQuery, selectedCategory, selectedCountry]);
+  }, [trendSearchQuery, trendCategory, trendCountry]);
 
   const livePriceRows = useMemo<PriceRow[]>(
     () =>
-      filteredListings.slice(0, 4).map((listing) => ({
+      listings.slice(0, 4).map((listing) => ({
         name: listing.name,
         priceVnd: listing.pricePerKgVnd,
         change: listing.trend,
         positive: listing.positive,
       })),
-    [filteredListings]
+    []
   );
 
-  const demandSignals = useMemo(
-    () => filteredListings.map(buildDemandSignal),
-    [filteredListings]
-  );
+  const demandSignals = useMemo(() => listings.map(buildDemandSignal), []);
 
   const commodityOptions = useMemo<CommodityOption[]>(
     () =>
-      filteredListings.map((listing) => ({
+      trendFilteredListings.map((listing) => ({
         value: `${listing.name}-${listing.country}`,
         label: `${listing.name} (${listing.country})`,
       })),
-    [filteredListings]
+    [trendFilteredListings]
   );
 
   const activeCommodityValue = commodityOptions.some(
@@ -396,28 +393,28 @@ export default function MarketplacePage() {
     : 'auto';
 
   const activeListingForTrend = useMemo(() => {
-    if (filteredListings.length === 0) {
+    if (trendFilteredListings.length === 0) {
       return null;
     }
 
     if (activeCommodityValue === 'auto') {
-      return filteredListings[0];
+      return trendFilteredListings[0];
     }
 
     return (
-      filteredListings.find(
+      trendFilteredListings.find(
         (listing) =>
           `${listing.name}-${listing.country}` === activeCommodityValue
-      ) ?? filteredListings[0]
+      ) ?? trendFilteredListings[0]
     );
-  }, [filteredListings, activeCommodityValue]);
+  }, [trendFilteredListings, activeCommodityValue]);
 
   const trendTimelineData = useMemo(
     () =>
       activeListingForTrend
-        ? buildMarketTrendData(activeListingForTrend, activeCurrency)
+        ? buildMarketTrendData(activeListingForTrend, activeTrendCurrency)
         : [],
-    [activeListingForTrend, activeCurrency]
+    [activeListingForTrend, activeTrendCurrency]
   );
 
   const forecastSummary = useMemo<ForecastSummary | null>(() => {
@@ -466,10 +463,10 @@ export default function MarketplacePage() {
   }, [activeListingForTrend, trendTimelineData]);
 
   const handleResetFilters = () => {
-    setSearchQuery('');
-    setSelectedCategory('all');
-    setSelectedCountry('all');
-    setSelectedCurrency('VND');
+    setTrendSearchQuery('');
+    setTrendCategory('all');
+    setTrendCountry('all');
+    setTrendCurrency('VND');
     setSelectedCommodity('auto');
   };
 
@@ -479,15 +476,15 @@ export default function MarketplacePage() {
 
       <MarketplaceHeroSection
         livePriceRows={livePriceRows}
-        activeCurrency={activeCurrency}
+        activeCurrency={marketplaceCurrency}
       />
 
       <MarketTrendSection
-        searchQuery={searchQuery}
-        selectedCategory={selectedCategory}
-        selectedCountry={selectedCountry}
-        selectedCurrency={selectedCurrency}
-        activeCurrency={activeCurrency}
+        searchQuery={trendSearchQuery}
+        selectedCategory={trendCategory}
+        selectedCountry={trendCountry}
+        selectedCurrency={trendCurrency}
+        activeCurrency={activeTrendCurrency}
         countries={countries}
         aseanCurrencies={aseanCurrencies}
         commodityOptions={commodityOptions}
@@ -495,23 +492,23 @@ export default function MarketplacePage() {
         activeListingForTrend={activeListingForTrend}
         trendTimelineData={trendTimelineData}
         forecastSummary={forecastSummary}
-        onSearchQueryChange={setSearchQuery}
-        onCategoryChange={setSelectedCategory}
-        onCountryChange={setSelectedCountry}
-        onCurrencyChange={setSelectedCurrency}
+        onSearchQueryChange={setTrendSearchQuery}
+        onCategoryChange={setTrendCategory}
+        onCountryChange={setTrendCountry}
+        onCurrencyChange={setTrendCurrency}
         onCommodityChange={setSelectedCommodity}
         onReset={handleResetFilters}
       />
 
       <TradingBoardSection
-        filteredListings={filteredListings}
-        activeCurrency={activeCurrency}
+        listings={listings}
+        activeCurrency={marketplaceCurrency}
       />
 
       <DemandSignalsSection demandSignals={demandSignals} />
 
       <ExchangeAndYieldSection
-        selectedCountry={selectedCountry}
+        selectedCountry="all"
         exchangeCards={exchangeCards}
       />
 

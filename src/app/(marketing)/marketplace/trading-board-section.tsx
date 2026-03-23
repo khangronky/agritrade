@@ -5,12 +5,12 @@ import type { CurrencyOption, ListingCard } from './types';
 import { formatPricePerKg } from './utils';
 
 type TradingBoardSectionProps = {
-  filteredListings: ListingCard[];
+  listings: ListingCard[];
   activeCurrency: CurrencyOption;
 };
 
 export function TradingBoardSection({
-  filteredListings,
+  listings,
   activeCurrency,
 }: TradingBoardSectionProps) {
   return (
@@ -26,8 +26,8 @@ export function TradingBoardSection({
           </div>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {filteredListings.length > 0 ? (
-              filteredListings.map((listing) => (
+            {listings.length > 0 ? (
+              listings.map((listing) => (
                 <ListingCardItem
                   key={`${listing.name}-${listing.region}-${listing.country}`}
                   listing={listing}
@@ -37,7 +37,7 @@ export function TradingBoardSection({
             ) : (
               <Card className="gap-0 rounded-2xl border-emerald-200 bg-white py-0 text-slate-900 shadow-sm sm:col-span-2 xl:col-span-4">
                 <CardContent className="px-5 py-8 text-center text-slate-600">
-                  No listings found for the selected country/filter.
+                  No marketplace listings available right now.
                 </CardContent>
               </Card>
             )}

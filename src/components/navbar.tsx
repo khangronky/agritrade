@@ -40,8 +40,7 @@ const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/#about' },
   { label: 'Marketplace', href: '/marketplace' },
-  { label: 'Farmers', href: '/' },
-  { label: 'Transactions', href: '/' },
+  { label: 'Forum', href: '/' },
 ];
 
 type NavbarProps = {
