@@ -3,6 +3,7 @@
 import { ArrowLeftRight, HandCoins, Zap } from 'lucide-react';
 import type { ComponentType } from 'react';
 import { useMemo, useState } from 'react';
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,6 +14,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart';
 import { Input } from '@/components/ui/input';
 import {
   NativeSelect,
@@ -73,6 +81,14 @@ type DemandSignal = {
   level: DemandLevel;
   insight: string;
   positive: boolean;
+};
+
+type MarketTrendPoint = {
+  label: string;
+  priceHistorical: number | null;
+  priceForecast: number | null;
+  demandHistorical: number | null;
+  demandForecast: number | null;
 };
 
 type ExchangeCard = {
@@ -251,6 +267,28 @@ const demandLevelStyles: Record<DemandLevel, string> = {
   'Soft demand': 'border-rose-200 bg-rose-100 text-rose-700',
 };
 
+const priceTrendChartConfig = {
+  priceHistorical: {
+    label: 'Historical price',
+    color: '#16a34a',
+  },
+  priceForecast: {
+    label: 'AI forecast',
+    color: '#0ea5e9',
+  },
+} as const;
+
+const demandTrendChartConfig = {
+  demandHistorical: {
+    label: 'Historical demand',
+    color: '#84cc16',
+  },
+  demandForecast: {
+    label: 'AI forecast',
+    color: '#f59e0b',
+  },
+} as const;
+
 function formatPriceByCurrency(priceVnd: number, currency: CurrencyOption) {
   const converted = priceVnd * currency.rateFromVnd;
   return new Intl.NumberFormat(currency.locale, {
@@ -260,6 +298,62 @@ function formatPriceByCurrency(priceVnd: number, currency: CurrencyOption) {
 
 function formatPricePerKg(priceVnd: number, currency: CurrencyOption) {
   return `${formatPriceByCurrency(priceVnd, currency)} ${currency.code}/kg`;
+}
+
+function hashSeed(input: string) {
+  return input.split('').reduce((seed, char) => seed + char.charCodeAt(0), 0);
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function buildMarketTrendData(
+  listing: ListingCard,
+  currency: CurrencyOption
+): MarketTrendPoint[] {
+  const historicalPoints = 8;
+  const forecastPoints = 4;
+  const totalPoints = historicalPoints + forecastPoints;
+  const seed = hashSeed(`${listing.name}-${listing.country}`);
+  const trendPct = parseTrendPercent(listing.trend) / 100;
+  const baseDemand = parseVolumeTons(listing.volume);
+  const points: MarketTrendPoint[] = [];
+
+  for (let index = 0; index < totalPoints; index += 1) {
+    const monthOffset = index - (historicalPoints - 1);
+    const date = new Date();
+    date.setMonth(date.getMonth() + monthOffset);
+    const label = date.toLocaleString('en-US', { month: 'short' });
+    const isForecast = monthOffset > 0;
+
+    const wave = Math.sin((index + seed * 0.03) * 1.2) * 0.035;
+    const drift = trendPct * monthOffset * (isForecast ? 1.2 : 0.75);
+
+    const priceVnd = listing.pricePerKgVnd * (1 + wave + drift);
+    const priceConverted = Number(
+      (priceVnd * currency.rateFromVnd).toFixed(currency.maxFractionDigits + 2)
+    );
+
+    const demandWave = Math.cos((index + seed * 0.02) * 0.95) * 0.12;
+    const demandDrift = trendPct * monthOffset * (isForecast ? 1.5 : 0.85);
+    const demand = Math.max(
+      5,
+      Math.round(baseDemand * (1 + demandWave + demandDrift))
+    );
+
+    points.push({
+      label,
+      priceHistorical: isForecast ? null : priceConverted,
+      priceForecast:
+        isForecast || index === historicalPoints - 1 ? priceConverted : null,
+      demandHistorical: isForecast ? null : demand,
+      demandForecast:
+        isForecast || index === historicalPoints - 1 ? demand : null,
+    });
+  }
+
+  return points;
 }
 
 function parseTrendPercent(trend: string) {
@@ -428,6 +522,7 @@ export default function MarketplacePage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedCountry, setSelectedCountry] = useState('all');
   const [selectedCurrency, setSelectedCurrency] = useState<CurrencyCode>('VND');
+  const [selectedCommodity, setSelectedCommodity] = useState('auto');
 
   const countries = useMemo(
     () =>
@@ -483,11 +578,97 @@ export default function MarketplacePage() {
     [filteredListings]
   );
 
+  const commodityOptions = useMemo(
+    () =>
+      filteredListings.map((listing) => ({
+        value: `${listing.name}-${listing.country}`,
+        label: `${listing.name} (${listing.country})`,
+      })),
+    [filteredListings]
+  );
+
+  const activeCommodityValue = commodityOptions.some(
+    (option) => option.value === selectedCommodity
+  )
+    ? selectedCommodity
+    : 'auto';
+
+  const activeListingForTrend = useMemo(() => {
+    if (filteredListings.length === 0) {
+      return null;
+    }
+
+    if (activeCommodityValue === 'auto') {
+      return filteredListings[0];
+    }
+
+    return (
+      filteredListings.find(
+        (listing) =>
+          `${listing.name}-${listing.country}` === activeCommodityValue
+      ) ?? filteredListings[0]
+    );
+  }, [filteredListings, activeCommodityValue]);
+
+  const trendTimelineData = useMemo(
+    () =>
+      activeListingForTrend
+        ? buildMarketTrendData(activeListingForTrend, activeCurrency)
+        : [],
+    [activeListingForTrend, activeCurrency]
+  );
+
+  const forecastSummary = useMemo(() => {
+    if (!activeListingForTrend || trendTimelineData.length === 0) {
+      return null;
+    }
+
+    const firstHistoricalPoint =
+      trendTimelineData.find((point) => point.priceHistorical !== null) ?? null;
+    const lastForecastPoint =
+      [...trendTimelineData]
+        .reverse()
+        .find((point) => point.priceForecast !== null) ?? null;
+
+    if (!firstHistoricalPoint || !lastForecastPoint) {
+      return null;
+    }
+
+    const priceStart = firstHistoricalPoint.priceHistorical ?? 0;
+    const priceEnd = lastForecastPoint.priceForecast ?? priceStart;
+    const projectedPriceChange = priceStart
+      ? ((priceEnd - priceStart) / priceStart) * 100
+      : 0;
+
+    const demandStart = firstHistoricalPoint.demandHistorical ?? 0;
+    const demandEnd = lastForecastPoint.demandForecast ?? demandStart;
+    const projectedDemandChange = demandStart
+      ? ((demandEnd - demandStart) / demandStart) * 100
+      : 0;
+
+    const confidence = clamp(
+      Math.round(
+        68 +
+          Math.abs(parseTrendPercent(activeListingForTrend.trend)) * 6 +
+          parseVolumeTons(activeListingForTrend.volume) / 25
+      ),
+      65,
+      92
+    );
+
+    return {
+      projectedPriceChange,
+      projectedDemandChange,
+      confidence,
+    };
+  }, [activeListingForTrend, trendTimelineData]);
+
   const handleResetFilters = () => {
     setSearchQuery('');
     setSelectedCategory('all');
     setSelectedCountry('all');
     setSelectedCurrency('VND');
+    setSelectedCommodity('auto');
   };
 
   return (
@@ -616,21 +797,229 @@ export default function MarketplacePage() {
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <h2 className="font-semibold text-2xl sm:text-3xl">
+                  Market Trend Analysis & Forecasting
+                </h2>
+                <p className="mt-2 max-w-3xl text-slate-600 text-sm leading-relaxed sm:text-base">
+                  Securities-like timeline charts combine historical commodity
+                  movement with AI-powered projections for next-cycle price and
+                  buyer demand trends.
+                </p>
+              </div>
+              <div className="w-full lg:w-auto">
+                <MarketplaceFilterBar
+                  searchQuery={searchQuery}
+                  selectedCategory={selectedCategory}
+                  selectedCountry={selectedCountry}
+                  selectedCurrency={selectedCurrency}
+                  countries={countries}
+                  onSearchQueryChange={setSearchQuery}
+                  onCategoryChange={setSelectedCategory}
+                  onCountryChange={setSelectedCountry}
+                  onCurrencyChange={setSelectedCurrency}
+                  onReset={handleResetFilters}
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-slate-500 text-xs sm:text-sm">
+                Timeline spans 8 historical periods + 4 AI forecast periods.
+              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-slate-500 text-xs">Commodity view</p>
+                <NativeSelect
+                  value={activeCommodityValue}
+                  onChange={(event) => setSelectedCommodity(event.target.value)}
+                  className="h-9 min-w-52 rounded-lg border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
+                >
+                  <NativeSelectOption value="auto">
+                    Auto (top matched commodity)
+                  </NativeSelectOption>
+                  {commodityOptions.map((option) => (
+                    <NativeSelectOption key={option.value} value={option.value}>
+                      {option.label}
+                    </NativeSelectOption>
+                  ))}
+                </NativeSelect>
+              </div>
+            </div>
+
+            {activeListingForTrend ? (
+              <>
+                <div className="mt-6 grid gap-4 lg:grid-cols-2">
+                  <Card className="gap-0 rounded-2xl border-emerald-200 bg-white/88 py-0 text-slate-900 shadow-sm">
+                    <CardHeader className="px-5 pt-5 pb-2">
+                      <CardTitle className="text-lg sm:text-xl">
+                        Price timeline ({activeCurrency.code})
+                      </CardTitle>
+                      <CardDescription>
+                        {activeListingForTrend.name} -{' '}
+                        {activeListingForTrend.region},{' '}
+                        {activeListingForTrend.country}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="px-3 pb-4 sm:px-4">
+                      <ChartContainer
+                        config={priceTrendChartConfig}
+                        className="h-64 w-full"
+                      >
+                        <LineChart data={trendTimelineData}>
+                          <CartesianGrid vertical={false} />
+                          <XAxis
+                            dataKey="label"
+                            tickLine={false}
+                            axisLine={false}
+                          />
+                          <YAxis
+                            tickLine={false}
+                            axisLine={false}
+                            width={60}
+                            tickFormatter={(value) => `${value}`}
+                          />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <ChartLegend content={<ChartLegendContent />} />
+                          <Line
+                            type="monotone"
+                            dataKey="priceHistorical"
+                            stroke="var(--color-priceHistorical)"
+                            strokeWidth={2.2}
+                            dot={false}
+                            name="priceHistorical"
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="priceForecast"
+                            stroke="var(--color-priceForecast)"
+                            strokeDasharray="6 4"
+                            strokeWidth={2.2}
+                            dot={false}
+                            name="priceForecast"
+                          />
+                        </LineChart>
+                      </ChartContainer>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="gap-0 rounded-2xl border-emerald-200 bg-white/88 py-0 text-slate-900 shadow-sm">
+                    <CardHeader className="px-5 pt-5 pb-2">
+                      <CardTitle className="text-lg sm:text-xl">
+                        Demand timeline (active buyers)
+                      </CardTitle>
+                      <CardDescription>
+                        Historical demand vs AI demand forecast
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="px-3 pb-4 sm:px-4">
+                      <ChartContainer
+                        config={demandTrendChartConfig}
+                        className="h-64 w-full"
+                      >
+                        <LineChart data={trendTimelineData}>
+                          <CartesianGrid vertical={false} />
+                          <XAxis
+                            dataKey="label"
+                            tickLine={false}
+                            axisLine={false}
+                          />
+                          <YAxis tickLine={false} axisLine={false} width={44} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <ChartLegend content={<ChartLegendContent />} />
+                          <Line
+                            type="monotone"
+                            dataKey="demandHistorical"
+                            stroke="var(--color-demandHistorical)"
+                            strokeWidth={2.2}
+                            dot={false}
+                            name="demandHistorical"
+                          />
+                          <Line
+                            type="monotone"
+                            dataKey="demandForecast"
+                            stroke="var(--color-demandForecast)"
+                            strokeDasharray="6 4"
+                            strokeWidth={2.2}
+                            dot={false}
+                            name="demandForecast"
+                          />
+                        </LineChart>
+                      </ChartContainer>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                  <Card className="gap-0 rounded-xl border-emerald-200 bg-white/85 py-0">
+                    <CardContent className="px-4 py-4">
+                      <p className="text-slate-500 text-xs uppercase tracking-[0.14em]">
+                        Predicted price move
+                      </p>
+                      <p
+                        className={cn(
+                          'mt-2 font-semibold text-2xl',
+                          (forecastSummary?.projectedPriceChange ?? 0) >= 0
+                            ? 'text-green-600'
+                            : 'text-amber-600'
+                        )}
+                      >
+                        {forecastSummary
+                          ? `${forecastSummary.projectedPriceChange.toFixed(1)}%`
+                          : '--'}
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card className="gap-0 rounded-xl border-emerald-200 bg-white/85 py-0">
+                    <CardContent className="px-4 py-4">
+                      <p className="text-slate-500 text-xs uppercase tracking-[0.14em]">
+                        Predicted demand move
+                      </p>
+                      <p
+                        className={cn(
+                          'mt-2 font-semibold text-2xl',
+                          (forecastSummary?.projectedDemandChange ?? 0) >= 0
+                            ? 'text-green-600'
+                            : 'text-amber-600'
+                        )}
+                      >
+                        {forecastSummary
+                          ? `${forecastSummary.projectedDemandChange.toFixed(1)}%`
+                          : '--'}
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card className="gap-0 rounded-xl border-emerald-200 bg-white/85 py-0">
+                    <CardContent className="px-4 py-4">
+                      <p className="text-slate-500 text-xs uppercase tracking-[0.14em]">
+                        AI confidence
+                      </p>
+                      <p className="mt-2 font-semibold text-2xl text-emerald-700">
+                        {forecastSummary
+                          ? `${forecastSummary.confidence}%`
+                          : '--'}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </>
+            ) : (
+              <Card className="mt-6 gap-0 rounded-2xl border-emerald-200 bg-white py-0 text-slate-900 shadow-sm">
+                <CardContent className="px-5 py-8 text-center text-slate-600">
+                  No timeline data available for current filters.
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative pb-4 sm:pb-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-emerald-200/80 bg-white/55 p-5 shadow-[0_22px_48px_rgba(16,185,129,0.12)] backdrop-blur-sm sm:p-6">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <h2 className="font-semibold text-2xl sm:text-3xl">
                   Agriculture trading board
                 </h2>
               </div>
-              <MarketplaceFilterBar
-                searchQuery={searchQuery}
-                selectedCategory={selectedCategory}
-                selectedCountry={selectedCountry}
-                selectedCurrency={selectedCurrency}
-                countries={countries}
-                onSearchQueryChange={setSearchQuery}
-                onCategoryChange={setSelectedCategory}
-                onCountryChange={setSelectedCountry}
-                onCurrencyChange={setSelectedCurrency}
-                onReset={handleResetFilters}
-              />
             </div>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

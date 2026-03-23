@@ -81,14 +81,14 @@ export function Navbar({ user }: NavbarProps) {
         <>
           <Button
             asChild
-            className="bg-brand-lime font-semibold text-foreground hover:bg-brand-lime/90"
+            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
           >
             <Link href="/login">Sign In</Link>
           </Button>
           <Button
             asChild
             variant="outline"
-            className="border-zinc-700 bg-transparent text-foreground hover:bg-zinc-800 hover:text-zinc-50"
+            className="border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
           >
             <Link href="/signup">Sign Up</Link>
           </Button>
@@ -137,7 +137,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full text-zinc-100 backdrop-blur">
+    <header className="fixed top-0 z-30 w-full border-zinc-800/70 border-b bg-black/88 text-zinc-100 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -155,7 +155,7 @@ export function Navbar({ user }: NavbarProps) {
             <Link
               key={item.label}
               href={item.href}
-              className="font-semibold text-foreground text-sm transition-colors hover:text-foreground/80"
+              className="font-semibold text-sm text-zinc-100 transition-colors hover:text-brand-lime"
             >
               {item.label}
             </Link>
