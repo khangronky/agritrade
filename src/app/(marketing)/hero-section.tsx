@@ -3,32 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-
-type LivePrice = {
-  product: string;
-  price: string;
-  change: string;
-  trend: 'up' | 'down' | 'flat';
-};
-
-const livePrices: LivePrice[] = [
-  { product: 'ST25 Rice', price: '15.5k', change: '+0.8%', trend: 'up' },
-  { product: 'Cat Mango', price: '34k', change: '+2.1%', trend: 'up' },
-  { product: 'Mustard Greens', price: '71k', change: '-0.5%', trend: 'down' },
-  { product: 'Pangasius', price: '28k', change: '+1.9%', trend: 'up' },
-];
-
-function trendClass(trend: LivePrice['trend']) {
-  if (trend === 'up') {
-    return 'text-emerald-300';
-  }
-
-  if (trend === 'down') {
-    return 'text-amber-300';
-  }
-
-  return 'text-green-100';
-}
+import { LivePriceBoard } from './live-price-board';
 
 export function HeroSection() {
   return (
@@ -125,47 +100,7 @@ export function HeroSection() {
             </div>
 
             <div className="mt-6 lg:mt-8 lg:-mr-6 lg:pl-6">
-              <div className="rounded-3xl border border-lime-100/20 bg-linear-to-br from-green-950/94 via-green-900/70 to-green-950/94 p-5 shadow-[0_20px_50px_rgba(5,30,20,0.45)] backdrop-blur-xl sm:p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-semibold text-2xl text-white">
-                    Live Price Board
-                  </h3>
-                  <p className="mt-1 text-green-100/85 text-sm">
-                    Updated every 60s
-                  </p>
-                </div>
-
-                <div className="mt-4 space-y-3">
-                  {livePrices.map((item) => (
-                    <div
-                      key={item.product}
-                      className="flex items-center justify-between rounded-xl bg-linear-to-r from-green-900/60 via-green-900/40 to-green-900/60 px-4 py-3"
-                    >
-                      <span className="font-medium text-green-50">
-                        {item.product}
-                      </span>
-                      <div className="flex items-center gap-3">
-                        <span className="font-semibold text-green-50">
-                          {item.price}
-                        </span>
-                        <span
-                          className={`font-semibold ${trendClass(item.trend)}`}
-                        >
-                          {item.change}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-5 flex items-center justify-between text-sm">
-                  <p className="text-green-100/72">Reference prices</p>
-                  <div className="flex items-center gap-2 text-emerald-300">
-                    <span className="inline-block size-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.8)]" />
-                    Live
-                  </div>
-                </div>
-              </div>
+              <LivePriceBoard />
             </div>
           </div>
         </div>
