@@ -2,16 +2,16 @@ import { Leaf } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { HomeLiveUpdatesPanel } from './home-live-updates-panel';
-import { LiveUserCount } from './live-user-count';
 import { LivePriceBoard } from './live-price-board';
+import { LiveUserCount } from './live-user-count';
 
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
-      <div className="relative mx-auto max-w-[1400px] px-4 pt-14 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-20">
+      <div className="relative mx-auto max-w-350 px-4 pt-14 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-20">
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(460px,520px)] xl:items-start">
           <div className="max-w-3xl lg:pt-4 lg:pl-8 xl:pt-6 xl:pl-14">
-            <h1 className="font-semibold text-5xl text-slate-900 leading-[1] sm:text-6xl lg:text-7xl">
+            <h1 className="font-semibold text-5xl text-slate-900 leading-none sm:text-6xl lg:text-7xl">
               <LiveUserCount className="text-amber-500" />
               <br />
               USERS
@@ -32,7 +32,7 @@ export function HeroSection() {
               <input
                 type="text"
                 placeholder="Email/Phone number"
-                className="h-9 flex-1 rounded-lg border border-emerald-300/70 bg-white/90 px-3 text-xs text-slate-800 placeholder:text-slate-500/90 focus:border-amber-400/70 focus:outline-hidden"
+                className="h-9 flex-1 rounded-lg border border-emerald-300/70 bg-white/90 px-3 text-slate-800 text-xs placeholder:text-slate-500/90 focus:border-amber-400/70 focus:outline-hidden"
               />
               <Button
                 asChild
@@ -44,7 +44,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="mt-4 flex w-full max-w-[520px] flex-col gap-3 xl:mt-0">
+          <div className="mt-4 flex w-full max-w-130 flex-col gap-3 xl:mt-0">
             <LivePriceBoard compact />
             <HomeLiveUpdatesPanel compact />
           </div>
@@ -59,7 +59,7 @@ function LaurelMetric({ label }: { label: string }) {
     <div className="group flex min-w-0 flex-1 items-center justify-center gap-2 sm:gap-3">
       <Laurel />
       <div className="text-center">
-        <p className="font-semibold text-xl text-amber-500 leading-none transition-all duration-300 group-hover:text-amber-600 group-hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.35)] sm:text-2xl">
+        <p className="font-semibold text-amber-500 text-xl leading-none transition-all duration-300 group-hover:text-amber-600 group-hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.35)] sm:text-2xl">
           No.1
         </p>
         <p className="mt-0.5 font-medium text-amber-500 text-xs transition-colors duration-300 group-hover:text-amber-600 sm:text-sm">
@@ -76,9 +76,9 @@ function Laurel({ reverse = false }: { reverse?: boolean }) {
     <div
       className={`flex items-center gap-0.5 text-amber-500/90 transition-colors duration-300 group-hover:text-amber-600 ${reverse ? '-scale-x-100' : ''}`}
     >
-      <Leaf className="size-3 -rotate-45 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-[52deg] sm:size-4" />
-      <Leaf className="size-3 -rotate-12 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-[18deg] sm:size-4" />
-      <Leaf className="size-3 rotate-12 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[18deg] sm:size-4" />
+      <Leaf className="size-3 -rotate-45 transition-transform duration-300 group-hover:-rotate-52 group-hover:scale-110 sm:size-4" />
+      <Leaf className="size-3 -rotate-12 transition-transform duration-300 group-hover:-rotate-18 group-hover:scale-110 sm:size-4" />
+      <Leaf className="size-3 rotate-12 transition-transform duration-300 group-hover:rotate-18 group-hover:scale-110 sm:size-4" />
     </div>
   );
 }

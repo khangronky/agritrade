@@ -80,16 +80,16 @@ export function Navbar({ user }: NavbarProps) {
         <>
           <Button
             asChild
-            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
+            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/80"
           >
             <Link href="/login">Sign In</Link>
           </Button>
           <Button
             asChild
             variant="outline"
-            className="border-emerald-300 bg-white/80 text-slate-800 hover:bg-white hover:text-slate-900"
+            className="bg-background text-slate-800 hover:bg-background/80"
           >
-            <Link href="/signup">Sign Up</Link>
+            <Link href="/register">Sign Up</Link>
           </Button>
         </>
       );
@@ -205,36 +205,32 @@ export function Navbar({ user }: NavbarProps) {
                   <SheetClose asChild>
                     <Button
                       asChild
-                      className="w-full bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
+                      className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/80"
                     >
                       <Link href="/login">Sign In</Link>
                     </Button>
                   </SheetClose>
-                  <SheetClose>
+                  <SheetClose asChild>
                     <Button
                       asChild
                       variant="outline"
-                      className="w-full border-zinc-700 bg-transparent text-zinc-800 hover:bg-zinc-800 hover:text-zinc-50"
+                      className="bg-background text-slate-800 hover:bg-background/80"
                     >
-                      <Link href="/signup">Sign Up</Link>
+                      <Link href="/register">Sign Up</Link>
                     </Button>
                   </SheetClose>
                 </>
               ) : (
                 <>
                   <SheetClose asChild>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full bg-zinc-800 text-zinc-50 hover:bg-zinc-900 hover:text-zinc-100"
-                    >
+                    <Button asChild variant="default" className="text-zinc-100">
                       <Link href="/dashboard">Dashboard</Link>
                     </Button>
                   </SheetClose>
                   <Button
                     variant="destructive"
                     onClick={handleLogout}
-                    className="w-full text-zinc-100 hover:text-zinc-50"
+                    className="text-zinc-100"
                   >
                     Log out
                   </Button>
