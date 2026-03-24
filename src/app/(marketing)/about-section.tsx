@@ -29,7 +29,7 @@ export function AboutSection() {
               {aboutImages.slice(0, 2).map((image) => (
                 <div
                   key={image.alt}
-                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-green-200/70 bg-green-100 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-green-300/80 hover:shadow-lg"
+                  className="group relative aspect-4/3 overflow-hidden rounded-2xl border border-green-200/70 bg-green-100 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-green-300/80 hover:shadow-lg"
                 >
                   <Image
                     src="/farm.jpg"
@@ -46,7 +46,7 @@ export function AboutSection() {
               {aboutImages.slice(2).map((image) => (
                 <div
                   key={image.alt}
-                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-green-200/70 bg-green-100 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-green-300/80 hover:shadow-lg"
+                  className="group relative aspect-4/3 overflow-hidden rounded-2xl border border-green-200/70 bg-green-100 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-green-300/80 hover:shadow-lg"
                 >
                   <Image
                     src="/farm.jpg"

@@ -81,18 +81,18 @@ export function MarketTrendSection({
     <section className="relative py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl border border-emerald-200/80 bg-white/55 p-5 shadow-[0_22px_48px_rgba(16,185,129,0.12)] backdrop-blur-sm sm:p-6">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
+          <div className="flex flex-col gap-4">
+            <div className="space-y-2">
               <h2 className="font-semibold text-2xl sm:text-3xl">
                 Market Trend Analysis & Forecasting
               </h2>
-              <p className="mt-2 max-w-3xl text-slate-600 text-sm leading-relaxed sm:text-base">
+              <p className="max-w-3xl text-slate-600 text-sm leading-relaxed sm:text-base">
                 Securities-like timeline charts combine historical commodity
                 movement with AI-powered projections for next-cycle price and
                 buyer demand trends.
               </p>
             </div>
-            <div className="w-full lg:w-auto">
+            <div className="flex justify-center">
               <MarketplaceFilterBar
                 searchQuery={searchQuery}
                 selectedCategory={selectedCategory}
@@ -246,7 +246,7 @@ function MarketplaceFilterBar({
   onReset,
 }: MarketplaceFilterBarProps) {
   return (
-    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+    <div className="flex flex-wrap gap-2">
       <Input
         type="text"
         placeholder="Search by commodity"
