@@ -9,10 +9,10 @@ import {
   TrendingUp,
   Waves,
 } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import StaticImageSlot, { type StaticImageFrame } from './static-image-slot';
 import { type StoryImageFrame, StoryImageSlot } from './story-image-slot';
 
 type StoryCard = {
@@ -81,55 +81,29 @@ const futureCommitments = [
   'Accelerating agricultural modernization and productivity growth.',
 ];
 
+const staticImage: StaticImageFrame = {
+  src: '/farm.jpg',
+  alt: 'Agricultural landscape with farmers working in the field.',
+};
+
 const challengeSlotImages: StoryImageFrame[] = [
   {
     src: '/about-us/slide-5.jpg',
     alt: 'Field conditions showing pressure on farm output.',
-    objectPosition: 'object-[center_56%]',
   },
   {
     src: '/about-us/slide-6.jpg',
     alt: 'Crop rows reflecting fluctuating demand and pricing.',
-    objectPosition: 'object-[center_44%]',
   },
   {
     src: '/about-us/slide-7.jpg',
     alt: 'Agricultural production scene highlighting uncertainty.',
-    objectPosition: 'object-[center_52%]',
   },
   {
     src: '/about-us/slide-8.jpg',
     alt: 'Close-up harvest imagery related to market quality standards.',
-    objectPosition: 'object-[center_38%]',
   },
 ];
-
-function StaticImageSlot({
-  title,
-  hint,
-  objectPosition,
-}: {
-  title: string;
-  hint: string;
-  objectPosition: string;
-}) {
-  return (
-    <div className="group relative h-64 overflow-hidden rounded-2xl border border-green-200/80 bg-green-900/10 shadow-sm sm:h-72">
-      <Image
-        src="/farm.jpg"
-        alt={title}
-        fill
-        className={`object-cover opacity-80 transition-transform duration-700 ease-out group-hover:scale-105 ${objectPosition}`}
-        sizes="(max-width: 640px) 100vw, 45vw"
-      />
-      <div className="absolute inset-0 bg-linear-to-t from-green-950/75 via-green-900/20 to-transparent" />
-      <div className="absolute right-4 bottom-4 left-4 rounded-xl border border-green-100/60 bg-white/90 p-3 backdrop-blur-sm">
-        <p className="font-semibold text-green-950 text-sm">{title}</p>
-        <p className="mt-1 text-green-900/80 text-xs">{hint}</p>
-      </div>
-    </div>
-  );
-}
 
 export default function AboutUsPage() {
   return (
@@ -168,11 +142,7 @@ export default function AboutUsPage() {
             </div>
           </div>
 
-          <StaticImageSlot
-            title="Image placeholder: Your farmer community story"
-            hint="Replace with your own team/farmer impact photo."
-            objectPosition="object-[center_42%]"
-          />
+          <StaticImageSlot image={staticImage} />
         </div>
       </section>
 
@@ -222,11 +192,7 @@ export default function AboutUsPage() {
                 information, weak negotiating power, and fragmented market
                 visibility.
               </p>
-              <StoryImageSlot
-                title="Image placeholder: Market pressure in the field"
-                hint="Replace with a real scene that reflects pricing pressure and uncertainty."
-                images={challengeSlotImages}
-              />
+              <StoryImageSlot images={challengeSlotImages} />
             </div>
 
             <div className="grid gap-4">
@@ -344,11 +310,7 @@ export default function AboutUsPage() {
               </p>
             </div>
 
-            <StaticImageSlot
-              title="Image placeholder: Future-ready agriculture"
-              hint="Replace with a hopeful image of farmers, cooperatives, or harvest outcomes."
-              objectPosition="object-[center_36%]"
-            />
+            <StaticImageSlot image={staticImage} />
           </div>
         </div>
       </section>

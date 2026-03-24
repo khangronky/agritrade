@@ -1,5 +1,3 @@
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -34,54 +32,17 @@ export function MarketplaceHeroSection({
   return (
     <section className="relative border-emerald-200/80 border-b pt-16 pb-12 sm:pt-20 sm:pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 xl:grid-cols-2 xl:items-start">
+        <div className="space-y-8">
           <div>
-            <Badge className="rounded-full border-green-200 bg-green-100 px-3 py-1 text-[11px] text-green-700">
-              Reduce waste - Increase transparency - Trade faster
-            </Badge>
-
-            <h1 className="mt-5 max-w-xl font-semibold text-3xl leading-tight sm:text-4xl lg:text-5xl">
+            <h1 className="max-w-3xl font-semibold text-3xl leading-tight sm:text-4xl lg:text-5xl">
               A forex for agriculture: see quantity, trade instantly.
             </h1>
 
-            <p className="mt-4 max-w-2xl text-slate-600 text-sm leading-relaxed sm:text-base">
+            <p className="mt-4 max-w-3xl text-slate-600 text-sm leading-relaxed sm:text-base">
               AgriTrade updates farmer supply in real time so traders,
               businesses, and local communities can buy, exchange, and close
               deals before produce is wasted.
             </p>
-
-            <div className="mt-6 flex flex-wrap gap-2.5">
-              <Button className="h-10 rounded-full bg-green-600 px-5 font-semibold text-white text-xs hover:bg-green-700">
-                Create sell order
-              </Button>
-              <Button
-                variant="outline"
-                className="h-10 rounded-full border-green-300 bg-transparent px-5 font-semibold text-green-800 text-xs"
-              >
-                Explore marketplace
-              </Button>
-            </div>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <div>
-                <p className="font-semibold text-2xl sm:text-3xl">1,248 tons</p>
-                <p className="mt-1 text-slate-500 text-xs sm:text-sm">
-                  Available today
-                </p>
-              </div>
-              <div>
-                <p className="font-semibold text-2xl sm:text-3xl">4,312</p>
-                <p className="mt-1 text-slate-500 text-xs sm:text-sm">
-                  Active farmers
-                </p>
-              </div>
-              <div>
-                <p className="font-semibold text-2xl sm:text-3xl">23%</p>
-                <p className="mt-1 text-slate-500 text-xs sm:text-sm">
-                  Lower middleman costs
-                </p>
-              </div>
-            </div>
           </div>
 
           <LivePriceBoard

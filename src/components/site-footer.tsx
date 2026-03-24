@@ -17,7 +17,7 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border-emerald-200/80 border-t bg-white/45 backdrop-blur-sm">
+    <footer className="relative border border-emerald-200/80 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
         <div className="grid gap-8 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div>

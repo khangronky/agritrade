@@ -8,20 +8,15 @@ import { cn } from '@/lib/utils';
 export type StoryImageFrame = {
   src: string;
   alt: string;
-  objectPosition?: string;
 };
 
 type StoryImageSlotProps = {
-  title: string;
-  hint: string;
   images: StoryImageFrame[];
   intervalMs?: number;
   className?: string;
 };
 
 export function StoryImageSlot({
-  title,
-  hint,
   images,
   intervalMs = 5200,
   className,
@@ -91,11 +86,10 @@ export function StoryImageSlot({
             alt={image.alt}
             fill
             className={cn(
-              'object-cover transition-[opacity,transform,filter] duration-1200 ease-out',
+              'object-cover object-center transition-[opacity,transform,filter] duration-1200 ease-out',
               isActive
                 ? 'scale-105 opacity-90 saturate-110'
-                : 'scale-100 opacity-0 blur-[2px]',
-              image.objectPosition ?? 'object-center'
+                : 'scale-100 opacity-0 blur-[2px]'
             )}
             sizes="(max-width: 640px) 100vw, 45vw"
             priority={index === 0}
@@ -103,8 +97,24 @@ export function StoryImageSlot({
         );
       })}
 
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-green-950/80 via-green-900/20 to-transparent" />
-      <div className="pointer-events-none absolute -inset-16 bg-[radial-gradient(circle_at_24%_22%,rgba(163,230,53,0.32),transparent_36%),radial-gradient(circle_at_80%_76%,rgba(34,197,94,0.3),transparent_40%)] opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-75" />
+      <div className="absolute top-4 left-4 flex flex-wrap items-center gap-2">
+        {images.map((image, index) => {
+          const isActive = index === activeIndex;
+
+          return (
+            <button
+              key={`${image.src}-indicator`}
+              type="button"
+              onClick={() => goToSlide(index)}
+              aria-label={`Show image ${index + 1}`}
+              className={cn(
+                'h-2.5 rounded-full border border-white/70 bg-white/45 transition-all duration-500',
+                isActive ? 'w-7 bg-lime-200' : 'w-2.5 hover:bg-white/80'
+              )}
+            />
+          );
+        })}
+      </div>
 
       {totalImages > 1 ? (
         <>
@@ -126,30 +136,6 @@ export function StoryImageSlot({
           </button>
         </>
       ) : null}
-
-      <div className="absolute top-4 left-4 flex flex-wrap items-center gap-2">
-        {images.map((image, index) => {
-          const isActive = index === activeIndex;
-
-          return (
-            <button
-              key={`${image.src}-indicator`}
-              type="button"
-              onClick={() => goToSlide(index)}
-              aria-label={`Show image ${index + 1}`}
-              className={cn(
-                'h-2.5 rounded-full border border-white/70 bg-white/45 transition-all duration-500',
-                isActive ? 'w-7 bg-lime-200' : 'w-2.5 hover:bg-white/80'
-              )}
-            />
-          );
-        })}
-      </div>
-
-      <div className="absolute right-4 bottom-4 left-4 rounded-xl border border-green-100/60 bg-white/90 p-3 backdrop-blur-sm">
-        <p className="font-semibold text-green-950 text-sm">{title}</p>
-        <p className="mt-1 text-green-900/80 text-xs">{hint}</p>
-      </div>
     </div>
   );
 }

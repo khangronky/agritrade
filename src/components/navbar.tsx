@@ -136,7 +136,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full text-slate-900 backdrop-blur-md">
+    <header className="fixed top-0 z-30 w-full backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -181,13 +181,9 @@ export function Navbar({ user }: NavbarProps) {
               </BreadcrumbList>
             </Breadcrumb>
           </SheetTrigger>
-          <SheetContent
-            side="right"
-            aria-describedby="Mobile navigation menu"
-            className="border-zinc-800 bg-zinc-950 text-zinc-100"
-          >
+          <SheetContent side="right" aria-describedby="Mobile navigation menu">
             <SheetHeader>
-              <SheetTitle className="text-zinc-50">Navigation</SheetTitle>
+              <SheetTitle>Navigation</SheetTitle>
             </SheetHeader>
 
             <nav className="mt-3 flex flex-col gap-1 px-4">
@@ -195,7 +191,7 @@ export function Navbar({ user }: NavbarProps) {
                 <SheetClose asChild key={item.label}>
                   <Link
                     href={item.href}
-                    className="rounded-md px-3 py-2 text-sm text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-zinc-50"
+                    className="rounded-md px-3 py-2 text-sm transition-colors hover:bg-zinc-800 hover:text-zinc-50"
                   >
                     {item.label}
                   </Link>
@@ -218,7 +214,7 @@ export function Navbar({ user }: NavbarProps) {
                     <Button
                       asChild
                       variant="outline"
-                      className="w-full border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+                      className="w-full border-zinc-700 bg-transparent text-zinc-800 hover:bg-zinc-800 hover:text-zinc-50"
                     >
                       <Link href="/signup">Sign Up</Link>
                     </Button>
@@ -230,15 +226,15 @@ export function Navbar({ user }: NavbarProps) {
                     <Button
                       asChild
                       variant="outline"
-                      className="w-full border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+                      className="w-full bg-zinc-800 text-zinc-50 hover:bg-zinc-900 hover:text-zinc-100"
                     >
                       <Link href="/dashboard">Dashboard</Link>
                     </Button>
                   </SheetClose>
                   <Button
-                    variant="outline"
+                    variant="destructive"
                     onClick={handleLogout}
-                    className="w-full border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+                    className="w-full text-zinc-100 hover:text-zinc-50"
                   >
                     Log out
                   </Button>
