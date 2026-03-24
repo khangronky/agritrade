@@ -136,7 +136,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full border-emerald-200/35 border-b bg-white/20 text-slate-900 backdrop-blur-md backdrop-saturate-150 supports-[backdrop-filter]:bg-white/10">
+    <header className="fixed top-0 z-30 w-full text-slate-900 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -154,7 +154,7 @@ export function Navbar({ user }: NavbarProps) {
             <Link
               key={item.label}
               href={item.href}
-              className="font-semibold text-sm text-slate-800 transition-colors hover:text-emerald-600"
+              className="font-semibold text-slate-800 text-sm transition-colors hover:text-emerald-600"
             >
               {item.label}
             </Link>
