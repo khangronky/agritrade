@@ -1,6 +1,13 @@
+import type { Metadata } from 'next';
 import { AboutSection } from './about-section';
 import { HeroSection } from './hero-section';
 import { SolutionsSection } from './solutions-section';
+
+export const metadata: Metadata = {
+  title: 'Marketplace',
+  description:
+    'Explore live market trends, discover demand signals, and trade with confidence on AgriTrade’s transparent agriculture marketplace.',
+};
 
 export default function MarketingPage() {
   return (

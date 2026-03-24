@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { RegisterForm } from './form';
 
 export const metadata: Metadata = {
-  title: 'Register | AgriTrade',
+  title: 'Register',
   description: 'Create your AgriTrade account',
 };
 
