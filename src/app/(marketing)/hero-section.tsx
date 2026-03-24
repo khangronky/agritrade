@@ -1,103 +1,84 @@
-import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import { Leaf } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { HomeLiveUpdatesPanel } from './home-live-updates-panel';
+import { LiveUserCount } from './live-user-count';
 import { LivePriceBoard } from './live-price-board';
 
 export function HeroSection() {
   return (
-    <section className="overflow-hidden bg-green-950">
-      <div className="relative">
-        <Image
-          src="/farm.jpg"
-          alt="Agricultural field with machinery at sunrise"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-green-950/95 via-green-900/75 to-lime-950/35" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(163,230,53,0.3),transparent_45%)]" />
+    <section className="relative overflow-hidden">
+      <div className="relative mx-auto max-w-[1400px] px-4 pt-14 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-20">
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(460px,520px)] xl:items-start">
+          <div className="max-w-3xl lg:pt-4 lg:pl-8 xl:pt-6 xl:pl-14">
+            <h1 className="font-semibold text-5xl text-slate-900 leading-[1] sm:text-6xl lg:text-7xl">
+              <LiveUserCount className="text-amber-500" />
+              <br />
+              USERS
+              <br />
+              TRUST US
+            </h1>
 
-        <div className="relative mx-auto max-w-7xl px-4 pt-14 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-20">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(450px,560px)] lg:items-start">
-            <div>
-              <h1 className="mt-6 max-w-2xl font-semibold text-3xl text-white leading-tight sm:text-4xl lg:text-5xl">
-                Farmers should not lose value before their crops reach the
-                market.
-              </h1>
+            <p className="mt-6 text-2xl text-slate-800 sm:text-3xl">
+              The first organization in ASEAN to do this
+            </p>
 
-              <p className="mt-6 max-w-2xl text-base text-green-100/95 sm:text-lg">
-                Many small farmers still earn less because middleman dependency,
-                weak bargaining power, and pre-agreed pricing reduce their
-                market options. AgriTrade introduces transparent offers and
-                keeps delivery pathways flexible without disrupting existing
-                relationships.
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-brand-lime font-semibold text-green-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-lime-300"
-                >
-                  <Link href="/register">
-                    Get Started
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
-              </div>
-
-              <div className="mt-10 max-w-3xl rounded-2xl border border-lime-200/30 bg-green-950/55 p-4 text-green-100 backdrop-blur-sm sm:p-5">
-                <p className="font-semibold text-lime-100 text-sm uppercase tracking-[0.2em]">
-                  Why this matters
-                </p>
-                <div className="mt-3 grid gap-3 sm:grid-cols-[auto_1px_auto_1px_auto] sm:items-center">
-                  <div>
-                    <p className="font-semibold text-white text-xl">
-                      225% lower profits
-                    </p>
-                    <p className="text-green-100/90 text-sm">
-                      observed for many middleman-dependent farmers
-                    </p>
-                  </div>
-                  <Separator
-                    orientation="vertical"
-                    className="hidden h-12 bg-lime-200/40 sm:block"
-                  />
-                  <div>
-                    <p className="font-semibold text-white text-xl">
-                      Longer value chains
-                    </p>
-                    <p className="text-green-100/90 text-sm">
-                      reduce farmer share of final market margin
-                    </p>
-                  </div>
-                  <Separator
-                    orientation="vertical"
-                    className="hidden h-12 bg-lime-200/40 sm:block"
-                  />
-                  <div>
-                    <p className="font-semibold text-white text-xl">
-                      AgriTrade model
-                    </p>
-                    <p className="text-green-100/90 text-sm">
-                      Farmer -&gt; Platform -&gt; Buyer (middleman optional)
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="mt-7 flex w-full max-w-xl flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+              <LaurelMetric label="Customer Assets" />
+              <LaurelMetric label="Trading Volume" />
             </div>
 
-            <div className="mt-6 lg:mt-8 lg:-mr-6 lg:pl-6">
-              <LivePriceBoard />
+            <div className="mt-7 flex w-full max-w-md flex-col gap-2 sm:flex-row">
+              <input
+                type="text"
+                placeholder="Email/Phone number"
+                className="h-9 flex-1 rounded-lg border border-emerald-300/70 bg-white/90 px-3 text-xs text-slate-800 placeholder:text-slate-500/90 focus:border-amber-400/70 focus:outline-hidden"
+              />
+              <Button
+                asChild
+                size="lg"
+                className="h-9 min-w-32 rounded-lg bg-amber-400 font-semibold text-base text-slate-950 transition-colors hover:bg-amber-300 sm:min-w-30"
+              >
+                <Link href="/register">Sign Up</Link>
+              </Button>
             </div>
           </div>
-        </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-linear-to-b from-transparent via-amber-50/12 to-amber-50/55" />
+          <div className="mt-4 flex w-full max-w-[520px] flex-col gap-3 xl:mt-0">
+            <LivePriceBoard compact />
+            <HomeLiveUpdatesPanel compact />
+          </div>
+        </div>
       </div>
     </section>
+  );
+}
+
+function LaurelMetric({ label }: { label: string }) {
+  return (
+    <div className="group flex min-w-0 flex-1 items-center justify-center gap-2 sm:gap-3">
+      <Laurel />
+      <div className="text-center">
+        <p className="font-semibold text-xl text-amber-500 leading-none transition-all duration-300 group-hover:text-amber-600 group-hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.35)] sm:text-2xl">
+          No.1
+        </p>
+        <p className="mt-0.5 font-medium text-amber-500 text-xs transition-colors duration-300 group-hover:text-amber-600 sm:text-sm">
+          {label}
+        </p>
+      </div>
+      <Laurel reverse />
+    </div>
+  );
+}
+
+function Laurel({ reverse = false }: { reverse?: boolean }) {
+  return (
+    <div
+      className={`flex items-center gap-0.5 text-amber-500/90 transition-colors duration-300 group-hover:text-amber-600 ${reverse ? '-scale-x-100' : ''}`}
+    >
+      <Leaf className="size-3 -rotate-45 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-[52deg] sm:size-4" />
+      <Leaf className="size-3 -rotate-12 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-[18deg] sm:size-4" />
+      <Leaf className="size-3 rotate-12 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[18deg] sm:size-4" />
+    </div>
   );
 }

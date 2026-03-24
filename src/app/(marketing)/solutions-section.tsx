@@ -90,7 +90,7 @@ const solutionCards: SolutionCard[] = [
 
 export function SolutionsSection() {
   return (
-    <section className="bg-linear-to-b from-green-50 to-green-100 py-16 sm:py-20">
+    <section className="py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Badge
           variant="outline"

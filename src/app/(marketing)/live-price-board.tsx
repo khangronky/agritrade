@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 type Trend = 'up' | 'down' | 'flat';
 
@@ -132,14 +133,14 @@ function getTrend(change: number): Trend {
 
 function trendClass(trend: Trend) {
   if (trend === 'up') {
-    return 'text-emerald-300';
+    return 'text-emerald-600';
   }
 
   if (trend === 'down') {
-    return 'text-amber-300';
+    return 'text-rose-500';
   }
 
-  return 'text-green-100';
+  return 'text-slate-500';
 }
 
 function formatPriceByCurrency(priceVnd: number, currency: CurrencyOption) {
@@ -180,7 +181,11 @@ function createNextRows(previousRows: PriceRow[]) {
   });
 }
 
-export function LivePriceBoard() {
+type LivePriceBoardProps = {
+  compact?: boolean;
+};
+
+export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
   const [rows, setRows] = useState<PriceRow[]>(createInitialRows);
   const [currencyCode, setCurrencyCode] = useState<CurrencyCode>('VND');
   const selectedCurrency =
@@ -196,11 +201,30 @@ export function LivePriceBoard() {
   }, []);
 
   return (
-    <div className="rounded-3xl border border-lime-100/20 bg-linear-to-br from-green-950/94 via-green-900/70 to-green-950/94 p-5 shadow-[0_20px_50px_rgba(5,30,20,0.45)] backdrop-blur-xl sm:p-6">
+    <div
+      className={cn(
+        'rounded-[28px] border border-emerald-200/70 bg-linear-to-br from-white/90 via-emerald-50/75 to-slate-100/85 shadow-[0_18px_42px_rgba(16,185,129,0.16)] backdrop-blur-xl',
+        compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
+      )}
+    >
       <div className="flex items-start justify-between gap-4">
-        <h3 className="font-semibold text-2xl text-white">Live Price Board</h3>
+        <h3
+          className={cn(
+            'font-semibold text-slate-900',
+            compact ? 'text-lg sm:text-xl' : 'text-2xl'
+          )}
+        >
+          Live Price Board
+        </h3>
         <div className="space-y-2 text-right">
-          <p className="text-green-100/85 text-sm">Updated every 5s</p>
+          <p
+            className={cn(
+              'text-slate-500',
+              compact ? 'text-[11px]' : 'text-sm'
+            )}
+          >
+            Updated every 5s
+          </p>
           <label className="sr-only" htmlFor="asean-currency">
             Select currency
           </label>
@@ -210,7 +234,10 @@ export function LivePriceBoard() {
             onChange={(event) =>
               setCurrencyCode(event.target.value as CurrencyCode)
             }
-            className="rounded-lg border border-lime-100/25 bg-green-950/70 px-2.5 py-1.5 text-green-50 text-xs outline-hidden transition-colors focus:border-lime-200/60"
+            className={cn(
+              'rounded-lg border border-emerald-200 bg-white/90 text-slate-800 outline-hidden transition-colors focus:border-emerald-400/70',
+              compact ? 'px-2 py-1 text-[11px]' : 'px-2.5 py-1.5 text-xs'
+            )}
           >
             {aseanCurrencies.map((currency) => (
               <option key={currency.code} value={currency.code}>
@@ -221,19 +248,42 @@ export function LivePriceBoard() {
         </div>
       </div>
 
-      <div className="mt-4 space-y-3">
+      <div className={cn(compact ? 'mt-3 space-y-2' : 'mt-4 space-y-3')}>
         {rows.map((item) => (
           <div
             key={item.product}
-            className="flex items-center justify-between rounded-xl bg-linear-to-r from-green-900/60 via-green-900/40 to-green-900/60 px-4 py-3"
+            className={cn(
+              'flex items-center justify-between rounded-xl border border-emerald-200/75 bg-linear-to-r from-emerald-50 via-teal-50 to-slate-100',
+              compact ? 'px-3 py-2' : 'px-4 py-2.5'
+            )}
           >
-            <span className="font-medium text-green-50">{item.product}</span>
-            <div className="flex items-center gap-3">
-              <span className="font-semibold text-green-50">
+            <span
+              className={cn(
+                'font-medium text-slate-800',
+                compact ? 'text-sm' : 'text-base'
+              )}
+            >
+              {item.product}
+            </span>
+            <div
+              className={cn('flex items-center', compact ? 'gap-2' : 'gap-3')}
+            >
+              <span
+                className={cn(
+                  'font-semibold text-slate-800',
+                  compact ? 'text-sm' : 'text-base'
+                )}
+              >
                 {formatPriceByCurrency(item.priceVnd, selectedCurrency)}{' '}
                 {selectedCurrency.code}
               </span>
-              <span className={`font-semibold ${trendClass(item.trend)}`}>
+              <span
+                className={cn(
+                  'font-semibold',
+                  compact ? 'text-xs' : 'text-sm',
+                  trendClass(item.trend)
+                )}
+              >
                 {formatChange(item.change)}
               </span>
             </div>
@@ -241,10 +291,20 @@ export function LivePriceBoard() {
         ))}
       </div>
 
-      <div className="mt-5 flex items-center justify-between text-sm">
-        <p className="text-green-100/72">Reference prices (mock FX rates)</p>
-        <div className="flex items-center gap-2 text-emerald-300">
-          <span className="inline-block size-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.8)]" />
+      <div
+        className={cn(
+          'flex items-center justify-between',
+          compact ? 'mt-4 text-xs' : 'mt-5 text-sm'
+        )}
+      >
+        <p className="text-slate-500">Reference prices (mock FX rates)</p>
+        <div
+          className={cn(
+            'flex items-center gap-2 text-emerald-600',
+            compact && 'text-xs'
+          )}
+        >
+          <span className="inline-block size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.35)]" />
           Live
         </div>
       </div>

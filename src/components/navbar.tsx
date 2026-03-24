@@ -38,7 +38,7 @@ import { createClient } from '@/lib/supabase/client';
 
 const navItems = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/#about' },
+  { label: 'About Us', href: '/about-us' },
   { label: 'Marketplace', href: '/marketplace' },
   { label: 'Forum', href: '/' },
 ];
@@ -87,7 +87,7 @@ export function Navbar({ user }: NavbarProps) {
           <Button
             asChild
             variant="outline"
-            className="border-zinc-700 bg-transparent text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+            className="border-emerald-300 bg-white/80 text-slate-800 hover:bg-white hover:text-slate-900"
           >
             <Link href="/signup">Sign Up</Link>
           </Button>
@@ -100,10 +100,10 @@ export function Navbar({ user }: NavbarProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-10 gap-2 px-2 text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+            className="h-10 gap-2 px-2 text-slate-800 hover:bg-white/80 hover:text-slate-900"
           >
             <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-zinc-700 text-zinc-100">
+              <AvatarFallback className="bg-emerald-100 text-slate-800">
                 {getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
@@ -136,7 +136,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full border-zinc-800/70 border-b bg-black/88 text-zinc-100 backdrop-blur-md">
+    <header className="fixed top-0 z-30 w-full text-slate-900 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -154,7 +154,7 @@ export function Navbar({ user }: NavbarProps) {
             <Link
               key={item.label}
               href={item.href}
-              className="font-semibold text-sm text-zinc-100 transition-colors hover:text-brand-lime"
+              className="font-semibold text-slate-800 text-sm transition-colors hover:text-emerald-600"
             >
               {item.label}
             </Link>
@@ -173,7 +173,7 @@ export function Navbar({ user }: NavbarProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-2 px-2 text-zinc-100 hover:bg-zinc-800 hover:text-zinc-50"
+                    className="gap-2 border-slate-300 bg-white/80 px-2 text-slate-800 hover:bg-white hover:text-slate-900"
                   >
                     <Menu className="size-4" />
                   </Button>

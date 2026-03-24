@@ -7,19 +7,29 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from '@/components/ui/native-select';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import type { CurrencyOption, PriceRow } from './types';
+import type { CurrencyCode, CurrencyOption, PriceRow } from './types';
 import { formatPriceByCurrency } from './utils';
 
 type MarketplaceHeroSectionProps = {
   livePriceRows: PriceRow[];
+  selectedCurrency: CurrencyCode;
+  aseanCurrencies: CurrencyOption[];
   activeCurrency: CurrencyOption;
+  onCurrencyChange: (value: CurrencyCode) => void;
 };
 
 export function MarketplaceHeroSection({
   livePriceRows,
+  selectedCurrency,
+  aseanCurrencies,
   activeCurrency,
+  onCurrencyChange,
 }: MarketplaceHeroSectionProps) {
   return (
     <section className="relative border-emerald-200/80 border-b pt-16 pb-12 sm:pt-20 sm:pb-16">
@@ -66,9 +76,9 @@ export function MarketplaceHeroSection({
                 </p>
               </div>
               <div>
-                <p className="font-semibold text-2xl sm:text-3xl">-23%</p>
+                <p className="font-semibold text-2xl sm:text-3xl">23%</p>
                 <p className="mt-1 text-slate-500 text-xs sm:text-sm">
-                  Waste reduced
+                  Lower middleman costs
                 </p>
               </div>
             </div>
@@ -76,7 +86,10 @@ export function MarketplaceHeroSection({
 
           <LivePriceBoard
             livePriceRows={livePriceRows}
+            selectedCurrency={selectedCurrency}
+            aseanCurrencies={aseanCurrencies}
             activeCurrency={activeCurrency}
+            onCurrencyChange={onCurrencyChange}
           />
         </div>
       </div>
@@ -84,20 +97,46 @@ export function MarketplaceHeroSection({
   );
 }
 
+type LivePriceBoardProps = {
+  livePriceRows: PriceRow[];
+  selectedCurrency: CurrencyCode;
+  aseanCurrencies: CurrencyOption[];
+  activeCurrency: CurrencyOption;
+  onCurrencyChange: (value: CurrencyCode) => void;
+};
+
 function LivePriceBoard({
   livePriceRows,
+  selectedCurrency,
+  aseanCurrencies,
   activeCurrency,
-}: MarketplaceHeroSectionProps) {
+  onCurrencyChange,
+}: LivePriceBoardProps) {
   return (
     <Card className="gap-0 rounded-3xl border-emerald-200 bg-white/90 py-0 text-slate-900 shadow-green-100/60 shadow-xl">
       <CardHeader className="px-5 pt-5 pb-4 sm:px-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-xl sm:text-2xl">
             Live price board
           </CardTitle>
-          <CardDescription className="text-slate-500 text-xs sm:text-sm">
-            Snapshot of featured commodities
-          </CardDescription>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <CardDescription className="text-slate-500 text-xs sm:text-sm">
+              Snapshot of featured commodities
+            </CardDescription>
+            <NativeSelect
+              value={selectedCurrency}
+              onChange={(event) =>
+                onCurrencyChange(event.target.value as CurrencyCode)
+              }
+              className="h-8 min-w-24 rounded-lg border-emerald-200/90 bg-white/90 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
+            >
+              {aseanCurrencies.map((currency) => (
+                <NativeSelectOption key={currency.code} value={currency.code}>
+                  {currency.code}
+                </NativeSelectOption>
+              ))}
+            </NativeSelect>
+          </div>
         </div>
       </CardHeader>
 
