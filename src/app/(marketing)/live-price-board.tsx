@@ -217,7 +217,12 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
           Live Price Board
         </h3>
         <div className="space-y-2 text-right">
-          <p className={cn('text-slate-500', compact ? 'text-[11px]' : 'text-sm')}>
+          <p
+            className={cn(
+              'text-slate-500',
+              compact ? 'text-[11px]' : 'text-sm'
+            )}
+          >
             Updated every 5s
           </p>
           <label className="sr-only" htmlFor="asean-currency">
@@ -260,7 +265,9 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
             >
               {item.product}
             </span>
-            <div className={cn('flex items-center', compact ? 'gap-2' : 'gap-3')}>
+            <div
+              className={cn('flex items-center', compact ? 'gap-2' : 'gap-3')}
+            >
               <span
                 className={cn(
                   'font-semibold text-slate-800',
@@ -291,7 +298,12 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
         )}
       >
         <p className="text-slate-500">Reference prices (mock FX rates)</p>
-        <div className={cn('flex items-center gap-2 text-emerald-600', compact && 'text-xs')}>
+        <div
+          className={cn(
+            'flex items-center gap-2 text-emerald-600',
+            compact && 'text-xs'
+          )}
+        >
           <span className="inline-block size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.35)]" />
           Live
         </div>
