@@ -62,7 +62,12 @@ export function HomeLiveUpdatesPanel({
         </Link>
       </div>
 
-      <p className={cn('mt-1 text-slate-500', compact ? 'text-[11px]' : 'text-sm')}>
+      <p
+        className={cn(
+          'mt-1 text-slate-500',
+          compact ? 'text-[11px]' : 'text-sm'
+        )}
+      >
         Auto updates every 5s
       </p>
 
