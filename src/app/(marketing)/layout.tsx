@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/navbar';
+import { SiteFooter } from '@/components/site-footer';
 import { createClient } from '@/lib/supabase/server';
 
 export default async function MarketingLayout({
@@ -24,6 +25,7 @@ export default async function MarketingLayout({
         }
       />
       <main>{children}</main>
+      <SiteFooter />
     </div>
   );
 }

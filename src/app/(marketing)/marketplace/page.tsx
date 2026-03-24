@@ -324,6 +324,8 @@ export default function MarketplacePage() {
   const [trendCategory, setTrendCategory] = useState('all');
   const [trendCountry, setTrendCountry] = useState('all');
   const [trendCurrency, setTrendCurrency] = useState<CurrencyCode>('VND');
+  const [marketplaceCurrency, setMarketplaceCurrency] =
+    useState<CurrencyCode>('VND');
   const [selectedCommodity, setSelectedCommodity] = useState('auto');
 
   const countries = useMemo(
@@ -338,7 +340,9 @@ export default function MarketplacePage() {
     aseanCurrencies.find((currency) => currency.code === trendCurrency) ??
     aseanCurrencies[0];
 
-  const marketplaceCurrency = aseanCurrencies[0];
+  const activeMarketplaceCurrency =
+    aseanCurrencies.find((currency) => currency.code === marketplaceCurrency) ??
+    aseanCurrencies[0];
 
   const trendFilteredListings = useMemo(() => {
     const normalizedQuery = trendSearchQuery.trim().toLowerCase();
@@ -476,7 +480,10 @@ export default function MarketplacePage() {
 
       <MarketplaceHeroSection
         livePriceRows={livePriceRows}
-        activeCurrency={marketplaceCurrency}
+        selectedCurrency={marketplaceCurrency}
+        aseanCurrencies={aseanCurrencies}
+        activeCurrency={activeMarketplaceCurrency}
+        onCurrencyChange={setMarketplaceCurrency}
       />
 
       <MarketTrendSection
@@ -502,7 +509,7 @@ export default function MarketplacePage() {
 
       <TradingBoardSection
         listings={listings}
-        activeCurrency={marketplaceCurrency}
+        activeCurrency={aseanCurrencies[0]}
       />
 
       <DemandSignalsSection demandSignals={demandSignals} />
