@@ -90,23 +90,23 @@ const solutionCards: SolutionCard[] = [
 
 export function SolutionsSection() {
   return (
-    <section className="py-16 sm:py-20">
+    <section id="business-model" className="scroll-mt-20 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Badge
           variant="outline"
           className="border-green-300 bg-green-100 text-green-800"
         >
-          Solution Services
+          Business Model
         </Badge>
 
         <h2 className="mt-5 max-w-3xl font-semibold text-3xl text-green-950 sm:text-4xl">
-          Five practical ways AgriTrade helps farmers sell with stronger pricing
-          power
+          How AgriTrade creates value across the agricultural market
         </h2>
 
         <p className="mt-4 max-w-3xl text-base text-green-800/85 sm:text-lg">
-          We keep the process simple while improving transparency, competition,
-          and flexibility for farmers, buyers, and middlemen.
+          The platform improves transparency, match quality, and execution
+          flexibility so farmers, buyers, and middlemen can collaborate with
+          better outcomes.
         </p>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">

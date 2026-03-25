@@ -74,7 +74,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-8 flex flex-col gap-2 border-emerald-200/80 border-t pt-4 text-slate-500 text-xs sm:flex-row sm:items-center sm:justify-between sm:text-sm">
-          <p>© {currentYear} AgriTrade. All rights reserved.</p>
+          <p>(c) {currentYear} AgriTrade. All rights reserved.</p>
           <p>Built for transparent and practical agricultural trading.</p>
         </div>
       </div>

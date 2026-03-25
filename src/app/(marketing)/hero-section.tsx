@@ -7,7 +7,7 @@ import { LiveUserCount } from './live-user-count';
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden">
+    <section id="main" className="relative scroll-mt-20 overflow-hidden">
       <div className="relative mx-auto max-w-350 px-4 pt-14 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-20">
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(460px,520px)] xl:items-start">
           <div className="max-w-3xl lg:pt-4 lg:pl-8 xl:pt-6 xl:pl-14">
