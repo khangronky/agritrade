@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { profileUpdateSchema } from '@/lib/schema/auth';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET() {
@@ -43,7 +44,39 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const updates = await request.json();
+    const parsed = profileUpdateSchema.safeParse(await request.json());
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.issues[0]?.message ?? 'Invalid request payload' },
+        { status: 400 }
+      );
+    }
+
+    const updates = parsed.data;
+
+    if (updates.username) {
+      const { data: existingUser, error: existingUserError } = await supabase
+        .from('users')
+        .select('id')
+        .eq('username', updates.username)
+        .neq('id', authUser.id)
+        .maybeSingle();
+
+      if (existingUserError) {
+        return NextResponse.json(
+          { error: existingUserError.message },
+          { status: 500 }
+        );
+      }
+
+      if (existingUser) {
+        return NextResponse.json(
+          { error: 'Username is already taken' },
+          { status: 409 }
+        );
+      }
+    }
 
     const { data: user, error } = await supabase
       .from('users')
@@ -53,6 +86,13 @@ export async function PATCH(request: Request) {
       .single();
 
     if (error) {
+      if (error.code === '23505') {
+        return NextResponse.json(
+          { error: 'Username is already taken' },
+          { status: 409 }
+        );
+      }
+
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 

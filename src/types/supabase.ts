@@ -9,33 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      sensor_data: {
-        Row: {
-          created_at: string;
-          id: string;
-          recorded_at: string;
-          type: string;
-          unit: string;
-          value: number;
-        };
-        Insert: {
-          created_at?: string;
-          id?: string;
-          recorded_at: string;
-          type: string;
-          unit: string;
-          value: number;
-        };
-        Update: {
-          created_at?: string;
-          id?: string;
-          recorded_at?: string;
-          type?: string;
-          unit?: string;
-          value?: number;
-        };
-        Relationships: [];
-      };
       users: {
         Row: {
           created_at: string;
@@ -43,9 +16,9 @@ export type Database = {
           full_name: string | null;
           id: string;
           onboarding_completed_at: string | null;
-          onboarding_status: 'completed' | 'pending';
+          onboarding_status: string;
           onboarding_step: number;
-          role: 'farmer' | 'trader' | null;
+          role: string | null;
           username: string | null;
         };
         Insert: {
@@ -54,9 +27,9 @@ export type Database = {
           full_name?: string | null;
           id?: string;
           onboarding_completed_at?: string | null;
-          onboarding_status?: 'completed' | 'pending';
+          onboarding_status?: string;
           onboarding_step?: number;
-          role?: 'farmer' | 'trader' | null;
+          role?: string | null;
           username?: string | null;
         };
         Update: {
@@ -65,9 +38,9 @@ export type Database = {
           full_name?: string | null;
           id?: string;
           onboarding_completed_at?: string | null;
-          onboarding_status?: 'completed' | 'pending';
+          onboarding_status?: string;
           onboarding_step?: number;
-          role?: 'farmer' | 'trader' | null;
+          role?: string | null;
           username?: string | null;
         };
         Relationships: [];

@@ -30,11 +30,17 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { FetchError } from '@/lib/api';
 import {
+  checkUsernameAvailability,
   useChangePasswordMutation,
   useCurrentUser,
   useUpdateProfileMutation,
 } from '@/lib/api/auth';
+import {
+  profileUpdateSchema,
+  usernameAvailabilitySchema,
+} from '@/lib/schema/auth';
 import { cn } from '@/lib/utils';
 import {
   type SettingsTab,
@@ -57,7 +63,14 @@ function UserSettingsContent() {
   const updateProfile = useUpdateProfileMutation();
   const changePassword = useChangePasswordMutation();
   const [displayName, setDisplayName] = useState('');
+  const [username, setUsername] = useState('');
   const [hasChanges, setHasChanges] = useState(false);
+  const [usernameStatus, setUsernameStatus] = useState<
+    'idle' | 'checking' | 'available' | 'taken' | 'invalid'
+  >('idle');
+  const [usernameMessage, setUsernameMessage] = useState(
+    'Choose a unique username for your profile.'
+  );
 
   // Password change state
   const [currentPassword, setCurrentPassword] = useState('');
@@ -67,32 +80,122 @@ function UserSettingsContent() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const currentDisplayName = user?.full_name ?? '';
+  const currentUsername = (user?.username ?? '').toLowerCase();
+  const normalizedUsername = username.trim().toLowerCase();
+  const profileValidation = profileUpdateSchema.safeParse({
+    full_name: displayName,
+    username: normalizedUsername,
+  });
+
+  const syncHasChanges = (nextDisplayName: string, nextUsername: string) => {
+    setHasChanges(
+      nextDisplayName.trim() !== currentDisplayName ||
+        nextUsername.trim().toLowerCase() !== currentUsername
+    );
+  };
+
   useEffect(() => {
-    if (user?.full_name !== undefined) {
-      setDisplayName(user.full_name ?? '');
+    if (!user) {
+      return;
     }
-  }, [user?.full_name]);
+
+    setDisplayName(currentDisplayName);
+    setUsername(currentUsername);
+    setHasChanges(false);
+    setUsernameStatus('idle');
+    setUsernameMessage('Choose a unique username for your profile.');
+  }, [user, currentDisplayName, currentUsername]);
 
   const handleDisplayNameChange = (value: string) => {
     setDisplayName(value);
-    setHasChanges(value !== (user?.full_name ?? ''));
+    syncHasChanges(value, username);
   };
 
-  const handleSave = () => {
-    updateProfile.mutate(
-      { full_name: displayName },
-      {
-        onSuccess: () => {
-          setHasChanges(false);
-          toast.success('Profile updated successfully');
-        },
-        onError: (error) => {
-          toast.error(
-            error instanceof Error ? error.message : 'Failed to update profile'
-          );
-        },
+  const handleUsernameChange = (value: string) => {
+    const normalizedValue = value.toLowerCase();
+    setUsername(normalizedValue);
+    syncHasChanges(displayName, normalizedValue);
+  };
+
+  useEffect(() => {
+    if (!user) return;
+
+    if (!normalizedUsername) {
+      setUsernameStatus('idle');
+      setUsernameMessage('Choose a unique username for your profile.');
+      return;
+    }
+
+    if (normalizedUsername === currentUsername) {
+      setUsernameStatus('idle');
+      setUsernameMessage('This is your current username.');
+      return;
+    }
+
+    const parsed = usernameAvailabilitySchema.safeParse({
+      username: normalizedUsername,
+    });
+
+    if (!parsed.success) {
+      setUsernameStatus('invalid');
+      setUsernameMessage(parsed.error.issues[0]?.message ?? 'Invalid username');
+      return;
+    }
+
+    setUsernameStatus('checking');
+    setUsernameMessage('Checking username availability...');
+
+    const timeoutId = setTimeout(async () => {
+      try {
+        const result = await checkUsernameAvailability(normalizedUsername);
+        setUsernameStatus(result.available ? 'available' : 'taken');
+        setUsernameMessage(
+          result.available
+            ? 'Username is available.'
+            : 'Username is already taken.'
+        );
+      } catch (error) {
+        setUsernameStatus('invalid');
+        setUsernameMessage(
+          error instanceof FetchError
+            ? error.message
+            : 'Unable to check username availability'
+        );
       }
-    );
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [user, currentUsername, normalizedUsername]);
+
+  const isUsernameBlocked =
+    usernameStatus === 'checking' ||
+    usernameStatus === 'taken' ||
+    usernameStatus === 'invalid';
+
+  const handleSave = () => {
+    if (!profileValidation.success) {
+      toast.error(
+        profileValidation.error.issues[0]?.message ?? 'Invalid profile details'
+      );
+      return;
+    }
+
+    updateProfile.mutate(profileValidation.data, {
+      onSuccess: (updatedUser) => {
+        setDisplayName(updatedUser.full_name ?? '');
+        setUsername(updatedUser.username ?? '');
+        setHasChanges(false);
+        setUsernameStatus('idle');
+        setUsernameMessage('Profile is up to date.');
+        toast.success('Profile updated successfully');
+      },
+      onError: (error) => {
+        toast.error(
+          error instanceof Error ? error.message : 'Failed to update profile'
+        );
+      },
+    });
   };
 
   const handlePasswordChange = () => {
@@ -164,6 +267,32 @@ function UserSettingsContent() {
           </p>
         </div>
         <div className="space-y-2">
+          <Label htmlFor="username">Username</Label>
+          <Input
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => handleUsernameChange(e.target.value)}
+            placeholder="Enter your username"
+            autoComplete="username"
+          />
+          <p
+            className={cn(
+              'text-xs',
+              usernameStatus === 'available' && 'text-green-600',
+              (usernameStatus === 'taken' || usernameStatus === 'invalid') &&
+                'text-destructive',
+              (usernameStatus === 'idle' || usernameStatus === 'checking') &&
+                'text-muted-foreground'
+            )}
+          >
+            {usernameStatus === 'checking' && (
+              <Loader2 className="mr-1 inline size-3 animate-spin" />
+            )}
+            {usernameMessage}
+          </p>
+        </div>
+        <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
@@ -179,7 +308,11 @@ function UserSettingsContent() {
         {hasChanges && (
           <Button
             onClick={handleSave}
-            disabled={updateProfile.isPending}
+            disabled={
+              updateProfile.isPending ||
+              isUsernameBlocked ||
+              !profileValidation.success
+            }
             className="w-full"
           >
             {updateProfile.isPending && (
@@ -368,7 +501,10 @@ export function SettingsDialog() {
     useSettingsDialogStore();
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && closeDialog()}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open: boolean) => !open && closeDialog()}
+    >
       <DialogContent
         className="h-[90vh] overflow-hidden p-0 md:max-w-2xl lg:max-w-6xl"
         showCloseButton={true}

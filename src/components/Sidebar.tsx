@@ -1,19 +1,28 @@
 'use client';
 
 import {
-  Blocks,
-  Brain,
-  History as HistoryIcon,
+  ClipboardList,
+  FolderKanban,
+  Handshake,
   LayoutDashboard,
-  Lightbulb,
-  Menu,
-  X,
+  MessagesSquare,
+  Package2,
+  Store,
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import {
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  Sidebar as SidebarShell,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar';
 import { NavUser } from './nav-user';
 
 const navigation = [
@@ -23,103 +32,90 @@ const navigation = [
     icon: LayoutDashboard,
   },
   {
-    href: '/ai-explain',
-    name: 'AI Explain',
-    icon: Brain,
+    href: '/product-folio',
+    name: 'Product Folio',
+    icon: FolderKanban,
   },
   {
-    href: '/ai-plan',
-    name: 'AI Plan',
-    icon: Lightbulb,
+    href: '/marketplace',
+    name: 'Marketplace',
+    icon: Store,
   },
   {
-    href: '/history',
-    name: 'History',
-    icon: HistoryIcon,
+    href: '/products',
+    name: 'Products',
+    icon: Package2,
   },
   {
-    href: '/audit-trail',
-    name: 'Audit Trail',
-    icon: Blocks,
+    href: '/deals',
+    name: 'Deals',
+    icon: Handshake,
+  },
+  {
+    href: '/orders',
+    name: 'Orders',
+    icon: ClipboardList,
+  },
+  {
+    href: '/chats',
+    name: 'Chats',
+    icon: MessagesSquare,
   },
 ];
 
 export default function Sidebar() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const pathname = usePathname();
+  const { isMobile, state } = useSidebar();
+  const sidebarOpen = isMobile || state === 'expanded';
 
   return (
-    <aside
-      className={`${
-        sidebarOpen ? 'w-64' : 'w-20'
-      } sticky top-0 flex h-screen flex-col overflow-hidden border-r bg-card transition-all duration-300`}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between gap-4 border-b p-4">
-        {sidebarOpen && (
-          <div className="flex h-full flex-1 items-center">
-            <Image
-              src="/branding.png"
-              alt="Logo"
-              width={96}
-              height={96}
-              className="h-full w-full object-contain"
-            />
-          </div>
-        )}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className={!sidebarOpen ? 'mx-auto' : ''}
-        >
-          {sidebarOpen ? (
-            <X className="h-4 w-4" />
-          ) : (
-            <Menu className="h-4 w-4" />
+    <SidebarShell collapsible="icon" className="border-r">
+      <SidebarHeader className="gap-0 border-b px-2 py-4">
+        <div className="flex items-center justify-between gap-6">
+          {sidebarOpen && (
+            <div className="flex-1">
+              <Link href="/">
+                <Image
+                  src="/branding.png"
+                  alt="Logo"
+                  width={96}
+                  height={96}
+                  className="h-full w-full object-contain"
+                />
+              </Link>
+            </div>
           )}
-        </Button>
-      </div>
-
-      {/* Company Info */}
-      {sidebarOpen && (
-        <div className="border-b p-4">
-          <div className="font-medium text-sm">Textile Wastewater</div>
-          <div className="text-muted-foreground text-xs">Monitoring System</div>
+          <SidebarTrigger className={!sidebarOpen ? 'mx-auto' : ''} />
         </div>
-      )}
+      </SidebarHeader>
 
-      {/* Navigation */}
-      <nav className="flex-1 space-y-1 p-2">
-        {navigation.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex w-full items-center ${
-                sidebarOpen ? 'px-3' : 'justify-center px-2'
-              } rounded-lg py-3 transition-colors ${
-                isActive
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-foreground hover:bg-accent'
-              }`}
-            >
-              <Icon
-                className={`h-5 w-5 ${sidebarOpen ? 'mr-3' : ''} shrink-0`}
-              />
-              {sidebarOpen && (
-                <div className="flex-1 text-left">
-                  <div className="font-medium text-sm">{item.name}</div>
-                </div>
-              )}
-            </Link>
-          );
-        })}
-      </nav>
+      <SidebarContent className="p-2">
+        <SidebarMenu>
+          {navigation.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
 
-      <NavUser sidebarOpen={sidebarOpen} />
-    </aside>
+            return (
+              <SidebarMenuItem key={item.href}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={isActive}
+                  tooltip={item.name}
+                >
+                  <Link href={item.href}>
+                    <Icon className="h-5 w-5 shrink-0" />
+                    <span className="font-medium text-sm">{item.name}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
+        </SidebarMenu>
+      </SidebarContent>
+
+      <SidebarFooter className="p-0">
+        <NavUser />
+      </SidebarFooter>
+    </SidebarShell>
   );
 }

@@ -39,6 +39,7 @@ interface ResetPasswordRequest {
 
 interface UpdateProfileRequest {
   full_name: string;
+  username: string | null;
 }
 
 interface UpdateOnboardingRequest {
@@ -70,6 +71,7 @@ interface CurrentUser {
   id: string;
   email: string;
   full_name: string | null;
+  username: string | null;
   role: OnboardingRole | null;
   onboarding_status: 'pending' | 'completed';
   onboarding_step: number;
@@ -80,10 +82,16 @@ export interface OnboardingStatus {
   id: string;
   email: string;
   full_name: string | null;
+  username?: string | null;
   role: OnboardingRole | null;
   onboarding_status: 'pending' | 'completed';
   onboarding_step: number;
   onboarding_completed_at: string | null;
+}
+
+interface UsernameAvailabilityResponse {
+  available: boolean;
+  username: string;
 }
 
 // Mutations
@@ -168,6 +176,12 @@ export function useChangePasswordMutation() {
         body: data,
       }),
   });
+}
+
+export async function checkUsernameAvailability(username: string) {
+  return fetcher<UsernameAvailabilityResponse>(
+    `/auth/username-availability?username=${encodeURIComponent(username)}`
+  );
 }
 
 export function useUpdateOnboardingMutation() {
