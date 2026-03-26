@@ -1,6 +1,3 @@
-import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
 import {
   CheckCircle2,
   ChevronDown,
@@ -13,13 +10,16 @@ import {
   Search,
   Video,
 } from 'lucide-react';
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { listForumPosts } from '@/lib/forum/posts-store';
 import {
   forumFeaturedCard,
   forumOverviewItems,
   forumPriceInsight,
   forumRfq,
 } from './mock-data';
-import { listForumPosts } from '@/lib/forum/posts-store';
 import { ForumPostComposer } from './post-composer';
 import type { ForumPost } from './types';
 
@@ -34,23 +34,20 @@ export const dynamic = 'force-dynamic';
 export default function ForumPage() {
   const forumPosts = listForumPosts();
   return (
-    <div className="min-h-screen bg-[#edf1f6] text-[#111827]">
+    <>
+      <div className="mb-12" />
       <ForumTopHeader />
       <ForumSubHeader />
       <ForumInfoBanner />
 
-      <main className="mx-auto max-w-[1320px] px-4 py-5">
-        <div className="grid gap-4 md:grid-cols-[272px_minmax(0,1fr)] lg:grid-cols-[272px_minmax(0,1fr)_280px]">
-          <LeftRail />
-          <CenterFeed posts={forumPosts} />
-          <div className="md:col-span-2 lg:col-span-1">
-            <RightRail />
-          </div>
+      <div className="grid gap-4 md:grid-cols-[272px_minmax(0,1fr)] lg:grid-cols-[272px_minmax(0,1fr)_280px]">
+        <LeftRail />
+        <CenterFeed posts={forumPosts} />
+        <div className="md:col-span-2 lg:col-span-1">
+          <RightRail />
         </div>
-      </main>
-
-      <ForumCookieBar />
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -475,34 +472,6 @@ function RightRail() {
         </div>
       </section>
     </aside>
-  );
-}
-
-function ForumCookieBar() {
-  return (
-    <div className="border-[#d8dee8] border-t bg-[#f6f8fb]">
-      <div className="mx-auto flex max-w-[1320px] flex-col gap-3 px-4 py-3 text-[#4b5563] text-[11px] sm:flex-row sm:items-center sm:justify-between">
-        <p>
-          By clicking "Accept Cookies," I agree to provide cookies for
-          statistical and personalized preference purpose. To learn more about
-          our cookies, please read our Privacy Policy.
-        </p>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            className="rounded bg-[#111827] px-3 py-1.5 font-medium text-white transition-colors hover:bg-black"
-          >
-            Accept Cookies
-          </button>
-          <button
-            type="button"
-            className="rounded border border-[#c7cfdd] bg-white px-3 py-1.5 font-medium text-[#374151] transition-colors hover:bg-[#eef2f7]"
-          >
-            Learn More
-          </button>
-        </div>
-      </div>
-    </div>
   );
 }
 

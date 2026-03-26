@@ -34,8 +34,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
+import { cn } from '@/lib/utils';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -150,7 +150,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full border-emerald-500/20 border-b bg-black/75 backdrop-blur-md">
+    <header className="fixed top-0 z-30 w-full border-emerald-500/20 border-b backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -182,7 +182,7 @@ export function Navbar({ user }: NavbarProps) {
                 {item.label}
                 <span
                   className={cn(
-                    '-bottom-1.5 pointer-events-none absolute left-0 h-0.5 w-full rounded-full bg-emerald-300 transition-opacity duration-200',
+                    'pointer-events-none absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full bg-emerald-300 transition-opacity duration-200',
                     isActive ? 'opacity-100' : 'opacity-0'
                   )}
                 />

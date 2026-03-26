@@ -60,7 +60,7 @@
 :root {
   --radius: 0.625rem;
 
-  --background: #000;
+  --background: oklch(0.12 0.03 146);
   --foreground: oklch(0.96 0.005 106);
 
   --card: oklch(0.17 0.01 255);
@@ -109,7 +109,7 @@
 }
 
 .dark {
-  --background: #000;
+  --background: oklch(0.12 0.03 146);
   --foreground: oklch(0.96 0.005 106);
 
   --card: oklch(0.17 0.01 255);
@@ -132,8 +132,8 @@
 
   --brand-lime: #93c83f;
   --brand-yellow: #d9d977;
-  --destructive: oklch(0.704 0.191 22.216);
 
+  --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(0.56 0.06 155 / 24%);
   --input: oklch(0.42 0.03 170 / 34%);
   --ring: oklch(0.7 0.12 148 / 38%);

@@ -32,7 +32,7 @@ export function HeroSection() {
               <input
                 type="text"
                 placeholder="Email/Phone number"
-                className="h-9 flex-1 rounded-lg border border-emerald-500/20 bg-zinc-950/82 px-3 text-zinc-200 text-xs placeholder:text-zinc-400/90 focus:border-emerald-400/55 focus:outline-hidden"
+                className="h-9 flex-1 rounded-lg border border-emerald-500/20 bg-zinc-950/82 px-3 text-xs text-zinc-200 placeholder:text-zinc-400/90 focus:border-emerald-400/55 focus:outline-hidden"
               />
               <Button
                 asChild

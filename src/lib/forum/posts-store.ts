@@ -2,7 +2,7 @@
   CreateForumPostInput,
   ForumPost,
   ForumPostMedia,
-} from '@/app/forum/types';
+} from '@/app/(marketing)/forum/types';
 
 const seedForumPosts: ForumPost[] = [
   {

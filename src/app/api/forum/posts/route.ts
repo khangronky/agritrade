@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import type { CreateForumPostInput } from '@/app/forum/types';
+import type { CreateForumPostInput } from '@/app/(marketing)/forum/types';
 import { createForumPost, listForumPosts } from '@/lib/forum/posts-store';
 
 export const dynamic = 'force-dynamic';
