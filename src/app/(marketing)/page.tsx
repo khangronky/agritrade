@@ -28,9 +28,9 @@ export default function MarketingPage() {
         <div className="mx-auto max-w-[1220px] px-4 sm:px-6 lg:px-8">
           <div className="grid items-start gap-6 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="relative rounded-[32px] border border-[#d1e6af] bg-white px-6 py-7 shadow-[0_16px_34px_rgba(127,181,44,0.18)] sm:px-8 sm:py-9">
-            <p className="font-bold text-4xl text-[#6db40e] leading-none tracking-tight sm:text-6xl">
-              <LiveUserCount className="text-[#6db40e]" />
-            </p>
+              <p className="font-bold text-4xl text-[#6db40e] leading-none tracking-tight sm:text-6xl">
+                <LiveUserCount className="text-[#6db40e]" />
+              </p>
               <p className="mt-4 max-w-md font-semibold text-[#2f480b] text-xl sm:text-3xl">
                 Farmers and Traders
                 <br />
@@ -196,7 +196,6 @@ export default function MarketingPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

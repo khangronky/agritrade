@@ -83,9 +83,7 @@ export function HomeLiveUpdatesPanel({
         <div
           className={cn(
             'mt-3',
-            isLight
-              ? 'grid gap-2.5 sm:grid-cols-3'
-              : 'space-y-3'
+            isLight ? 'grid gap-2.5 sm:grid-cols-3' : 'space-y-3'
           )}
         >
           {visibleFeed.map((item) => (
