@@ -168,7 +168,7 @@ export default function LivePriceBoard({
 
                 <div
                   className={cn(
-                    'min-w-[82px] rounded-lg border px-2 py-1 text-right tabular-nums',
+                    'w-fit justify-self-end rounded-lg border px-1.5 py-1 text-right tabular-nums sm:px-2',
                     trendBadgeClass(trend)
                   )}
                 >
