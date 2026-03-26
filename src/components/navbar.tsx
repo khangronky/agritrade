@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import {
   ChevronDown,
@@ -101,7 +101,7 @@ export function Navbar({ user }: NavbarProps) {
           <Button
             asChild
             variant="outline"
-            className="bg-background text-slate-800 hover:bg-background/80"
+            className="bg-background text-zinc-200 hover:bg-background/80"
           >
             <Link href="/register">Sign Up</Link>
           </Button>
@@ -114,10 +114,10 @@ export function Navbar({ user }: NavbarProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-10 gap-2 px-2 text-slate-800 hover:bg-white/80 hover:text-slate-900"
+            className="h-10 gap-2 px-2 text-zinc-200 hover:bg-zinc-800/80 hover:text-zinc-100"
           >
             <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-emerald-100 text-slate-800">
+              <AvatarFallback className="bg-emerald-500/20 text-emerald-200">
                 {getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
@@ -150,7 +150,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full backdrop-blur-md">
+    <header className="fixed top-0 z-30 w-full border-emerald-500/15 border-b bg-zinc-950/45 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -175,14 +175,14 @@ export function Navbar({ user }: NavbarProps) {
                 className={cn(
                   'relative font-semibold text-sm transition-colors',
                   isActive
-                    ? 'text-emerald-700'
-                    : 'text-slate-800 hover:text-emerald-600'
+                    ? 'text-emerald-300'
+                    : 'text-zinc-200 hover:text-emerald-400'
                 )}
               >
                 {item.label}
                 <span
                   className={cn(
-                    '-bottom-1.5 pointer-events-none absolute left-0 h-0.5 w-full rounded-full bg-emerald-600 transition-opacity duration-200',
+                    '-bottom-1.5 pointer-events-none absolute left-0 h-0.5 w-full rounded-full bg-emerald-400 transition-opacity duration-200',
                     isActive ? 'opacity-100' : 'opacity-0'
                   )}
                 />
@@ -203,7 +203,7 @@ export function Navbar({ user }: NavbarProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-2 border-slate-300 bg-white/80 px-2 text-slate-800 hover:bg-white hover:text-slate-900"
+                    className="gap-2 border-zinc-700 bg-zinc-900/72 px-2 text-zinc-200 hover:bg-zinc-800 hover:text-zinc-100"
                   >
                     <Menu className="size-4" />
                   </Button>
@@ -228,7 +228,7 @@ export function Navbar({ user }: NavbarProps) {
                       className={cn(
                         'rounded-md px-3 py-2 text-sm transition-colors',
                         isActive
-                          ? 'bg-emerald-100 text-emerald-800'
+                          ? 'bg-emerald-500/20 text-emerald-200'
                           : 'hover:bg-zinc-800 hover:text-zinc-50'
                       )}
                     >
@@ -254,7 +254,7 @@ export function Navbar({ user }: NavbarProps) {
                     <Button
                       asChild
                       variant="outline"
-                      className="bg-background text-slate-800 hover:bg-background/80"
+                      className="bg-background text-zinc-200 hover:bg-background/80"
                     >
                       <Link href="/register">Sign Up</Link>
                     </Button>
@@ -283,3 +283,6 @@ export function Navbar({ user }: NavbarProps) {
     </header>
   );
 }
+
+
+

@@ -1,30 +1,30 @@
 ﻿import type { CurrencyOption, DemandLevel } from './types';
 
 export const demandLevelStyles: Record<DemandLevel, string> = {
-  'High demand': 'border-lime-300 bg-lime-100 text-lime-800',
-  'Balanced demand': 'border-amber-200 bg-amber-100 text-amber-700',
-  'Soft demand': 'border-rose-200 bg-rose-100 text-rose-700',
+  'High demand': 'border-emerald-400/40 bg-emerald-500/10 text-emerald-300',
+  'Balanced demand': 'border-amber-300/40 bg-amber-500/10 text-amber-300',
+  'Soft demand': 'border-rose-300/40 bg-rose-500/10 text-rose-300',
 };
 
 export const priceTrendChartConfig = {
   priceHistorical: {
     label: 'Historical price',
-    color: '#16a34a',
+    color: '#34d399',
   },
   priceForecast: {
     label: 'AI forecast',
-    color: '#0ea5e9',
+    color: '#38bdf8',
   },
 } as const;
 
 export const demandTrendChartConfig = {
   demandHistorical: {
     label: 'Historical demand',
-    color: '#84cc16',
+    color: '#a3e635',
   },
   demandForecast: {
     label: 'AI forecast',
-    color: '#f59e0b',
+    color: '#fbbf24',
   },
 } as const;
 
@@ -41,3 +41,4 @@ export function formatPriceByCurrency(
 export function formatPricePerKg(priceVnd: number, currency: CurrencyOption) {
   return `${formatPriceByCurrency(priceVnd, currency)} ${currency.code}/kg`;
 }
+

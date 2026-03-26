@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -66,7 +66,7 @@ export function LiveUserCount({
       </span>
       <span
         className={cn(
-          'pointer-events-none absolute -top-5 right-0 font-semibold text-emerald-600 text-sm transition-all duration-500',
+          'pointer-events-none absolute -top-5 right-0 font-semibold text-emerald-400 text-sm transition-all duration-500',
           isAnimating ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'
         )}
       >
@@ -75,3 +75,4 @@ export function LiveUserCount({
     </span>
   );
 }
+

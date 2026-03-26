@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -133,14 +133,14 @@ function getTrend(change: number): Trend {
 
 function trendClass(trend: Trend) {
   if (trend === 'up') {
-    return 'text-emerald-600';
+    return 'text-emerald-400';
   }
 
   if (trend === 'down') {
-    return 'text-rose-500';
+    return 'text-rose-300';
   }
 
-  return 'text-slate-500';
+  return 'text-zinc-400';
 }
 
 function formatPriceByCurrency(priceVnd: number, currency: CurrencyOption) {
@@ -203,14 +203,14 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
   return (
     <div
       className={cn(
-        'rounded-[28px] border border-emerald-200/70 bg-linear-to-br from-white/90 via-emerald-50/75 to-slate-100/85 shadow-[0_18px_42px_rgba(16,185,129,0.16)] backdrop-blur-xl',
+        'rounded-[28px] border border-emerald-500/25 bg-linear-to-br from-zinc-900/95 via-zinc-900/90 to-zinc-950/95 shadow-[0_18px_42px_rgba(16,185,129,0.16)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
     >
       <div className="flex items-start justify-between gap-4">
         <h3
           className={cn(
-            'font-semibold text-slate-900',
+            'font-semibold text-zinc-100',
             compact ? 'text-lg sm:text-xl' : 'text-2xl'
           )}
         >
@@ -219,7 +219,7 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
         <div className="space-y-2 text-right">
           <p
             className={cn(
-              'text-slate-500',
+              'text-zinc-400',
               compact ? 'text-[11px]' : 'text-sm'
             )}
           >
@@ -235,7 +235,7 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
               setCurrencyCode(event.target.value as CurrencyCode)
             }
             className={cn(
-              'rounded-lg border border-emerald-200 bg-white/90 text-slate-800 outline-hidden transition-colors focus:border-emerald-400/70',
+              'rounded-lg border border-emerald-500/25 bg-zinc-900/85 text-zinc-200 outline-hidden transition-colors focus:border-emerald-400/70',
               compact ? 'px-2 py-1 text-[11px]' : 'px-2.5 py-1.5 text-xs'
             )}
           >
@@ -253,13 +253,13 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
           <div
             key={item.product}
             className={cn(
-              'flex items-center justify-between rounded-xl border border-emerald-200/75 bg-linear-to-r from-emerald-50 via-teal-50 to-slate-100',
+              'flex items-center justify-between rounded-xl border border-emerald-500/25 bg-linear-to-r from-zinc-900 via-zinc-900 to-zinc-950',
               compact ? 'px-3 py-2' : 'px-4 py-2.5'
             )}
           >
             <span
               className={cn(
-                'font-medium text-slate-800',
+                'font-medium text-zinc-200',
                 compact ? 'text-sm' : 'text-base'
               )}
             >
@@ -270,7 +270,7 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
             >
               <span
                 className={cn(
-                  'font-semibold text-slate-800',
+                  'font-semibold text-zinc-200',
                   compact ? 'text-sm' : 'text-base'
                 )}
               >
@@ -297,10 +297,10 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
           compact ? 'mt-4 text-xs' : 'mt-5 text-sm'
         )}
       >
-        <p className="text-slate-500">Reference prices (mock FX rates)</p>
+        <p className="text-zinc-400">Reference prices (mock FX rates)</p>
         <div
           className={cn(
-            'flex items-center gap-2 text-emerald-600',
+            'flex items-center gap-2 text-emerald-400',
             compact && 'text-xs'
           )}
         >
@@ -311,3 +311,5 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
     </div>
   );
 }
+
+

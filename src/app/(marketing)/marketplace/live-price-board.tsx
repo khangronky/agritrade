@@ -30,14 +30,14 @@ export default function LivePriceBoard({
   onCurrencyChange,
 }: LivePriceBoardProps) {
   return (
-    <Card className="gap-0 rounded-3xl border-lime-300 bg-white/90 py-0 text-slate-900 shadow-lime-200/70 shadow-xl">
+    <Card className="gap-0 rounded-3xl border-emerald-400/30 bg-zinc-900/85 py-0 text-zinc-100 shadow-[0_24px_48px_rgba(16,185,129,0.2)]">
       <CardHeader className="px-5 pt-5 pb-4 sm:px-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-xl sm:text-2xl">
             Live price board
           </CardTitle>
           <div className="flex items-center gap-2 sm:gap-3">
-            <CardDescription className="text-slate-500 text-xs sm:text-sm">
+            <CardDescription className="text-zinc-400 text-xs sm:text-sm">
               Snapshot of featured commodities
             </CardDescription>
             <NativeSelect
@@ -45,7 +45,7 @@ export default function LivePriceBoard({
               onChange={(event) =>
                 onCurrencyChange(event.target.value as CurrencyCode)
               }
-              className="h-8 min-w-24 rounded-lg border-lime-300/90 bg-white/90 text-slate-700 text-xs focus-visible:border-lime-500 focus-visible:ring-lime-500/20"
+              className="h-8 min-w-24 rounded-lg border-emerald-400/35 bg-zinc-900/85 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
             >
               {aseanCurrencies.map((currency) => (
                 <NativeSelectOption key={currency.code} value={currency.code}>
@@ -61,7 +61,7 @@ export default function LivePriceBoard({
         {livePriceRows.length > 0 ? (
           livePriceRows.map((row, index) => (
             <div key={row.name}>
-              <div className="flex items-center justify-between rounded-xl border border-lime-200 bg-lime-50/90 px-3 py-2.5 sm:px-4">
+              <div className="flex items-center justify-between rounded-xl border border-zinc-700/70 bg-zinc-900/82 px-3 py-2.5 sm:px-4">
                 <p className="font-medium text-sm sm:text-base">{row.name}</p>
                 <div className="flex items-center gap-6">
                   <span className="font-semibold text-base sm:text-lg">
@@ -71,7 +71,7 @@ export default function LivePriceBoard({
                   <span
                     className={cn(
                       'font-semibold text-sm sm:text-base',
-                      row.positive ? 'text-green-600' : 'text-amber-600'
+                      row.positive ? 'text-emerald-400' : 'text-amber-300'
                     )}
                   >
                     {row.change}
@@ -79,20 +79,20 @@ export default function LivePriceBoard({
                 </div>
               </div>
               {index < livePriceRows.length - 1 ? (
-                <Separator className="my-2 bg-lime-100" />
+                <Separator className="my-2 bg-zinc-800/60" />
               ) : null}
             </div>
           ))
         ) : (
-          <div className="rounded-xl border border-lime-200 bg-lime-50/90 px-4 py-5 text-center text-slate-600 text-sm">
+          <div className="rounded-xl border border-zinc-700/70 bg-zinc-900/82 px-4 py-5 text-center text-zinc-400 text-sm">
             No featured commodities available right now.
           </div>
         )}
 
-        <div className="mt-3 flex items-center justify-between text-slate-500 text-xs sm:text-sm">
+        <div className="mt-3 flex items-center justify-between text-zinc-400 text-xs sm:text-sm">
           <p>Reference pricing in {activeCurrency.code}</p>
-          <p className="inline-flex items-center gap-2 font-medium text-green-600">
-            <span className="inline-block size-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.45)]" />
+          <p className="inline-flex items-center gap-2 font-medium text-emerald-400">
+            <span className="inline-block size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(34,197,94,0.45)]" />
             Live
           </p>
         </div>
@@ -100,3 +100,4 @@ export default function LivePriceBoard({
     </Card>
   );
 }
+

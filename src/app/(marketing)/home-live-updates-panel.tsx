@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -38,14 +38,14 @@ export function HomeLiveUpdatesPanel({
   return (
     <div
       className={cn(
-        'rounded-[28px] border border-emerald-200/70 bg-linear-to-br from-white/90 via-emerald-50/75 to-slate-100/85 shadow-[0_18px_42px_rgba(16,185,129,0.16)] backdrop-blur-xl',
+        'rounded-[28px] border border-emerald-500/25 bg-linear-to-br from-zinc-900/95 via-zinc-900/90 to-zinc-950/95 shadow-[0_18px_42px_rgba(16,185,129,0.16)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
     >
       <div className="flex items-center justify-between gap-3">
         <h3
           className={cn(
-            'font-semibold text-slate-900',
+            'font-semibold text-zinc-100',
             compact ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
           )}
         >
@@ -54,7 +54,7 @@ export function HomeLiveUpdatesPanel({
         <Link
           href="/marketplace"
           className={cn(
-            'text-slate-500 transition-colors hover:text-emerald-600',
+            'text-zinc-400 transition-colors hover:text-emerald-400',
             compact ? 'text-[11px]' : 'text-sm'
           )}
         >
@@ -64,7 +64,7 @@ export function HomeLiveUpdatesPanel({
 
       <p
         className={cn(
-          'mt-1 text-slate-500',
+          'mt-1 text-zinc-400',
           compact ? 'text-[11px]' : 'text-sm'
         )}
       >
@@ -76,7 +76,7 @@ export function HomeLiveUpdatesPanel({
           {visibleFeed.map((item) => (
             <p
               key={item.id}
-              className="text-base text-slate-700 leading-snug sm:text-lg"
+              className="text-base text-zinc-300 leading-snug sm:text-lg"
             >
               {item.farmer} {item.update}
             </p>
@@ -87,12 +87,12 @@ export function HomeLiveUpdatesPanel({
           {visibleFeed.map((item) => (
             <div
               key={item.id}
-              className="rounded-xl border border-emerald-100/12 bg-linear-to-r from-emerald-900/30 via-teal-900/24 to-slate-900/56 px-4 py-3"
+              className="rounded-xl border border-emerald-500/20 bg-linear-to-r from-emerald-900/30 via-teal-900/24 to-zinc-950/65 px-4 py-3"
             >
-              <p className="font-medium text-slate-100 text-sm leading-relaxed sm:text-base">
+              <p className="font-medium text-zinc-100 text-sm leading-relaxed sm:text-base">
                 {item.farmer} {item.update} ({item.country})
               </p>
-              <p className="mt-1 text-slate-300/85 text-xs sm:text-sm">
+              <p className="mt-1 text-zinc-300/85 text-xs sm:text-sm">
                 {item.detail}
               </p>
               <p className="mt-2 font-medium text-emerald-300/90 text-xs">
@@ -105,3 +105,5 @@ export function HomeLiveUpdatesPanel({
     </div>
   );
 }
+
+

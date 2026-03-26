@@ -1,4 +1,4 @@
-import LivePriceBoard from './live-price-board';
+﻿import LivePriceBoard from './live-price-board';
 import type { CurrencyCode, CurrencyOption, PriceRow } from './types';
 
 type MarketplaceHeroSectionProps = {
@@ -17,7 +17,7 @@ export function MarketplaceHeroSection({
   onCurrencyChange,
 }: MarketplaceHeroSectionProps) {
   return (
-    <section className="relative border-lime-300/80 border-b pt-16 pb-12 sm:pt-20 sm:pb-16">
+    <section className="relative border-emerald-400/30 border-b pt-16 pb-12 sm:pt-20 sm:pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           <div>
@@ -25,7 +25,7 @@ export function MarketplaceHeroSection({
               A forex for agriculture: see quantity, trade instantly.
             </h1>
 
-            <p className="mt-4 max-w-3xl text-slate-600 text-sm leading-relaxed sm:text-base">
+            <p className="mt-4 max-w-3xl text-zinc-400 text-sm leading-relaxed sm:text-base">
               AgriTrade updates farmer supply in real time so traders,
               businesses, and local communities can buy, exchange, and close
               deals before produce is wasted.
@@ -44,3 +44,4 @@ export function MarketplaceHeroSection({
     </section>
   );
 }
+

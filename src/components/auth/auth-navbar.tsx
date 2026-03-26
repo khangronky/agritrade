@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ export function AuthNavbar() {
           <Button
             variant="ghost"
             size="sm"
-            className="gap-2 rounded-full border border-green-200/80 bg-white/80 text-green-800 shadow-sm backdrop-blur-sm transition-colors hover:border-green-300 hover:bg-white hover:text-green-950"
+            className="gap-2 rounded-full border border-emerald-500/25 bg-zinc-900/72 text-zinc-300 shadow-sm backdrop-blur-sm transition-colors hover:border-emerald-400/35 hover:bg-zinc-800 hover:text-zinc-100"
           >
             <ArrowLeft className="h-4 w-4" />
             {isLoginPage ? 'Home' : 'Back to Login'}
@@ -26,3 +26,4 @@ export function AuthNavbar() {
     </nav>
   );
 }
+
