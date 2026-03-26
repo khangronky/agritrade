@@ -277,10 +277,7 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
         </h3>
         <div className="space-y-2 text-right">
           <p
-            className={cn(
-              'text-zinc-400',
-              compact ? 'text-[11px]' : 'text-sm'
-            )}
+            className={cn('text-zinc-400', compact ? 'text-[11px]' : 'text-sm')}
           >
             Updated every 5s
           </p>
@@ -372,7 +369,11 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
                   compact ? 'text-xs' : 'text-sm'
                 )}
               >
-                {formatAbsoluteDelta(item.priceVnd, item.change, selectedCurrency)}
+                {formatAbsoluteDelta(
+                  item.priceVnd,
+                  item.change,
+                  selectedCurrency
+                )}
               </p>
               <p
                 className={cn(

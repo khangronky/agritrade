@@ -332,7 +332,10 @@ function buildMarketTrendData(
   const seed = hashSeed(`${listing.name}-${listing.country}`);
   const trendRatio = parseTrendPercent(listing.trend) / 100;
   const baseVolumeTons = parseVolumeTons(listing.volume);
-  const baseActivityVolume = Math.max(8_000, Math.round(baseVolumeTons * 4_200));
+  const baseActivityVolume = Math.max(
+    8_000,
+    Math.round(baseVolumeTons * 4_200)
+  );
   const fractionDigits = currency.maxFractionDigits === 0 ? 0 : 2;
   const convertPrice = (valueVnd: number) =>
     Number((valueVnd * currency.rateFromVnd).toFixed(fractionDigits));
@@ -350,7 +353,8 @@ function buildMarketTrendData(
     const stochasticShock = pseudoNoise(seed, index + 13) * volatilityPulse;
     const momentum = previousReturn * 0.34;
     const meanReversion =
-      -0.08 * ((evolvingPriceVnd - listing.pricePerKgVnd) / listing.pricePerKgVnd);
+      -0.08 *
+      ((evolvingPriceVnd - listing.pricePerKgVnd) / listing.pricePerKgVnd);
     const drift = trendRatio / historicalPoints;
 
     const periodReturn = clamp(
@@ -387,8 +391,10 @@ function buildMarketTrendData(
   const realizedVolatility = standardDeviation(historicalReturns);
   const annualizedVolatilityPct = realizedVolatility * Math.sqrt(12) * 100;
 
-  const emaShort = buildEma(historicalPricesVnd, 5).at(-1) ?? historicalPricesVnd[0];
-  const emaLong = buildEma(historicalPricesVnd, 10).at(-1) ?? historicalPricesVnd[0];
+  const emaShort =
+    buildEma(historicalPricesVnd, 5).at(-1) ?? historicalPricesVnd[0];
+  const emaLong =
+    buildEma(historicalPricesVnd, 10).at(-1) ?? historicalPricesVnd[0];
   const rsi = computeRsi(historicalPricesVnd, 6);
   const trendStrength = linearSlopeNormalized(historicalPricesVnd);
 
@@ -418,7 +424,8 @@ function buildMarketTrendData(
         : 0;
     const meanReversionTerm =
       -0.18 * ((arPrice - emaLong) / Math.max(1, emaLong));
-    const innovation = pseudoNoise(seed, 200 + horizon) * realizedVolatility * 0.45;
+    const innovation =
+      pseudoNoise(seed, 200 + horizon) * realizedVolatility * 0.45;
 
     arReturn = clamp(
       0.56 * arReturn +
@@ -446,7 +453,8 @@ function buildMarketTrendData(
           : trendStrength * 2.6;
     const volatilityPenalty =
       regime === 'High-volatility regime' ? -realizedVolatility * 0.2 : 0;
-    const regimeNoise = pseudoNoise(seed, 300 + horizon) * realizedVolatility * 0.35;
+    const regimeNoise =
+      pseudoNoise(seed, 300 + horizon) * realizedVolatility * 0.35;
     const regimeReturn = clamp(
       averageReturn + trendBias + volatilityPenalty + regimeNoise,
       -0.09,
@@ -489,14 +497,17 @@ function buildMarketTrendData(
 
     const priceReference =
       horizon === 0
-        ? historicalPricesVnd.at(-1) ?? forecastPriceVnd
+        ? (historicalPricesVnd.at(-1) ?? forecastPriceVnd)
         : forecastPricesVnd[horizon - 1];
     const forecastReturn = (forecastPriceVnd - priceReference) / priceReference;
     const forecastVolumeShock = pseudoNoise(seed, 500 + horizon) * 0.08;
     const forecastSeasonality =
       0.1 * Math.sin((horizon + historicalPoints + seed * 0.03) * 1.1);
     const forecastVolumeMultiplier = clamp(
-      1 + Math.abs(forecastReturn) * 1.8 + forecastSeasonality + forecastVolumeShock,
+      1 +
+        Math.abs(forecastReturn) * 1.8 +
+        forecastSeasonality +
+        forecastVolumeShock,
       0.72,
       1.42
     );
@@ -552,7 +563,8 @@ function buildMarketTrendData(
     )
   );
 
-  const projectedPriceVnd = forecastPricesVnd.at(-1) ?? (historicalPricesVnd.at(-1) ?? 0);
+  const projectedPriceVnd =
+    forecastPricesVnd.at(-1) ?? historicalPricesVnd.at(-1) ?? 0;
   const currentPriceVnd = historicalPricesVnd.at(-1) ?? projectedPriceVnd;
   const projectedReturnPct =
     currentPriceVnd !== 0
@@ -756,13 +768,17 @@ export default function MarketplaceClient() {
 
     return (
       listings.find(
-        (listing) => `${listing.name}-${listing.country}` === activeCommodityValue
+        (listing) =>
+          `${listing.name}-${listing.country}` === activeCommodityValue
       ) ?? listings[0]
     );
   }, [activeCommodityValue]);
 
   const trendTimelineData = useMemo(
-    () => (activeListingForTrend ? buildMarketTrendData(activeListingForTrend, activeTrendCurrency) : null),
+    () =>
+      activeListingForTrend
+        ? buildMarketTrendData(activeListingForTrend, activeTrendCurrency)
+        : null,
     [activeListingForTrend, activeTrendCurrency]
   );
 

@@ -100,4 +100,3 @@ function DemandSignalCard({ signal }: { signal: DemandSignal }) {
     </Card>
   );
 }
-

@@ -36,5 +36,3 @@ function LoginFormSkeleton() {
     </div>
   );
 }
-
-

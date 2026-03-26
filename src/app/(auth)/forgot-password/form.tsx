@@ -407,5 +407,3 @@ export function ForgotPasswordForm() {
     </Card>
   );
 }
-
-

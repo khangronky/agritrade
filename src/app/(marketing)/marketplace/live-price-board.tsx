@@ -73,10 +73,7 @@ function trendBadgeClass(trend: Trend) {
 }
 
 function toCommodityCode(name: string) {
-  const tokens = name
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
+  const tokens = name.trim().split(/\s+/).filter(Boolean);
 
   if (tokens.length === 0) {
     return 'N/A';
@@ -94,7 +91,9 @@ function toCommodityCode(name: string) {
 }
 
 function estimateVolume(name: string) {
-  const seed = name.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const seed = name
+    .split('')
+    .reduce((sum, char) => sum + char.charCodeAt(0), 0);
   return 450_000 + (seed % 3_500_000);
 }
 
@@ -115,7 +114,9 @@ export default function LivePriceBoard({
     <Card className="gap-0 rounded-3xl border-emerald-400/22 bg-zinc-950/84 py-0 text-zinc-100 shadow-[0_24px_48px_rgba(0,0,0,0.55)]">
       <CardHeader className="px-5 pt-5 pb-4 sm:px-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <CardTitle className="text-xl sm:text-2xl">Live price board</CardTitle>
+          <CardTitle className="text-xl sm:text-2xl">
+            Live price board
+          </CardTitle>
           <div className="flex items-center gap-2 sm:gap-3">
             <CardDescription className="text-zinc-400 text-xs sm:text-sm">
               Snapshot of featured commodities
@@ -154,7 +155,9 @@ export default function LivePriceBoard({
                   <p className="font-semibold tracking-[0.08em] text-zinc-100">
                     {code}
                   </p>
-                  <p className="mt-0.5 truncate text-xs text-zinc-400">{row.name}</p>
+                  <p className="mt-0.5 truncate text-xs text-zinc-400">
+                    {row.name}
+                  </p>
                 </div>
 
                 <div className="text-right">
@@ -173,7 +176,11 @@ export default function LivePriceBoard({
                   )}
                 >
                   <p className="font-semibold text-sm leading-tight">
-                    {formatAbsoluteDelta(row.priceVnd, changePercent, activeCurrency)}
+                    {formatAbsoluteDelta(
+                      row.priceVnd,
+                      changePercent,
+                      activeCurrency
+                    )}
                   </p>
                   <p className="mt-0.5 text-xs font-medium leading-tight">
                     {formatPercent(changePercent)}
