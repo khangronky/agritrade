@@ -6,28 +6,6 @@ export const demandLevelStyles: Record<DemandLevel, string> = {
   'Soft demand': 'border-zinc-500/45 bg-zinc-800/55 text-zinc-200',
 };
 
-export const priceTrendChartConfig = {
-  priceHistorical: {
-    label: 'Historical price',
-    color: '#34d399',
-  },
-  priceForecast: {
-    label: 'AI forecast',
-    color: '#86efac',
-  },
-} as const;
-
-export const demandTrendChartConfig = {
-  demandHistorical: {
-    label: 'Historical demand',
-    color: '#6ee7b7',
-  },
-  demandForecast: {
-    label: 'AI forecast',
-    color: '#22c55e',
-  },
-} as const;
-
 export function formatPriceByCurrency(
   priceVnd: number,
   currency: CurrencyOption

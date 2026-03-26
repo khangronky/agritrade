@@ -22,13 +22,14 @@ export function MarketplaceHeroSection({
         <div className="space-y-8">
           <div>
             <h1 className="max-w-3xl font-semibold text-3xl leading-tight sm:text-4xl lg:text-5xl">
-              A forex for agriculture: see quantity, trade instantly.
+              AI-powered agriculture marketplace: track prices, forecast trends,
+              trade smarter.
             </h1>
 
             <p className="mt-4 max-w-3xl text-zinc-400 text-sm leading-relaxed sm:text-base">
-              AgriTrade updates farmer supply in real time so traders,
-              businesses, and local communities can buy, exchange, and close
-              deals before produce is wasted.
+              AgriTrade combines real-time supply, market analytics, and AI
+              forecasting so traders, cooperatives, and businesses can execute
+              faster decisions with lower risk.
             </p>
           </div>
 
