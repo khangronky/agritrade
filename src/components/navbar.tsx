@@ -41,7 +41,7 @@ const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us' },
   { label: 'Marketplace', href: '/marketplace' },
-  { label: 'Forum', href: '/' },
+  { label: 'Forum', href: '/forum' },
 ];
 
 type NavbarProps = {
@@ -283,6 +283,3 @@ export function Navbar({ user }: NavbarProps) {
     </header>
   );
 }
-
-
-
