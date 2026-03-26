@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import MarketplaceClient from './client';
 
 export const metadata: Metadata = {
   title: 'Marketplace',
   description:
-    'Explore live market trends, discover demand signals, and trade with confidence on AgriTrade’s transparent agriculture marketplace.',
+    'Explore live market trends, discover demand signals, and trade with confidence on AgriTradeâ€™s transparent agriculture marketplace.',
 };
 
 export default function MarketplacePage() {

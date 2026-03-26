@@ -25,13 +25,13 @@ export function AboutSection() {
     <section id="about-us" className="scroll-mt-20 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
-          <p className="font-semibold text-green-700 text-sm uppercase tracking-[0.2em]">
+          <p className="font-semibold text-green-800 text-sm uppercase tracking-[0.2em]">
             About Us
           </p>
-          <h2 className="mt-3 font-semibold text-3xl text-green-950 sm:text-4xl">
+          <h2 className="mt-3 font-semibold text-3xl text-green-950 leading-tight sm:text-4xl">
             Why farmers and stakeholders build with AgriTrade
           </h2>
-          <p className="mt-5 text-base text-green-900/85 leading-relaxed sm:text-lg">
+          <p className="mt-5 text-base text-green-950/90 leading-relaxed sm:text-lg">
             We connect producers, buyers, and market supporters in one trusted
             flow so price decisions are clearer, faster, and fairer.
           </p>
@@ -83,7 +83,7 @@ export function AboutSection() {
                 'Simple tools so adoption does not disrupt existing workflows.',
               ].map((point) => (
                 <li key={point} className="flex gap-3 text-green-100/95 text-sm">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-lime-300" />
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-lime-200" />
                   <span>{point}</span>
                 </li>
               ))}
@@ -104,8 +104,8 @@ function AudienceCard({
 }) {
   return (
     <div className="rounded-2xl border border-green-200/80 bg-lime-50/70 p-4">
-      <p className="font-semibold text-green-900">{title}</p>
-      <p className="mt-1 text-green-900/80 text-sm leading-relaxed">
+      <p className="font-semibold text-green-950">{title}</p>
+      <p className="mt-1 text-green-950/85 text-sm leading-relaxed">
         {description}
       </p>
     </div>

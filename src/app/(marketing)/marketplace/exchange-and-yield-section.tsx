@@ -13,7 +13,7 @@ export function ExchangeAndYieldSection({
   exchangeCards,
 }: ExchangeAndYieldSectionProps) {
   return (
-    <section className="relative border-emerald-200/80 border-t py-12 sm:py-16">
+    <section className="relative border-lime-300/80 border-t py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
           <h2 className="font-semibold text-2xl sm:text-3xl">
@@ -53,7 +53,7 @@ function ExchangeFeatureCard({ card }: { card: ExchangeCard }) {
   const Icon = card.icon;
 
   return (
-    <Card className="rounded-2xl border-emerald-200 bg-white py-0 text-slate-900 shadow-sm">
+    <Card className="rounded-2xl border-lime-300 bg-white py-0 text-slate-900 shadow-sm">
       <CardHeader className="px-5 pt-5 pb-2">
         <Icon className="size-5 text-lime-600" />
         <CardTitle className="mt-3 text-lg sm:text-xl">{card.title}</CardTitle>

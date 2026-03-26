@@ -94,7 +94,7 @@ export function SolutionsSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Badge
           variant="outline"
-          className="border-green-300 bg-green-100 text-green-800"
+          className="border-green-300 bg-green-100 text-green-900"
         >
           Business Model
         </Badge>
@@ -103,7 +103,7 @@ export function SolutionsSection() {
           How AgriTrade creates value across the agricultural market
         </h2>
 
-        <p className="mt-4 max-w-3xl text-base text-green-800/85 sm:text-lg">
+        <p className="mt-4 max-w-3xl text-base text-green-950/85 sm:text-lg">
           The platform improves transparency, match quality, and execution
           flexibility so farmers, buyers, and middlemen can collaborate with
           better outcomes.
@@ -135,7 +135,7 @@ export function SolutionsSection() {
                 </div>
 
                 <CardHeader className="gap-3 px-5 pt-5">
-                  <div className="flex items-center gap-2 text-lime-200">
+                  <div className="flex items-center gap-2 text-lime-100">
                     <Icon className="size-4" />
                     <span className="font-medium text-xs uppercase tracking-[0.2em]">
                       AgriTrade
@@ -144,16 +144,16 @@ export function SolutionsSection() {
                   <CardTitle className="text-lime-100 text-xl">
                     {card.title}
                   </CardTitle>
-                  <CardDescription className="text-green-100/90">
+                  <CardDescription className="text-green-50">
                     {card.description}
                   </CardDescription>
                 </CardHeader>
 
                 <CardContent className="px-5 pb-6">
-                  <ul className="space-y-2 text-green-100 text-sm">
+                  <ul className="space-y-2 text-green-50 text-sm">
                     {card.points.map((point) => (
                       <li key={point} className="flex gap-2">
-                        <span className="mt-1.5 inline-block size-2 shrink-0 rounded-full bg-lime-300" />
+                        <span className="mt-1.5 inline-block size-2 shrink-0 rounded-full bg-lime-200" />
                         <span>{point}</span>
                       </li>
                     ))}

@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -34,6 +34,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
 
 const navItems = [
@@ -62,6 +63,7 @@ function getInitials(name: string) {
 
 export function Navbar({ user }: NavbarProps) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
 
   const supabase = createClient();
@@ -72,6 +74,18 @@ export function Navbar({ user }: NavbarProps) {
     await supabase.auth.signOut();
     router.push('/login');
     router.refresh();
+  };
+
+  const isItemActive = (item: (typeof navItems)[number]) => {
+    if (item.label === 'Forum') {
+      return pathname.startsWith('/forum');
+    }
+
+    if (item.href === '/') {
+      return pathname === '/';
+    }
+
+    return pathname === item.href || pathname.startsWith(`${item.href}/`);
   };
 
   const renderDesktopAuth = () => {
@@ -150,15 +164,31 @@ export function Navbar({ user }: NavbarProps) {
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-8 md:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="font-semibold text-slate-800 text-sm transition-colors hover:text-emerald-600"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = isItemActive(item);
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                aria-current={isActive ? 'page' : undefined}
+                className={cn(
+                  'relative font-semibold text-sm transition-colors',
+                  isActive
+                    ? 'text-emerald-700'
+                    : 'text-slate-800 hover:text-emerald-600'
+                )}
+              >
+                {item.label}
+                <span
+                  className={cn(
+                    '-bottom-1.5 pointer-events-none absolute left-0 h-0.5 w-full rounded-full bg-emerald-600 transition-opacity duration-200',
+                    isActive ? 'opacity-100' : 'opacity-0'
+                  )}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
@@ -187,16 +217,26 @@ export function Navbar({ user }: NavbarProps) {
             </SheetHeader>
 
             <nav className="mt-3 flex flex-col gap-1 px-4">
-              {navItems.map((item) => (
-                <SheetClose asChild key={item.label}>
-                  <Link
-                    href={item.href}
-                    className="rounded-md px-3 py-2 text-sm transition-colors hover:bg-zinc-800 hover:text-zinc-50"
-                  >
-                    {item.label}
-                  </Link>
-                </SheetClose>
-              ))}
+              {navItems.map((item) => {
+                const isActive = isItemActive(item);
+
+                return (
+                  <SheetClose asChild key={item.label}>
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={cn(
+                        'rounded-md px-3 py-2 text-sm transition-colors',
+                        isActive
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'hover:bg-zinc-800 hover:text-zinc-50'
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </SheetClose>
+                );
+              })}
             </nav>
 
             <div className="mt-auto flex flex-col gap-2 px-4 pb-6">

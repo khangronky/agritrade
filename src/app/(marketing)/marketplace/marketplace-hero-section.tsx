@@ -17,7 +17,7 @@ export function MarketplaceHeroSection({
   onCurrencyChange,
 }: MarketplaceHeroSectionProps) {
   return (
-    <section className="relative border-emerald-200/80 border-b pt-16 pb-12 sm:pt-20 sm:pb-16">
+    <section className="relative border-lime-300/80 border-b pt-16 pb-12 sm:pt-20 sm:pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
           <div>

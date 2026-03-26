@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react';
+﻿import type { ReactElement } from 'react';
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 
 import { Button } from '@/components/ui/button';
@@ -80,7 +80,7 @@ export function MarketTrendSection({
   return (
     <section className="relative py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-emerald-200/80 bg-white/55 p-5 shadow-[0_22px_48px_rgba(16,185,129,0.12)] backdrop-blur-sm sm:p-6">
+        <div className="rounded-3xl border border-lime-300/80 bg-white/55 p-5 shadow-[0_22px_48px_rgba(163,230,53,0.22)] backdrop-blur-sm sm:p-6">
           <div className="flex flex-col gap-4">
             <div className="space-y-2">
               <h2 className="font-semibold text-2xl sm:text-3xl">
@@ -118,7 +118,7 @@ export function MarketTrendSection({
               <NativeSelect
                 value={activeCommodityValue}
                 onChange={(event) => onCommodityChange(event.target.value)}
-                className="h-9 min-w-52 rounded-lg border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
+                className="h-9 min-w-52 rounded-lg border-lime-300/90 bg-white/85 text-slate-700 text-xs focus-visible:border-lime-500 focus-visible:ring-lime-500/20"
               >
                 <NativeSelectOption value="auto">
                   Auto (top matched commodity)
@@ -206,7 +206,7 @@ export function MarketTrendSection({
               <ForecastSummaryGrid forecastSummary={forecastSummary} />
             </>
           ) : (
-            <Card className="mt-6 gap-0 rounded-2xl border-emerald-200 bg-white py-0 text-slate-900 shadow-sm">
+            <Card className="mt-6 gap-0 rounded-2xl border-lime-300 bg-white py-0 text-slate-900 shadow-sm">
               <CardContent className="px-5 py-8 text-center text-slate-600">
                 No timeline data available for current filters.
               </CardContent>
@@ -252,12 +252,12 @@ function MarketplaceFilterBar({
         placeholder="Search by commodity"
         value={searchQuery}
         onChange={(event) => onSearchQueryChange(event.target.value)}
-        className="h-10 rounded-xl border-emerald-200/90 bg-white/85 text-slate-700 text-xs placeholder:text-slate-400 focus-visible:border-green-500 focus-visible:ring-green-500/20 sm:w-64"
+        className="h-10 rounded-xl border-lime-300/90 bg-white/85 text-slate-700 text-xs placeholder:text-slate-400 focus-visible:border-lime-500 focus-visible:ring-lime-500/20 sm:w-64"
       />
       <NativeSelect
         value={selectedCategory}
         onChange={(event) => onCategoryChange(event.target.value)}
-        className="h-10 min-w-40 rounded-xl border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
+        className="h-10 min-w-40 rounded-xl border-lime-300/90 bg-white/85 text-slate-700 text-xs focus-visible:border-lime-500 focus-visible:ring-lime-500/20"
       >
         <NativeSelectOption value="all">
           All listed commodities
@@ -270,7 +270,7 @@ function MarketplaceFilterBar({
       <NativeSelect
         value={selectedCountry}
         onChange={(event) => onCountryChange(event.target.value)}
-        className="h-10 min-w-40 rounded-xl border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
+        className="h-10 min-w-40 rounded-xl border-lime-300/90 bg-white/85 text-slate-700 text-xs focus-visible:border-lime-500 focus-visible:ring-lime-500/20"
       >
         <NativeSelectOption value="all">All countries</NativeSelectOption>
         {countries.map((country) => (
@@ -284,7 +284,7 @@ function MarketplaceFilterBar({
         onChange={(event) =>
           onCurrencyChange(event.target.value as CurrencyCode)
         }
-        className="h-10 min-w-36 rounded-xl border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
+        className="h-10 min-w-36 rounded-xl border-lime-300/90 bg-white/85 text-slate-700 text-xs focus-visible:border-lime-500 focus-visible:ring-lime-500/20"
       >
         {aseanCurrencies.map((currency) => (
           <NativeSelectOption key={currency.code} value={currency.code}>
@@ -296,7 +296,7 @@ function MarketplaceFilterBar({
         variant="outline"
         size="sm"
         onClick={onReset}
-        className="h-10 rounded-xl border-emerald-300/90 bg-white/90 text-emerald-800 text-xs hover:bg-emerald-50"
+        className="h-10 rounded-xl border-lime-400/90 bg-white/90 text-lime-900 text-xs hover:bg-lime-50"
       >
         Reset
       </Button>
@@ -318,7 +318,7 @@ function TrendChartCard({
   children,
 }: TrendChartCardProps) {
   return (
-    <Card className="gap-0 rounded-2xl border-emerald-200 bg-white/88 py-0 text-slate-900 shadow-sm">
+    <Card className="gap-0 rounded-2xl border-lime-300 bg-white/88 py-0 text-slate-900 shadow-sm">
       <CardHeader className="px-5 pt-5 pb-2">
         <CardTitle className="text-lg sm:text-xl">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
@@ -344,7 +344,7 @@ function ForecastMetricCard({
   valueClassName,
 }: ForecastMetricCardProps) {
   return (
-    <Card className="gap-0 rounded-xl border-emerald-200 bg-white/85 py-0">
+    <Card className="gap-0 rounded-xl border-lime-300 bg-white/85 py-0">
       <CardContent className="px-4 py-4">
         <p className="text-slate-500 text-xs uppercase tracking-[0.14em]">
           {label}
@@ -393,7 +393,7 @@ function ForecastSummaryGrid({
       <ForecastMetricCard
         label="AI confidence"
         value={forecastSummary ? `${forecastSummary.confidence}%` : '--'}
-        valueClassName="text-emerald-700"
+        valueClassName="text-lime-800"
       />
     </div>
   );
