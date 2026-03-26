@@ -25,9 +25,9 @@ export default function MarketingPage() {
         id="main"
         className="scroll-mt-20 border-[#d9e8c6] border-b pt-24 pb-14"
       >
-        <div className="mx-auto max-w-[1220px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-305 px-4 sm:px-6 lg:px-8">
           <div className="grid items-start gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="relative rounded-[32px] border border-[#d1e6af] bg-white px-6 py-7 shadow-[0_16px_34px_rgba(127,181,44,0.18)] sm:px-8 sm:py-9">
+            <div className="relative rounded-4xl border border-[#d1e6af] bg-white px-6 py-7 shadow-[0_16px_34px_rgba(127,181,44,0.18)] sm:px-8 sm:py-9">
               <p className="font-bold text-4xl text-[#6db40e] leading-none tracking-tight sm:text-6xl">
                 <LiveUserCount className="text-[#6db40e]" />
               </p>
@@ -54,7 +54,7 @@ export default function MarketingPage() {
 
       <section className="relative border-[#d7e7c2] border-y bg-[#86da05] pt-14 pb-10 sm:pt-16 sm:pb-11">
         <div className="absolute -top-5 left-0 z-20">
-          <div className="inline-flex items-end gap-2 rounded-r-[24px] border border-[#d7e7c2] border-l-0 bg-[#f5f8ef] px-4 py-1.5 shadow-[0_4px_0_rgba(88,145,16,0.35)] sm:px-7">
+          <div className="inline-flex items-end gap-2 rounded-r-3xl border border-[#d7e7c2] border-l-0 bg-[#f5f8ef] px-4 py-1.5 shadow-[0_4px_0_rgba(88,145,16,0.35)] sm:px-7">
             <Sprout
               className="mb-0.5 size-11 text-[#7cc313] sm:size-16"
               strokeWidth={2.5}
@@ -65,7 +65,7 @@ export default function MarketingPage() {
           </div>
         </div>
 
-        <div className="relative mx-auto max-w-[1220px] px-4 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-305 px-4 sm:px-6 lg:px-8">
           <div className="mt-6 space-y-3 pl-1 font-semibold text-[#1c3200] text-base uppercase leading-tight sm:mt-7 sm:pl-28 sm:text-[2rem]">
             {helpPoints.map((point) => (
               <p key={point}>{point}</p>
@@ -75,8 +75,8 @@ export default function MarketingPage() {
       </section>
 
       <section id="about-us" className="scroll-mt-20 py-16">
-        <div className="mx-auto grid max-w-[1220px] gap-8 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-[42px] border border-[#d0e6af] bg-white shadow-[0_14px_28px_rgba(137,196,50,0.16)]">
+        <div className="mx-auto grid max-w-305 gap-8 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8">
+          <div className="relative aspect-video overflow-hidden rounded-[42px] border border-[#d0e6af] bg-white shadow-[0_14px_28px_rgba(137,196,50,0.16)]">
             <Image
               src="/about-us/slide-3.jpg"
               alt="Vietnamese tea farmers harvesting in highland fields"
@@ -104,7 +104,7 @@ export default function MarketingPage() {
       </section>
 
       <section id="business-model" className="scroll-mt-20 pb-14">
-        <div className="mx-auto max-w-[1220px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-305 px-4 sm:px-6 lg:px-8">
           <h2 className="font-extrabold text-5xl text-[#64ad06] uppercase leading-[0.92] sm:text-7xl">
             Business
             <br />
@@ -119,7 +119,7 @@ export default function MarketingPage() {
               </p>
             </article>
 
-            <div className="relative aspect-[16/11] overflow-hidden rounded-[28px] border border-[#cee5ad]">
+            <div className="relative aspect-16/11 overflow-hidden rounded-[28px] border border-[#cee5ad]">
               <Image
                 src="/farm.jpg"
                 alt="Farmer harvesting crops in a green field"
@@ -138,13 +138,13 @@ export default function MarketingPage() {
           </div>
 
           <div className="mt-4 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-            <article className="rounded-[32px] bg-[#f0de00] p-6 font-semibold text-[#4c5207] text-base leading-relaxed">
+            <article className="rounded-4xl bg-[#f0de00] p-6 font-semibold text-[#4c5207] text-base leading-relaxed">
               AgriTrade supports multiple execution paths: direct buyer
               transactions, middleman-supported logistics, and phased delivery
               models adapted to real farm conditions.
             </article>
 
-            <div className="relative aspect-[16/11] overflow-hidden rounded-[28px] border border-[#cee5ad]">
+            <div className="relative aspect-16/11 overflow-hidden rounded-[28px] border border-[#cee5ad]">
               <Image
                 src="/about-us/slide-7.jpg"
                 alt="Farmers inspecting crop quality before market delivery"
@@ -158,7 +158,7 @@ export default function MarketingPage() {
       </section>
 
       <section id="step-to-step" className="scroll-mt-20 py-14">
-        <div className="mx-auto max-w-[1140px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-1140px px-4 sm:px-6 lg:px-8">
           <h2 className="text-center font-extrabold text-4xl text-[#68b308] uppercase sm:text-5xl">
             Explore Platform
           </h2>
