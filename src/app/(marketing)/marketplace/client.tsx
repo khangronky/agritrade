@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { ArrowLeftRight, HandCoins, Zap } from 'lucide-react';
 import type { Metadata } from 'next';
@@ -10,13 +10,13 @@ import { MarketplaceCtaSection } from './marketplace-cta-section';
 import { MarketplaceHeroSection } from './marketplace-hero-section';
 import { TradingBoardSection } from './trading-board-section';
 import type {
+  AiForecastSummary,
   CommodityOption,
   CurrencyCode,
   CurrencyOption,
   DemandLevel,
   DemandSignal,
   ExchangeCard,
-  ForecastSummary,
   ListingCard,
   MarketTrendPoint,
   PriceRow,
@@ -194,52 +194,442 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
 
+function pseudoNoise(seed: number, index: number) {
+  const raw = Math.sin(seed * 12.9898 + index * 78.233) * 43758.5453;
+  const fraction = raw - Math.floor(raw);
+  return fraction * 2 - 1;
+}
+
+function mean(values: number[]) {
+  if (values.length === 0) {
+    return 0;
+  }
+
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+function standardDeviation(values: number[]) {
+  if (values.length < 2) {
+    return 0;
+  }
+
+  const avg = mean(values);
+  const variance =
+    values.reduce((sum, value) => sum + (value - avg) ** 2, 0) /
+    (values.length - 1);
+  return Math.sqrt(variance);
+}
+
+function buildEma(values: number[], period: number) {
+  if (values.length === 0) {
+    return [];
+  }
+
+  const alpha = 2 / (period + 1);
+  const emaSeries = [values[0]];
+
+  for (let index = 1; index < values.length; index += 1) {
+    emaSeries.push(alpha * values[index] + (1 - alpha) * emaSeries[index - 1]);
+  }
+
+  return emaSeries;
+}
+
+function computeRsi(values: number[], period: number) {
+  if (values.length < 2) {
+    return 50;
+  }
+
+  const startIndex = Math.max(1, values.length - period);
+  let gains = 0;
+  let losses = 0;
+
+  for (let index = startIndex; index < values.length; index += 1) {
+    const delta = values[index] - values[index - 1];
+    if (delta >= 0) {
+      gains += delta;
+    } else {
+      losses -= delta;
+    }
+  }
+
+  const averageGain = gains / period;
+  const averageLoss = losses / period;
+
+  if (averageLoss === 0) {
+    return 100;
+  }
+
+  const relativeStrength = averageGain / averageLoss;
+  return 100 - 100 / (1 + relativeStrength);
+}
+
+function linearSlopeNormalized(values: number[]) {
+  if (values.length < 2) {
+    return 0;
+  }
+
+  const xMean = (values.length - 1) / 2;
+  const yMean = mean(values);
+  let numerator = 0;
+  let denominator = 0;
+
+  for (let index = 0; index < values.length; index += 1) {
+    const deltaX = index - xMean;
+    numerator += deltaX * (values[index] - yMean);
+    denominator += deltaX * deltaX;
+  }
+
+  if (denominator === 0 || yMean === 0) {
+    return 0;
+  }
+
+  return numerator / denominator / yMean;
+}
+
+function holtLinearForecast(
+  values: number[],
+  horizon: number,
+  alpha: number,
+  beta: number
+) {
+  if (values.length === 0) {
+    return Array.from({ length: horizon }, () => 0);
+  }
+
+  let level = values[0];
+  let trend = values.length > 1 ? values[1] - values[0] : 0;
+
+  for (let index = 1; index < values.length; index += 1) {
+    const previousLevel = level;
+    level = alpha * values[index] + (1 - alpha) * (level + trend);
+    trend = beta * (level - previousLevel) + (1 - beta) * trend;
+  }
+
+  return Array.from({ length: horizon }, (_, step) =>
+    Math.max(500, level + (step + 1) * trend)
+  );
+}
+
+function formatTrendLabel(date: Date) {
+  return date.toLocaleString('en-US', {
+    month: 'short',
+    year: '2-digit',
+  });
+}
+
+type TrendModelOutput = {
+  points: MarketTrendPoint[];
+  aiForecast: AiForecastSummary | null;
+};
+
 function buildMarketTrendData(
   listing: ListingCard,
   currency: CurrencyOption
-): MarketTrendPoint[] {
-  const historicalPoints = 8;
-  const forecastPoints = 4;
-  const totalPoints = historicalPoints + forecastPoints;
+): TrendModelOutput {
+  const historicalPoints = 18;
+  const forecastPoints = 6;
   const seed = hashSeed(`${listing.name}-${listing.country}`);
-  const trendPct = parseTrendPercent(listing.trend) / 100;
-  const baseDemand = parseVolumeTons(listing.volume);
+  const trendRatio = parseTrendPercent(listing.trend) / 100;
+  const baseVolumeTons = parseVolumeTons(listing.volume);
+  const baseActivityVolume = Math.max(
+    8_000,
+    Math.round(baseVolumeTons * 4_200)
+  );
+  const fractionDigits = currency.maxFractionDigits === 0 ? 0 : 2;
+  const convertPrice = (valueVnd: number) =>
+    Number((valueVnd * currency.rateFromVnd).toFixed(fractionDigits));
+
+  const historicalPricesVnd: number[] = [];
+  const historicalVolumes: number[] = [];
+
+  let evolvingPriceVnd = listing.pricePerKgVnd;
+  let previousReturn = trendRatio / 12;
+
+  for (let index = 0; index < historicalPoints; index += 1) {
+    const seasonal = 0.012 * Math.sin((index + seed * 0.01) * (Math.PI / 3));
+    const volatilityPulse =
+      0.009 + Math.abs(Math.sin((index + seed * 0.02) * 0.7)) * 0.018;
+    const stochasticShock = pseudoNoise(seed, index + 13) * volatilityPulse;
+    const momentum = previousReturn * 0.34;
+    const meanReversion =
+      -0.08 *
+      ((evolvingPriceVnd - listing.pricePerKgVnd) / listing.pricePerKgVnd);
+    const drift = trendRatio / historicalPoints;
+
+    const periodReturn = clamp(
+      drift + seasonal + momentum + meanReversion + stochasticShock,
+      -0.08,
+      0.08
+    );
+
+    evolvingPriceVnd = Math.max(500, evolvingPriceVnd * (1 + periodReturn));
+    previousReturn = periodReturn;
+    historicalPricesVnd.push(evolvingPriceVnd);
+
+    const volumeSeasonality = 0.12 * Math.cos((index + seed * 0.015) * 0.9);
+    const volumeShock = pseudoNoise(seed, index + 67) * 0.13;
+    const volumeMomentum = Math.abs(periodReturn) * 2.5;
+    const volumeMultiplier = clamp(
+      1 + volumeSeasonality + volumeShock + volumeMomentum,
+      0.6,
+      1.8
+    );
+
+    historicalVolumes.push(
+      Math.max(8_000, Math.round(baseActivityVolume * volumeMultiplier))
+    );
+  }
+
+  const historicalReturns = historicalPricesVnd
+    .slice(1)
+    .map(
+      (price, index) =>
+        (price - historicalPricesVnd[index]) / historicalPricesVnd[index]
+    );
+  const averageReturn = mean(historicalReturns);
+  const realizedVolatility = standardDeviation(historicalReturns);
+  const annualizedVolatilityPct = realizedVolatility * Math.sqrt(12) * 100;
+
+  const emaShort =
+    buildEma(historicalPricesVnd, 5).at(-1) ?? historicalPricesVnd[0];
+  const emaLong =
+    buildEma(historicalPricesVnd, 10).at(-1) ?? historicalPricesVnd[0];
+  const rsi = computeRsi(historicalPricesVnd, 6);
+  const trendStrength = linearSlopeNormalized(historicalPricesVnd);
+
+  let regime: AiForecastSummary['regime'] = 'Mean-reverting regime';
+  if (realizedVolatility > 0.028) {
+    regime = 'High-volatility regime';
+  } else if (Math.abs(trendStrength) > 0.0026) {
+    regime = 'Trending regime';
+  }
+
+  const holtForecastVnd = holtLinearForecast(
+    historicalPricesVnd,
+    forecastPoints,
+    0.46,
+    0.3
+  );
+
+  const seasonalReturns = historicalReturns.slice(-6);
+  const arForecastVnd: number[] = [];
+  let arPrice = historicalPricesVnd.at(-1) ?? listing.pricePerKgVnd;
+  let arReturn = historicalReturns.at(-1) ?? averageReturn;
+
+  for (let horizon = 0; horizon < forecastPoints; horizon += 1) {
+    const seasonalReturn =
+      seasonalReturns.length > 0
+        ? seasonalReturns[horizon % seasonalReturns.length] * 0.35
+        : 0;
+    const meanReversionTerm =
+      -0.18 * ((arPrice - emaLong) / Math.max(1, emaLong));
+    const innovation =
+      pseudoNoise(seed, 200 + horizon) * realizedVolatility * 0.45;
+
+    arReturn = clamp(
+      0.56 * arReturn +
+        0.24 * averageReturn +
+        seasonalReturn +
+        meanReversionTerm +
+        innovation,
+      -0.1,
+      0.1
+    );
+
+    arPrice = Math.max(500, arPrice * (1 + arReturn));
+    arForecastVnd.push(arPrice);
+  }
+
+  const regimeForecastVnd: number[] = [];
+  let regimePrice = historicalPricesVnd.at(-1) ?? listing.pricePerKgVnd;
+
+  for (let horizon = 0; horizon < forecastPoints; horizon += 1) {
+    const trendBias =
+      regime === 'Trending regime'
+        ? trendStrength * (6 + horizon * 0.5)
+        : regime === 'Mean-reverting regime'
+          ? -0.12 * ((regimePrice - emaLong) / Math.max(1, emaLong))
+          : trendStrength * 2.6;
+    const volatilityPenalty =
+      regime === 'High-volatility regime' ? -realizedVolatility * 0.2 : 0;
+    const regimeNoise =
+      pseudoNoise(seed, 300 + horizon) * realizedVolatility * 0.35;
+    const regimeReturn = clamp(
+      averageReturn + trendBias + volatilityPenalty + regimeNoise,
+      -0.09,
+      0.09
+    );
+
+    regimePrice = Math.max(500, regimePrice * (1 + regimeReturn));
+    regimeForecastVnd.push(regimePrice);
+  }
+
+  const ensembleWeights =
+    regime === 'Trending regime'
+      ? { holt: 0.5, ar: 0.3, regime: 0.2 }
+      : regime === 'High-volatility regime'
+        ? { holt: 0.25, ar: 0.4, regime: 0.35 }
+        : { holt: 0.3, ar: 0.45, regime: 0.25 };
+
+  const forecastPricesVnd: number[] = [];
+  const forecastLowerVnd: number[] = [];
+  const forecastUpperVnd: number[] = [];
+  const forecastVolumes: number[] = [];
+
+  let evolvingForecastVolume = historicalVolumes.at(-1) ?? baseActivityVolume;
+  const forecastSigmaBase =
+    Math.max(0.008, realizedVolatility) *
+    (regime === 'High-volatility regime' ? 1.35 : 1);
+
+  for (let horizon = 0; horizon < forecastPoints; horizon += 1) {
+    const blendedPrice =
+      holtForecastVnd[horizon] * ensembleWeights.holt +
+      arForecastVnd[horizon] * ensembleWeights.ar +
+      regimeForecastVnd[horizon] * ensembleWeights.regime;
+
+    const forecastPriceVnd = Math.max(500, blendedPrice);
+    forecastPricesVnd.push(forecastPriceVnd);
+
+    const sigma = forecastSigmaBase * Math.sqrt(horizon + 1);
+    forecastLowerVnd.push(Math.max(500, forecastPriceVnd * (1 - 1.64 * sigma)));
+    forecastUpperVnd.push(forecastPriceVnd * (1 + 1.64 * sigma));
+
+    const priceReference =
+      horizon === 0
+        ? (historicalPricesVnd.at(-1) ?? forecastPriceVnd)
+        : forecastPricesVnd[horizon - 1];
+    const forecastReturn = (forecastPriceVnd - priceReference) / priceReference;
+    const forecastVolumeShock = pseudoNoise(seed, 500 + horizon) * 0.08;
+    const forecastSeasonality =
+      0.1 * Math.sin((horizon + historicalPoints + seed * 0.03) * 1.1);
+    const forecastVolumeMultiplier = clamp(
+      1 +
+        Math.abs(forecastReturn) * 1.8 +
+        forecastSeasonality +
+        forecastVolumeShock,
+      0.72,
+      1.42
+    );
+
+    evolvingForecastVolume = Math.max(
+      8_000,
+      Math.round(evolvingForecastVolume * forecastVolumeMultiplier)
+    );
+    forecastVolumes.push(evolvingForecastVolume);
+  }
+
+  const disagreementRatio = mean(
+    Array.from({ length: forecastPoints }, (_, horizon) => {
+      const sampleMean = mean([
+        holtForecastVnd[horizon],
+        arForecastVnd[horizon],
+        regimeForecastVnd[horizon],
+      ]);
+      if (sampleMean === 0) {
+        return 0;
+      }
+
+      const deviations = [
+        Math.abs(holtForecastVnd[horizon] - sampleMean),
+        Math.abs(arForecastVnd[horizon] - sampleMean),
+        Math.abs(regimeForecastVnd[horizon] - sampleMean),
+      ];
+
+      return mean(deviations) / sampleMean;
+    })
+  );
+  const modelAgreementScore = 1 - clamp(disagreementRatio / 0.2, 0, 1);
+
+  const directionalConsistency =
+    historicalReturns.length < 2
+      ? 0.5
+      : historicalReturns.slice(1).filter((value, index) => {
+          const previousValue = historicalReturns[index];
+          return Math.sign(value) === Math.sign(previousValue);
+        }).length /
+        (historicalReturns.length - 1);
+
+  const confidence = Math.round(
+    clamp(
+      54 +
+        modelAgreementScore * 22 +
+        directionalConsistency * 10 +
+        clamp(Math.abs(trendStrength) * 1800, 0, 10) -
+        clamp(realizedVolatility * 420, 0, 18) -
+        (regime === 'High-volatility regime' ? 5 : 0),
+      42,
+      94
+    )
+  );
+
+  const projectedPriceVnd =
+    forecastPricesVnd.at(-1) ?? historicalPricesVnd.at(-1) ?? 0;
+  const currentPriceVnd = historicalPricesVnd.at(-1) ?? projectedPriceVnd;
+  const projectedReturnPct =
+    currentPriceVnd !== 0
+      ? ((projectedPriceVnd - currentPriceVnd) / currentPriceVnd) * 100
+      : 0;
+
   const points: MarketTrendPoint[] = [];
 
-  for (let index = 0; index < totalPoints; index += 1) {
+  for (let index = 0; index < historicalPoints; index += 1) {
     const monthOffset = index - (historicalPoints - 1);
     const date = new Date();
+    date.setDate(1);
     date.setMonth(date.getMonth() + monthOffset);
-    const label = date.toLocaleString('en-US', { month: 'short' });
-    const isForecast = monthOffset > 0;
-
-    const wave = Math.sin((index + seed * 0.03) * 1.2) * 0.035;
-    const drift = trendPct * monthOffset * (isForecast ? 1.2 : 0.75);
-
-    const priceVnd = listing.pricePerKgVnd * (1 + wave + drift);
-    const priceConverted = Number(
-      (priceVnd * currency.rateFromVnd).toFixed(currency.maxFractionDigits + 2)
-    );
-
-    const demandWave = Math.cos((index + seed * 0.02) * 0.95) * 0.12;
-    const demandDrift = trendPct * monthOffset * (isForecast ? 1.5 : 0.85);
-    const demand = Math.max(
-      5,
-      Math.round(baseDemand * (1 + demandWave + demandDrift))
-    );
+    const convertedPrice = convertPrice(historicalPricesVnd[index]);
+    const isLastObserved = index === historicalPoints - 1;
 
     points.push({
-      label,
-      priceHistorical: isForecast ? null : priceConverted,
-      priceForecast:
-        isForecast || index === historicalPoints - 1 ? priceConverted : null,
-      demandHistorical: isForecast ? null : demand,
-      demandForecast:
-        isForecast || index === historicalPoints - 1 ? demand : null,
+      date: date.toISOString(),
+      label: formatTrendLabel(date),
+      price: convertedPrice,
+      historicalPrice: convertedPrice,
+      forecastPrice: isLastObserved ? convertedPrice : null,
+      forecastUpper: isLastObserved ? convertedPrice : null,
+      forecastLower: isLastObserved ? convertedPrice : null,
+      activityVolume: historicalVolumes[index],
+      isForecast: false,
     });
   }
 
-  return points;
+  for (let horizon = 0; horizon < forecastPoints; horizon += 1) {
+    const date = new Date();
+    date.setDate(1);
+    date.setMonth(date.getMonth() + horizon + 1);
+
+    const convertedForecastPrice = convertPrice(forecastPricesVnd[horizon]);
+    points.push({
+      date: date.toISOString(),
+      label: formatTrendLabel(date),
+      price: convertedForecastPrice,
+      historicalPrice: null,
+      forecastPrice: convertedForecastPrice,
+      forecastUpper: convertPrice(forecastUpperVnd[horizon]),
+      forecastLower: convertPrice(forecastLowerVnd[horizon]),
+      activityVolume: forecastVolumes[horizon],
+      isForecast: true,
+    });
+  }
+
+  return {
+    points,
+    aiForecast: {
+      modelName: 'Ensemble AI (Holt + ARX + Regime)',
+      confidence,
+      regime,
+      horizonPeriods: forecastPoints,
+      projectedPrice: convertPrice(projectedPriceVnd),
+      projectedReturnPct,
+      intervalLow: convertPrice(forecastLowerVnd.at(-1) ?? projectedPriceVnd),
+      intervalHigh: convertPrice(forecastUpperVnd.at(-1) ?? projectedPriceVnd),
+      volatilityPct: annualizedVolatilityPct,
+      rsi,
+      emaShort: convertPrice(emaShort),
+      emaLong: convertPrice(emaLong),
+    },
+  };
 }
 
 function parseTrendPercent(trend: string) {
@@ -322,25 +712,14 @@ const exchangeCards: ExchangeCard[] = [
 export const metadata: Metadata = {
   title: 'Marketplace',
   description:
-    'Explore live market trends, discover demand signals, and trade with confidence on AgriTrade’s transparent agriculture marketplace.',
+    'Explore live market trends, discover demand signals, and trade with confidence on AgriTradeâ€™s transparent agriculture marketplace.',
 };
 
 export default function MarketplaceClient() {
-  const [trendSearchQuery, setTrendSearchQuery] = useState('');
-  const [trendCategory, setTrendCategory] = useState('all');
-  const [trendCountry, setTrendCountry] = useState('all');
   const [trendCurrency, setTrendCurrency] = useState<CurrencyCode>('VND');
   const [marketplaceCurrency, setMarketplaceCurrency] =
     useState<CurrencyCode>('VND');
   const [selectedCommodity, setSelectedCommodity] = useState('auto');
-
-  const countries = useMemo(
-    () =>
-      Array.from(new Set(listings.map((listing) => listing.country))).sort(
-        (a, b) => a.localeCompare(b)
-      ),
-    []
-  );
 
   const activeTrendCurrency =
     aseanCurrencies.find((currency) => currency.code === trendCurrency) ??
@@ -349,30 +728,6 @@ export default function MarketplaceClient() {
   const activeMarketplaceCurrency =
     aseanCurrencies.find((currency) => currency.code === marketplaceCurrency) ??
     aseanCurrencies[0];
-
-  const trendFilteredListings = useMemo(() => {
-    const normalizedQuery = trendSearchQuery.trim().toLowerCase();
-
-    return listings.filter((listing) => {
-      const matchesCategory =
-        trendCategory === 'all' ||
-        (trendCategory === 'grains' && listing.category === 'Grain') ||
-        (trendCategory === 'fruits' && listing.category === 'Fruit') ||
-        (trendCategory === 'vegetables' && listing.category === 'Vegetable') ||
-        (trendCategory === 'aquaculture' && listing.category === 'Aquaculture');
-
-      const matchesCountry =
-        trendCountry === 'all' || listing.country === trendCountry;
-
-      const matchesQuery =
-        normalizedQuery.length === 0 ||
-        listing.name.toLowerCase().includes(normalizedQuery) ||
-        listing.region.toLowerCase().includes(normalizedQuery) ||
-        listing.country.toLowerCase().includes(normalizedQuery);
-
-      return matchesCategory && matchesCountry && matchesQuery;
-    });
-  }, [trendSearchQuery, trendCategory, trendCountry]);
 
   const livePriceRows = useMemo<PriceRow[]>(
     () =>
@@ -389,11 +744,11 @@ export default function MarketplaceClient() {
 
   const commodityOptions = useMemo<CommodityOption[]>(
     () =>
-      trendFilteredListings.map((listing) => ({
+      listings.map((listing) => ({
         value: `${listing.name}-${listing.country}`,
         label: `${listing.name} (${listing.country})`,
       })),
-    [trendFilteredListings]
+    []
   );
 
   const activeCommodityValue = commodityOptions.some(
@@ -403,82 +758,29 @@ export default function MarketplaceClient() {
     : 'auto';
 
   const activeListingForTrend = useMemo(() => {
-    if (trendFilteredListings.length === 0) {
+    if (listings.length === 0) {
       return null;
     }
 
     if (activeCommodityValue === 'auto') {
-      return trendFilteredListings[0];
+      return listings[0];
     }
 
     return (
-      trendFilteredListings.find(
+      listings.find(
         (listing) =>
           `${listing.name}-${listing.country}` === activeCommodityValue
-      ) ?? trendFilteredListings[0]
+      ) ?? listings[0]
     );
-  }, [trendFilteredListings, activeCommodityValue]);
+  }, [activeCommodityValue]);
 
   const trendTimelineData = useMemo(
     () =>
       activeListingForTrend
         ? buildMarketTrendData(activeListingForTrend, activeTrendCurrency)
-        : [],
+        : null,
     [activeListingForTrend, activeTrendCurrency]
   );
-
-  const forecastSummary = useMemo<ForecastSummary | null>(() => {
-    if (!activeListingForTrend || trendTimelineData.length === 0) {
-      return null;
-    }
-
-    const firstHistoricalPoint =
-      trendTimelineData.find((point) => point.priceHistorical !== null) ?? null;
-    const lastForecastPoint =
-      [...trendTimelineData]
-        .reverse()
-        .find((point) => point.priceForecast !== null) ?? null;
-
-    if (!firstHistoricalPoint || !lastForecastPoint) {
-      return null;
-    }
-
-    const priceStart = firstHistoricalPoint.priceHistorical ?? 0;
-    const priceEnd = lastForecastPoint.priceForecast ?? priceStart;
-    const projectedPriceChange = priceStart
-      ? ((priceEnd - priceStart) / priceStart) * 100
-      : 0;
-
-    const demandStart = firstHistoricalPoint.demandHistorical ?? 0;
-    const demandEnd = lastForecastPoint.demandForecast ?? demandStart;
-    const projectedDemandChange = demandStart
-      ? ((demandEnd - demandStart) / demandStart) * 100
-      : 0;
-
-    const confidence = clamp(
-      Math.round(
-        68 +
-          Math.abs(parseTrendPercent(activeListingForTrend.trend)) * 6 +
-          parseVolumeTons(activeListingForTrend.volume) / 25
-      ),
-      65,
-      92
-    );
-
-    return {
-      projectedPriceChange,
-      projectedDemandChange,
-      confidence,
-    };
-  }, [activeListingForTrend, trendTimelineData]);
-
-  const handleResetFilters = () => {
-    setTrendSearchQuery('');
-    setTrendCategory('all');
-    setTrendCountry('all');
-    setTrendCurrency('VND');
-    setSelectedCommodity('auto');
-  };
 
   return (
     <>
@@ -491,24 +793,16 @@ export default function MarketplaceClient() {
       />
 
       <MarketTrendSection
-        searchQuery={trendSearchQuery}
-        selectedCategory={trendCategory}
-        selectedCountry={trendCountry}
         selectedCurrency={trendCurrency}
         activeCurrency={activeTrendCurrency}
-        countries={countries}
         aseanCurrencies={aseanCurrencies}
         commodityOptions={commodityOptions}
         activeCommodityValue={activeCommodityValue}
         activeListingForTrend={activeListingForTrend}
-        trendTimelineData={trendTimelineData}
-        forecastSummary={forecastSummary}
-        onSearchQueryChange={setTrendSearchQuery}
-        onCategoryChange={setTrendCategory}
-        onCountryChange={setTrendCountry}
+        trendTimelineData={trendTimelineData?.points ?? []}
+        aiForecast={trendTimelineData?.aiForecast ?? null}
         onCurrencyChange={setTrendCurrency}
         onCommodityChange={setSelectedCommodity}
-        onReset={handleResetFilters}
       />
 
       <TradingBoardSection

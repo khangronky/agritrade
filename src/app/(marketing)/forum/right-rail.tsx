@@ -1,0 +1,63 @@
+import { ChevronRight, ClipboardList } from 'lucide-react';
+import { forumOverviewItems, forumRfq } from './mock-data';
+
+export function RightRail() {
+  return (
+    <aside className="space-y-4">
+      <section className="rounded border border-border p-3">
+        <p className="font-medium text-sm">Me</p>
+        <p className="mt-2 text-xs leading-relaxed">
+          Sign in or join AgriTrade to personalize your feed. Interested in what
+          we offer? Click here to find out.
+        </p>
+        <button
+          type="button"
+          className="mt-2 font-semibold text-[#1d4ed8] text-xs hover:text-[#1e40af]"
+        >
+          Sign in
+        </button>
+      </section>
+
+      <section className="rounded border border-border p-3">
+        <p className="font-medium text-sm">Market Overviews</p>
+        <p className="mt-2 text-xs leading-relaxed">
+          Discover market overviews with key data and insights on products you
+          may be interested in.
+        </p>
+
+        <ul className="mt-3 space-y-2">
+          {forumOverviewItems.map((item) => (
+            <li key={item.name}>
+              <button
+                type="button"
+                className="flex w-full items-center justify-between rounded-lg border border-transparent px-1 py-1 text-sm text-zinc-200 hover:border-emerald-500/20 hover:bg-zinc-900/75"
+              >
+                <span className="flex items-center gap-2">
+                  <item.icon className="size-4 text-emerald-300" />
+                  {item.name}
+                </span>
+                <ChevronRight className="size-4 text-zinc-500" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="rounded border border-border p-3">
+        <p className="font-medium text-muted-foreground text-sm">
+          {forumRfq.title}
+        </p>
+        <p className="mt-2 text-xs leading-relaxed">{forumRfq.description}</p>
+        <div className="mt-3 flex items-center justify-between">
+          <button
+            type="button"
+            className="font-semibold text-[#1d4ed8] text-xs hover:text-[#1e40af]"
+          >
+            {forumRfq.actionLabel}
+          </button>
+          <ClipboardList className="size-5 text-zinc-400" />
+        </div>
+      </section>
+    </aside>
+  );
+}

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
@@ -118,14 +118,14 @@ export function RegisterForm() {
 
   if (otpSent) {
     return (
-      <Card className="border-green-200/70 bg-white/90 shadow-[0_20px_48px_rgba(5,46,22,0.12)] backdrop-blur">
+      <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(0,0,0,0.5)] backdrop-blur">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-green-950">
+          <CardTitle className="text-2xl text-zinc-100">
             Verify Your Email
           </CardTitle>
-          <CardDescription className="text-green-800/80">
+          <CardDescription className="text-zinc-300/80">
             We sent a verification code to{' '}
-            <span className="font-medium text-green-950">{email}</span>
+            <span className="font-medium text-zinc-100">{email}</span>
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -139,33 +139,33 @@ export function RegisterForm() {
               <InputOTPGroup>
                 <InputOTPSlot
                   index={0}
-                  className="h-11 w-11 border-green-200 bg-white text-green-950 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
+                  className="h-11 w-11 border-emerald-500/25 bg-zinc-900 text-zinc-100 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
                 />
                 <InputOTPSlot
                   index={1}
-                  className="h-11 w-11 border-green-200 bg-white text-green-950 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
+                  className="h-11 w-11 border-emerald-500/25 bg-zinc-900 text-zinc-100 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
                 />
                 <InputOTPSlot
                   index={2}
-                  className="h-11 w-11 border-green-200 bg-white text-green-950 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
+                  className="h-11 w-11 border-emerald-500/25 bg-zinc-900 text-zinc-100 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
                 />
                 <InputOTPSlot
                   index={3}
-                  className="h-11 w-11 border-green-200 bg-white text-green-950 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
+                  className="h-11 w-11 border-emerald-500/25 bg-zinc-900 text-zinc-100 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
                 />
                 <InputOTPSlot
                   index={4}
-                  className="h-11 w-11 border-green-200 bg-white text-green-950 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
+                  className="h-11 w-11 border-emerald-500/25 bg-zinc-900 text-zinc-100 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
                 />
                 <InputOTPSlot
                   index={5}
-                  className="h-11 w-11 border-green-200 bg-white text-green-950 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
+                  className="h-11 w-11 border-emerald-500/25 bg-zinc-900 text-zinc-100 data-[active=true]:border-brand-lime data-[active=true]:ring-brand-lime/25"
                 />
               </InputOTPGroup>
             </InputOTP>
           </div>
           <Button
-            className="w-full bg-brand-lime font-semibold text-green-950 transition-colors hover:bg-lime-300"
+            className="w-full bg-brand-lime font-semibold text-zinc-950 transition-colors hover:bg-brand-lime/85"
             onClick={handleVerifyOtp}
             disabled={verifyOtpMutation.isPending || otp.length !== 6}
           >
@@ -179,16 +179,16 @@ export function RegisterForm() {
             )}
           </Button>
           <div className="text-center">
-            <p className="text-green-800/85 text-sm">
+            <p className="text-zinc-300/85 text-sm">
               Didn&apos;t receive the code?{' '}
               {cooldown > 0 ? (
-                <span className="text-green-700/70">Resend in {cooldown}s</span>
+                <span className="text-zinc-400/80">Resend in {cooldown}s</span>
               ) : (
                 <button
                   type="button"
                   onClick={handleResendOtp}
                   disabled={resendOtpMutation.isPending}
-                  className="font-medium text-green-950 hover:underline disabled:opacity-50"
+                  className="font-medium text-zinc-100 hover:underline disabled:opacity-50"
                 >
                   {resendOtpMutation.isPending ? 'Sending...' : 'Resend'}
                 </button>
@@ -196,11 +196,11 @@ export function RegisterForm() {
             </p>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-center border-green-100/90 border-t pt-6">
+        <CardFooter className="flex justify-center border-zinc-700/70 border-t pt-6">
           <button
             type="button"
             onClick={() => setOtpSent(false)}
-            className="text-green-800/85 text-sm hover:text-green-950 hover:underline"
+            className="text-zinc-300/85 text-sm hover:text-zinc-100 hover:underline"
           >
             Use a different email
           </button>
@@ -210,12 +210,10 @@ export function RegisterForm() {
   }
 
   return (
-    <Card className="border-green-200/70 bg-white/90 shadow-[0_20px_48px_rgba(5,46,22,0.12)] backdrop-blur">
+    <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(0,0,0,0.5)] backdrop-blur">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-green-950">
-          Create Account
-        </CardTitle>
-        <CardDescription className="text-green-800/80">
+        <CardTitle className="text-2xl text-zinc-100">Create Account</CardTitle>
+        <CardDescription className="text-zinc-300/80">
           Get started with AgriTrade
         </CardDescription>
       </CardHeader>
@@ -227,12 +225,12 @@ export function RegisterForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-green-900">Email</FormLabel>
+                  <FormLabel className="text-zinc-200">Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
                       placeholder="you@example.com"
-                      className="border-green-200 bg-white/95 focus-visible:border-green-300 focus-visible:ring-green-200"
+                      className="border-emerald-500/25 bg-zinc-950/80 focus-visible:border-emerald-400/35 focus-visible:ring-emerald-400/20"
                       {...field}
                     />
                   </FormControl>
@@ -245,20 +243,20 @@ export function RegisterForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-green-900">Password</FormLabel>
+                  <FormLabel className="text-zinc-200">Password</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Create a password"
-                        className="border-green-200 bg-white/95 pr-10 focus-visible:border-green-300 focus-visible:ring-green-200"
+                        className="border-emerald-500/25 bg-zinc-950/80 pr-10 focus-visible:border-emerald-400/35 focus-visible:ring-emerald-400/20"
                         {...field}
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-0 right-0 h-full px-3 text-green-700/70 hover:text-green-900"
+                        className="absolute top-0 right-0 h-full px-3 text-zinc-400/80 hover:text-zinc-200"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? (
@@ -278,7 +276,7 @@ export function RegisterForm() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-green-900">
+                  <FormLabel className="text-zinc-200">
                     Confirm Password
                   </FormLabel>
                   <FormControl>
@@ -286,14 +284,14 @@ export function RegisterForm() {
                       <Input
                         type={showConfirmPassword ? 'text' : 'password'}
                         placeholder="Confirm your password"
-                        className="border-green-200 bg-white/95 pr-10 focus-visible:border-green-300 focus-visible:ring-green-200"
+                        className="border-emerald-500/25 bg-zinc-950/80 pr-10 focus-visible:border-emerald-400/35 focus-visible:ring-emerald-400/20"
                         {...field}
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-0 right-0 h-full px-3 text-green-700/70 hover:text-green-900"
+                        className="absolute top-0 right-0 h-full px-3 text-zinc-400/80 hover:text-zinc-200"
                         onClick={() =>
                           setShowConfirmPassword(!showConfirmPassword)
                         }
@@ -310,13 +308,13 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
-            <p className="text-green-800/75 text-xs">
+            <p className="text-zinc-300/75 text-xs">
               Password must be at least 8 characters with uppercase, lowercase,
               number, and special character.
             </p>
             <Button
               type="submit"
-              className="w-full bg-brand-lime font-semibold text-green-950 transition-colors hover:bg-lime-300"
+              className="w-full bg-brand-lime font-semibold text-zinc-950 transition-colors hover:bg-brand-lime/85"
               disabled={registerMutation.isPending}
             >
               {registerMutation.isPending ? (
@@ -331,12 +329,12 @@ export function RegisterForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex justify-center border-green-100/90 border-t pt-6">
-        <p className="text-green-800/85 text-sm">
+      <CardFooter className="flex justify-center border-zinc-700/70 border-t pt-6">
+        <p className="text-zinc-300/85 text-sm">
           Already have an account?{' '}
           <Link
             href="/login"
-            className="font-medium text-green-950 hover:underline"
+            className="font-medium text-zinc-100 hover:underline"
           >
             Sign in
           </Link>
