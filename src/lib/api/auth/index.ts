@@ -3,7 +3,10 @@ import { fetcher } from '@/lib/api';
 
 export const authKeys = {
   me: ['auth', 'me'] as const,
+  onboarding: ['auth', 'onboarding'] as const,
 };
+
+export type OnboardingRole = 'farmer' | 'trader';
 
 // Types
 interface LoginRequest {
@@ -38,6 +41,17 @@ interface UpdateProfileRequest {
   full_name: string;
 }
 
+interface UpdateOnboardingRequest {
+  full_name?: string;
+  role?: OnboardingRole;
+  onboarding_step?: number;
+}
+
+interface CompleteOnboardingRequest {
+  full_name: string;
+  role: OnboardingRole;
+}
+
 interface ChangePasswordRequest {
   currentPassword: string;
   newPassword: string;
@@ -56,6 +70,20 @@ interface CurrentUser {
   id: string;
   email: string;
   full_name: string | null;
+  role: OnboardingRole | null;
+  onboarding_status: 'pending' | 'completed';
+  onboarding_step: number;
+  onboarding_completed_at: string | null;
+}
+
+export interface OnboardingStatus {
+  id: string;
+  email: string;
+  full_name: string | null;
+  role: OnboardingRole | null;
+  onboarding_status: 'pending' | 'completed';
+  onboarding_step: number;
+  onboarding_completed_at: string | null;
 }
 
 // Mutations
@@ -142,10 +170,48 @@ export function useChangePasswordMutation() {
   });
 }
 
+export function useUpdateOnboardingMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: UpdateOnboardingRequest) =>
+      fetcher<OnboardingStatus>('/auth/onboarding', {
+        method: 'PATCH',
+        body: data,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: authKeys.onboarding });
+      queryClient.invalidateQueries({ queryKey: authKeys.me });
+    },
+  });
+}
+
+export function useCompleteOnboardingMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: CompleteOnboardingRequest) =>
+      fetcher<AuthResponse>('/auth/onboarding/complete', {
+        method: 'POST',
+        body: data,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: authKeys.onboarding });
+      queryClient.invalidateQueries({ queryKey: authKeys.me });
+    },
+  });
+}
+
 // Queries
 export function useCurrentUser() {
   return useQuery({
     queryKey: authKeys.me,
     queryFn: () => fetcher<CurrentUser>('/auth/me'),
+  });
+}
+
+export function useOnboardingStatusQuery(initialData?: OnboardingStatus) {
+  return useQuery({
+    queryKey: authKeys.onboarding,
+    queryFn: () => fetcher<OnboardingStatus>('/auth/onboarding'),
+    initialData,
   });
 }

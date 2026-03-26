@@ -42,18 +42,33 @@ export type Database = {
           email: string;
           full_name: string | null;
           id: string;
+          onboarding_completed_at: string | null;
+          onboarding_status: 'completed' | 'pending';
+          onboarding_step: number;
+          role: 'farmer' | 'trader' | null;
+          username: string | null;
         };
         Insert: {
           created_at?: string;
           email: string;
           full_name?: string | null;
           id?: string;
+          onboarding_completed_at?: string | null;
+          onboarding_status?: 'completed' | 'pending';
+          onboarding_step?: number;
+          role?: 'farmer' | 'trader' | null;
+          username?: string | null;
         };
         Update: {
           created_at?: string;
           email?: string;
           full_name?: string | null;
           id?: string;
+          onboarding_completed_at?: string | null;
+          onboarding_status?: 'completed' | 'pending';
+          onboarding_step?: number;
+          role?: 'farmer' | 'trader' | null;
+          username?: string | null;
         };
         Relationships: [];
       };
