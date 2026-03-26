@@ -10,7 +10,9 @@ function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
-function isValidCreatePayload(payload: CreatePostPayload): payload is CreateForumPostInput {
+function isValidCreatePayload(
+  payload: CreatePostPayload
+): payload is CreateForumPostInput {
   return (
     isNonEmptyString(payload.companyName) &&
     isNonEmptyString(payload.author) &&

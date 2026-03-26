@@ -81,7 +81,9 @@ export function ForumPostComposer() {
 
       if (!response.ok) {
         const responseError = 'error' in data ? data.error : undefined;
-        throw new Error(responseError || data.message || 'Failed to create post');
+        throw new Error(
+          responseError || data.message || 'Failed to create post'
+        );
       }
 
       toast.success('Post created successfully.');
@@ -89,7 +91,9 @@ export function ForumPostComposer() {
       setIsComposerOpen(false);
       router.refresh();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to create post');
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to create post'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -116,7 +120,9 @@ export function ForumPostComposer() {
               <span className="text-xs text-zinc-400">Company Name *</span>
               <input
                 value={form.companyName}
-                onChange={(event) => updateField('companyName', event.target.value)}
+                onChange={(event) =>
+                  updateField('companyName', event.target.value)
+                }
                 className="w-full rounded-md border border-emerald-500/20 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-emerald-400/50"
                 placeholder="Example: Mekong Green Cooperative"
                 maxLength={120}
@@ -166,7 +172,9 @@ export function ForumPostComposer() {
               <span className="text-xs text-zinc-400">Image URL</span>
               <input
                 value={form.imageSrc}
-                onChange={(event) => updateField('imageSrc', event.target.value)}
+                onChange={(event) =>
+                  updateField('imageSrc', event.target.value)
+                }
                 className="w-full rounded-md border border-emerald-500/20 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-emerald-400/50"
                 placeholder="/farm.jpg or https://..."
               />
@@ -176,7 +184,9 @@ export function ForumPostComposer() {
               <span className="text-xs text-zinc-400">Image Caption</span>
               <input
                 value={form.imageCaption}
-                onChange={(event) => updateField('imageCaption', event.target.value)}
+                onChange={(event) =>
+                  updateField('imageCaption', event.target.value)
+                }
                 className="w-full rounded-md border border-emerald-500/20 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none focus:border-emerald-400/50"
                 placeholder="Optional caption"
                 maxLength={120}
@@ -198,7 +208,9 @@ export function ForumPostComposer() {
               className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-3 py-2 font-semibold text-xs text-zinc-950 hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-70"
               disabled={isSubmitting}
             >
-              {isSubmitting ? <Loader2 className="size-3 animate-spin" /> : null}
+              {isSubmitting ? (
+                <Loader2 className="size-3 animate-spin" />
+              ) : null}
               {isSubmitting ? 'Posting...' : 'Post'}
             </button>
           </div>
@@ -207,6 +219,3 @@ export function ForumPostComposer() {
     </div>
   );
 }
-
-
-
