@@ -38,7 +38,7 @@ export function HomeLiveUpdatesPanel({
   return (
     <div
       className={cn(
-        'rounded-[28px] border border-emerald-500/25 bg-linear-to-br from-zinc-900/95 via-zinc-900/90 to-zinc-950/95 shadow-[0_18px_42px_rgba(16,185,129,0.16)] backdrop-blur-xl',
+        'rounded-[28px] border border-emerald-500/20 bg-zinc-950/88 shadow-[0_18px_42px_rgba(0,0,0,0.55)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
     >
@@ -54,7 +54,7 @@ export function HomeLiveUpdatesPanel({
         <Link
           href="/marketplace"
           className={cn(
-            'text-zinc-400 transition-colors hover:text-emerald-400',
+            'text-zinc-400 transition-colors hover:text-emerald-300',
             compact ? 'text-[11px]' : 'text-sm'
           )}
         >
@@ -87,7 +87,7 @@ export function HomeLiveUpdatesPanel({
           {visibleFeed.map((item) => (
             <div
               key={item.id}
-              className="rounded-xl border border-emerald-500/20 bg-linear-to-r from-emerald-900/30 via-teal-900/24 to-zinc-950/65 px-4 py-3"
+              className="rounded-xl border border-emerald-500/20 bg-zinc-950/78 px-4 py-3"
             >
               <p className="font-medium text-zinc-100 text-sm leading-relaxed sm:text-base">
                 {item.farmer} {item.update} ({item.country})
@@ -95,7 +95,7 @@ export function HomeLiveUpdatesPanel({
               <p className="mt-1 text-zinc-300/85 text-xs sm:text-sm">
                 {item.detail}
               </p>
-              <p className="mt-2 font-medium text-emerald-300/90 text-xs">
+              <p className="mt-2 font-medium text-emerald-200/90 text-xs">
                 {item.time}
               </p>
             </div>

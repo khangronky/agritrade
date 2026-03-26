@@ -80,7 +80,7 @@ export function MarketTrendSection({
   return (
     <section className="relative py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-emerald-400/30 bg-zinc-900/70 p-5 shadow-[0_22px_48px_rgba(163,230,53,0.22)] backdrop-blur-sm sm:p-6">
+        <div className="rounded-3xl border border-emerald-400/22 bg-zinc-950/80 p-5 shadow-[0_22px_48px_rgba(0,0,0,0.55)] backdrop-blur-sm sm:p-6">
           <div className="flex flex-col gap-4">
             <div className="space-y-2">
               <h2 className="font-semibold text-2xl sm:text-3xl">
@@ -118,7 +118,7 @@ export function MarketTrendSection({
               <NativeSelect
                 value={activeCommodityValue}
                 onChange={(event) => onCommodityChange(event.target.value)}
-                className="h-9 min-w-52 rounded-lg border-emerald-400/35 bg-zinc-900/78 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
+                className="h-9 min-w-52 rounded-lg border-emerald-400/22 bg-zinc-950/78 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
               >
                 <NativeSelectOption value="auto">
                   Auto (top matched commodity)
@@ -206,7 +206,7 @@ export function MarketTrendSection({
               <ForecastSummaryGrid forecastSummary={forecastSummary} />
             </>
           ) : (
-            <Card className="mt-6 gap-0 rounded-2xl border-emerald-400/30 bg-zinc-900 py-0 text-zinc-100 shadow-sm">
+            <Card className="mt-6 gap-0 rounded-2xl border-emerald-400/22 bg-zinc-950/82 py-0 text-zinc-100 shadow-sm">
               <CardContent className="px-5 py-8 text-center text-zinc-400">
                 No timeline data available for current filters.
               </CardContent>
@@ -252,12 +252,12 @@ function MarketplaceFilterBar({
         placeholder="Search by commodity"
         value={searchQuery}
         onChange={(event) => onSearchQueryChange(event.target.value)}
-        className="h-10 rounded-xl border-emerald-400/35 bg-zinc-900/78 text-zinc-300 text-xs placeholder:text-zinc-500 focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20 sm:w-64"
+        className="h-10 rounded-xl border-emerald-400/22 bg-zinc-950/78 text-zinc-300 text-xs placeholder:text-zinc-500 focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20 sm:w-64"
       />
       <NativeSelect
         value={selectedCategory}
         onChange={(event) => onCategoryChange(event.target.value)}
-        className="h-10 min-w-40 rounded-xl border-emerald-400/35 bg-zinc-900/78 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
+        className="h-10 min-w-40 rounded-xl border-emerald-400/22 bg-zinc-950/78 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
       >
         <NativeSelectOption value="all">
           All listed commodities
@@ -270,7 +270,7 @@ function MarketplaceFilterBar({
       <NativeSelect
         value={selectedCountry}
         onChange={(event) => onCountryChange(event.target.value)}
-        className="h-10 min-w-40 rounded-xl border-emerald-400/35 bg-zinc-900/78 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
+        className="h-10 min-w-40 rounded-xl border-emerald-400/22 bg-zinc-950/78 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
       >
         <NativeSelectOption value="all">All countries</NativeSelectOption>
         {countries.map((country) => (
@@ -284,7 +284,7 @@ function MarketplaceFilterBar({
         onChange={(event) =>
           onCurrencyChange(event.target.value as CurrencyCode)
         }
-        className="h-10 min-w-36 rounded-xl border-emerald-400/35 bg-zinc-900/78 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
+        className="h-10 min-w-36 rounded-xl border-emerald-400/22 bg-zinc-950/78 text-zinc-300 text-xs focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
       >
         {aseanCurrencies.map((currency) => (
           <NativeSelectOption key={currency.code} value={currency.code}>
@@ -296,7 +296,7 @@ function MarketplaceFilterBar({
         variant="outline"
         size="sm"
         onClick={onReset}
-        className="h-10 rounded-xl border-emerald-400/45 bg-zinc-900/85 text-lime-200 text-xs hover:bg-zinc-800/75"
+        className="h-10 rounded-xl border-emerald-400/30 bg-zinc-950/85 text-emerald-200 text-xs hover:bg-zinc-900/75"
       >
         Reset
       </Button>
@@ -318,7 +318,7 @@ function TrendChartCard({
   children,
 }: TrendChartCardProps) {
   return (
-    <Card className="gap-0 rounded-2xl border-emerald-400/30 bg-zinc-900/82 py-0 text-zinc-100 shadow-sm">
+    <Card className="gap-0 rounded-2xl border-emerald-400/22 bg-zinc-950/82 py-0 text-zinc-100 shadow-sm">
       <CardHeader className="px-5 pt-5 pb-2">
         <CardTitle className="text-lg sm:text-xl">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
@@ -344,7 +344,7 @@ function ForecastMetricCard({
   valueClassName,
 }: ForecastMetricCardProps) {
   return (
-    <Card className="gap-0 rounded-xl border-emerald-400/30 bg-zinc-900/78 py-0">
+    <Card className="gap-0 rounded-xl border-emerald-400/22 bg-zinc-950/78 py-0">
       <CardContent className="px-4 py-4">
         <p className="text-zinc-400 text-xs uppercase tracking-[0.14em]">
           {label}
@@ -393,7 +393,7 @@ function ForecastSummaryGrid({
       <ForecastMetricCard
         label="AI confidence"
         value={forecastSummary ? `${forecastSummary.confidence}%` : '--'}
-        valueClassName="text-lime-300"
+        valueClassName="text-emerald-200"
       />
     </div>
   );

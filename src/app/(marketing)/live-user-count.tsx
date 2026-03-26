@@ -59,7 +59,7 @@ export function LiveUserCount({
         className={cn(
           'tabular-nums transition-all duration-500',
           isAnimating &&
-            'scale-[1.02] text-amber-400 drop-shadow-[0_0_14px_rgba(245,158,11,0.4)]'
+            'scale-[1.02] text-emerald-300 drop-shadow-[0_0_14px_rgba(52,211,153,0.32)]'
         )}
       >
         {formatCount(count)}

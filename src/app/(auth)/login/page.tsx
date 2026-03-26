@@ -18,7 +18,7 @@ export default function LoginPage() {
 function LoginFormSkeleton() {
   return (
     <div className="w-full max-w-md animate-pulse">
-      <div className="rounded-xl border border-emerald-500/25 bg-zinc-900/85 p-6 shadow-[0_20px_48px_rgba(5,46,22,0.12)]">
+      <div className="rounded-xl border border-emerald-500/25 bg-zinc-900/85 p-6 shadow-[0_20px_48px_rgba(0,0,0,0.5)]">
         <div className="space-y-4">
           <div className="mx-auto h-8 w-1/2 rounded bg-zinc-800/70" />
           <div className="mx-auto h-4 w-3/4 rounded bg-zinc-800/70" />

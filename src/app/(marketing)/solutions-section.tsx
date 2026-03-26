@@ -33,7 +33,7 @@ const solutionCards: SolutionCard[] = [
     description: 'Farmers see the real market before accepting a deal.',
     points: ['Real-time regional prices', 'Clear up/down trend indicators'],
     imagePosition: 'object-center',
-    overlayClass: 'from-green-950/70 via-green-900/40 to-transparent',
+    overlayClass: 'from-zinc-950/78 via-zinc-900/42 to-transparent',
     icon: BarChart3,
   },
   {
@@ -45,7 +45,7 @@ const solutionCards: SolutionCard[] = [
       'Simple notifications for new offers',
     ],
     imagePosition: 'object-[center_35%]',
-    overlayClass: 'from-lime-950/70 via-green-800/35 to-transparent',
+    overlayClass: 'from-zinc-950/78 via-zinc-900/42 to-transparent',
     icon: Search,
   },
   {
@@ -58,7 +58,7 @@ const solutionCards: SolutionCard[] = [
       'Compare multiple offers side by side',
     ],
     imagePosition: 'object-[center_45%]',
-    overlayClass: 'from-green-950/70 via-emerald-900/35 to-transparent',
+    overlayClass: 'from-zinc-950/78 via-zinc-900/42 to-transparent',
     icon: Handshake,
   },
   {
@@ -70,7 +70,7 @@ const solutionCards: SolutionCard[] = [
       'External logistics or middleman delivery',
     ],
     imagePosition: 'object-[center_30%]',
-    overlayClass: 'from-emerald-950/70 via-lime-900/35 to-transparent',
+    overlayClass: 'from-zinc-950/78 via-zinc-900/42 to-transparent',
     icon: Truck,
   },
   {
@@ -83,7 +83,7 @@ const solutionCards: SolutionCard[] = [
       'Better price discovery through competition',
     ],
     imagePosition: 'object-[center_55%]',
-    overlayClass: 'from-green-950/70 via-green-900/35 to-transparent',
+    overlayClass: 'from-zinc-950/78 via-zinc-900/42 to-transparent',
     icon: Unplug,
   },
 ];
@@ -94,7 +94,7 @@ export function SolutionsSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Badge
           variant="outline"
-          className="border-emerald-400/35 bg-zinc-800/70 text-zinc-200"
+          className="border-emerald-400/30 bg-zinc-900/70 text-zinc-200"
         >
           Business Model
         </Badge>
@@ -116,7 +116,7 @@ export function SolutionsSection() {
             return (
               <Card
                 key={card.title}
-                className="overflow-hidden rounded-2xl border border-emerald-500/25 bg-zinc-950/90 py-0 text-zinc-100 shadow-md"
+                className="overflow-hidden rounded-2xl border border-emerald-500/20 bg-zinc-950/88 py-0 text-zinc-100 shadow-md"
               >
                 <div className="relative h-40">
                   <Image
@@ -129,19 +129,19 @@ export function SolutionsSection() {
                   <div
                     className={`absolute inset-0 bg-linear-to-t ${card.overlayClass}`}
                   />
-                  <Badge className="absolute top-4 left-4 border-zinc-700/70 bg-lime-300/90 font-semibold text-zinc-950">
+                  <Badge className="absolute top-4 left-4 border-emerald-400/30 bg-emerald-500/15 font-semibold text-emerald-200">
                     {card.badge}
                   </Badge>
                 </div>
 
                 <CardHeader className="gap-3 px-5 pt-5">
-                  <div className="flex items-center gap-2 text-lime-200">
+                  <div className="flex items-center gap-2 text-emerald-200">
                     <Icon className="size-4" />
                     <span className="font-medium text-xs uppercase tracking-[0.2em]">
                       AgriTrade
                     </span>
                   </div>
-                  <CardTitle className="text-lime-200 text-xl">
+                  <CardTitle className="text-emerald-200 text-xl">
                     {card.title}
                   </CardTitle>
                   <CardDescription className="text-zinc-100">
@@ -153,7 +153,7 @@ export function SolutionsSection() {
                   <ul className="space-y-2 text-zinc-100 text-sm">
                     {card.points.map((point) => (
                       <li key={point} className="flex gap-2">
-                        <span className="mt-1.5 inline-block size-2 shrink-0 rounded-full bg-lime-200" />
+                        <span className="mt-1.5 inline-block size-2 shrink-0 rounded-full bg-emerald-300" />
                         <span>{point}</span>
                       </li>
                     ))}

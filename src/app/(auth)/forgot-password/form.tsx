@@ -132,7 +132,7 @@ export function ForgotPasswordForm() {
   // Stage 1: Email
   if (stage === 'email') {
     return (
-      <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(5,46,22,0.12)] backdrop-blur">
+      <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(0,0,0,0.5)] backdrop-blur">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-zinc-100">
             Forgot Password?
@@ -197,7 +197,7 @@ export function ForgotPasswordForm() {
   // Stage 2: OTP
   if (stage === 'otp') {
     return (
-      <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(5,46,22,0.12)] backdrop-blur">
+      <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(0,0,0,0.5)] backdrop-blur">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-zinc-100">
             Enter Recovery Code
@@ -290,7 +290,7 @@ export function ForgotPasswordForm() {
 
   // Stage 3: New Password
   return (
-    <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(5,46,22,0.12)] backdrop-blur">
+    <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(0,0,0,0.5)] backdrop-blur">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl text-zinc-100">
           Set New Password

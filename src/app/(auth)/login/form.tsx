@@ -56,7 +56,7 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(5,46,22,0.12)] backdrop-blur">
+    <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(0,0,0,0.5)] backdrop-blur">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl text-zinc-100">Welcome Back</CardTitle>
         <CardDescription className="text-zinc-300/80">

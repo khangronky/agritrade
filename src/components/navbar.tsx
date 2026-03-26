@@ -94,14 +94,14 @@ export function Navbar({ user }: NavbarProps) {
         <>
           <Button
             asChild
-            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/80"
+            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
           >
             <Link href="/login">Sign In</Link>
           </Button>
           <Button
             asChild
             variant="outline"
-            className="bg-background text-zinc-200 hover:bg-background/80"
+            className="border-emerald-400/30 bg-zinc-950/70 text-zinc-200 hover:bg-zinc-900/90 hover:text-zinc-100"
           >
             <Link href="/register">Sign Up</Link>
           </Button>
@@ -114,10 +114,10 @@ export function Navbar({ user }: NavbarProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-10 gap-2 px-2 text-zinc-200 hover:bg-zinc-800/80 hover:text-zinc-100"
+            className="h-10 gap-2 px-2 text-zinc-200 hover:bg-zinc-900 hover:text-zinc-100"
           >
             <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-emerald-500/20 text-emerald-200">
+              <AvatarFallback className="border border-emerald-500/25 bg-emerald-500/12 text-emerald-200">
                 {getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
@@ -150,7 +150,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full border-emerald-500/15 border-b bg-zinc-950/45 backdrop-blur-md">
+    <header className="fixed top-0 z-30 w-full border-emerald-500/20 border-b bg-black/75 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -175,14 +175,14 @@ export function Navbar({ user }: NavbarProps) {
                 className={cn(
                   'relative font-semibold text-sm transition-colors',
                   isActive
-                    ? 'text-emerald-300'
-                    : 'text-zinc-200 hover:text-emerald-400'
+                    ? 'text-emerald-200'
+                    : 'text-zinc-300 hover:text-emerald-300'
                 )}
               >
                 {item.label}
                 <span
                   className={cn(
-                    '-bottom-1.5 pointer-events-none absolute left-0 h-0.5 w-full rounded-full bg-emerald-400 transition-opacity duration-200',
+                    '-bottom-1.5 pointer-events-none absolute left-0 h-0.5 w-full rounded-full bg-emerald-300 transition-opacity duration-200',
                     isActive ? 'opacity-100' : 'opacity-0'
                   )}
                 />
@@ -203,7 +203,7 @@ export function Navbar({ user }: NavbarProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-2 border-zinc-700 bg-zinc-900/72 px-2 text-zinc-200 hover:bg-zinc-800 hover:text-zinc-100"
+                    className="gap-2 border-emerald-400/25 bg-zinc-950/80 px-2 text-zinc-200 hover:bg-zinc-900 hover:text-zinc-100"
                   >
                     <Menu className="size-4" />
                   </Button>
@@ -228,7 +228,7 @@ export function Navbar({ user }: NavbarProps) {
                       className={cn(
                         'rounded-md px-3 py-2 text-sm transition-colors',
                         isActive
-                          ? 'bg-emerald-500/20 text-emerald-200'
+                          ? 'bg-emerald-500/15 text-emerald-200'
                           : 'hover:bg-zinc-800 hover:text-zinc-50'
                       )}
                     >
@@ -245,7 +245,7 @@ export function Navbar({ user }: NavbarProps) {
                   <SheetClose asChild>
                     <Button
                       asChild
-                      className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/80"
+                      className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
                     >
                       <Link href="/login">Sign In</Link>
                     </Button>
@@ -254,7 +254,7 @@ export function Navbar({ user }: NavbarProps) {
                     <Button
                       asChild
                       variant="outline"
-                      className="bg-background text-zinc-200 hover:bg-background/80"
+                      className="border-emerald-400/30 bg-zinc-950/70 text-zinc-200 hover:bg-zinc-900/90 hover:text-zinc-100"
                     >
                       <Link href="/register">Sign Up</Link>
                     </Button>

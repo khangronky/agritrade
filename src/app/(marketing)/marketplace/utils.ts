@@ -2,8 +2,8 @@
 
 export const demandLevelStyles: Record<DemandLevel, string> = {
   'High demand': 'border-emerald-400/40 bg-emerald-500/10 text-emerald-300',
-  'Balanced demand': 'border-amber-300/40 bg-amber-500/10 text-amber-300',
-  'Soft demand': 'border-rose-300/40 bg-rose-500/10 text-rose-300',
+  'Balanced demand': 'border-emerald-400/30 bg-emerald-500/10 text-emerald-200',
+  'Soft demand': 'border-zinc-500/45 bg-zinc-800/55 text-zinc-200',
 };
 
 export const priceTrendChartConfig = {
@@ -13,18 +13,18 @@ export const priceTrendChartConfig = {
   },
   priceForecast: {
     label: 'AI forecast',
-    color: '#38bdf8',
+    color: '#86efac',
   },
 } as const;
 
 export const demandTrendChartConfig = {
   demandHistorical: {
     label: 'Historical demand',
-    color: '#a3e635',
+    color: '#6ee7b7',
   },
   demandForecast: {
     label: 'AI forecast',
-    color: '#fbbf24',
+    color: '#22c55e',
   },
 } as const;
 

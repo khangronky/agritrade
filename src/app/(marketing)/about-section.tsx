@@ -38,7 +38,7 @@ export function AboutSection() {
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
-          <div className="space-y-4 rounded-3xl border border-emerald-500/25 bg-zinc-900/78 p-5 shadow-sm sm:p-6">
+          <div className="space-y-4 rounded-3xl border border-emerald-500/20 bg-zinc-950/80 p-5 shadow-sm sm:p-6">
             <div className="grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
               <AudienceCard
                 title="Farmer"
@@ -57,7 +57,7 @@ export function AboutSection() {
               {aboutImages.map((image) => (
                 <div
                   key={image.alt}
-                  className="group relative aspect-4/3 overflow-hidden rounded-2xl border border-emerald-500/25 bg-zinc-800/70 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-emerald-400/35 hover:shadow-lg"
+                  className="group relative aspect-4/3 overflow-hidden rounded-2xl border border-emerald-500/20 bg-zinc-900/62 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-emerald-400/30 hover:shadow-lg"
                 >
                   <Image
                     src="/farm.jpg"
@@ -71,8 +71,8 @@ export function AboutSection() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-emerald-500/25 bg-zinc-950/90 p-6 text-zinc-100 shadow-sm sm:p-7">
-            <h3 className="font-semibold text-2xl text-lime-200 sm:text-3xl">
+          <div className="rounded-3xl border border-emerald-500/20 bg-zinc-950/88 p-6 text-zinc-100 shadow-sm sm:p-7">
+            <h3 className="font-semibold text-2xl text-emerald-200 sm:text-3xl">
               Why us
             </h3>
             <ul className="mt-5 space-y-3">
@@ -83,7 +83,7 @@ export function AboutSection() {
                 'Simple tools so adoption does not disrupt existing workflows.',
               ].map((point) => (
                 <li key={point} className="flex gap-3 text-zinc-200/95 text-sm">
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-lime-200" />
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-200" />
                   <span>{point}</span>
                 </li>
               ))}
@@ -103,7 +103,7 @@ function AudienceCard({
   description: string;
 }) {
   return (
-    <div className="rounded-2xl border border-emerald-500/25 bg-zinc-900/75 p-4">
+    <div className="rounded-2xl border border-emerald-500/20 bg-zinc-950/72 p-4">
       <p className="font-semibold text-zinc-100">{title}</p>
       <p className="mt-1 text-zinc-100/85 text-sm leading-relaxed">
         {description}

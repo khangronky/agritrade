@@ -12,11 +12,11 @@ const staticImage: StaticImageFrame = {
 
 export function AboutUsHeroSection() {
   return (
-    <section className="relative border-emerald-500/25 border-b pt-24 pb-16 sm:pt-28 sm:pb-20">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(163,230,53,0.22),transparent_38%),radial-gradient(circle_at_85%_12%,rgba(34,197,94,0.16),transparent_34%)]" />
+    <section className="relative border-emerald-500/20 border-b pt-24 pb-16 sm:pt-28 sm:pb-20">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(0,0,0,0.8),transparent_38%),radial-gradient(circle_at_85%_12%,rgba(0,0,0,0.72),transparent_34%)]" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_minmax(0,0.95fr)] lg:items-center lg:px-8">
         <div>
-          <Badge className="border-emerald-400/35 bg-zinc-800/70 text-zinc-300">
+          <Badge className="border-emerald-400/30 bg-zinc-900/70 text-zinc-300">
             About Us
           </Badge>
           <h1 className="mt-5 max-w-3xl font-semibold text-3xl leading-tight sm:text-4xl lg:text-5xl">
@@ -36,7 +36,7 @@ export function AboutUsHeroSection() {
             <Button
               asChild
               size="lg"
-              className="border border-emerald-500/35 bg-emerald-500/20 font-semibold text-emerald-200 hover:bg-emerald-500/30"
+              className="border border-emerald-500/30 bg-emerald-500/15 font-semibold text-emerald-200 hover:bg-emerald-500/22"
             >
               <Link href="/register">
                 Join AgriTrade

@@ -17,7 +17,7 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border border-emerald-500/25 bg-zinc-950/45 backdrop-blur-sm">
+    <footer className="relative border border-emerald-500/20 bg-black/70 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
         <div className="grid gap-8 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div>
@@ -45,7 +45,7 @@ export function SiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-zinc-400 text-sm transition-colors hover:text-emerald-300"
+                    className="text-zinc-400 text-sm transition-colors hover:text-emerald-200"
                   >
                     {link.label}
                   </Link>
@@ -63,7 +63,7 @@ export function SiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-zinc-400 text-sm transition-colors hover:text-emerald-300"
+                    className="text-zinc-400 text-sm transition-colors hover:text-emerald-200"
                   >
                     {link.label}
                   </Link>
@@ -73,7 +73,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-2 border-emerald-500/25 border-t pt-4 text-zinc-400 text-xs sm:flex-row sm:items-center sm:justify-between sm:text-sm">
+        <div className="mt-8 flex flex-col gap-2 border-emerald-500/20 border-t pt-4 text-zinc-400 text-xs sm:flex-row sm:items-center sm:justify-between sm:text-sm">
           <p>(c) {currentYear} AgriTrade. All rights reserved.</p>
           <p>Built for transparent and practical agricultural trading.</p>
         </div>

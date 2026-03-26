@@ -16,7 +16,7 @@ export function TradingBoardSection({
   return (
     <section className="relative pb-4 sm:pb-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-emerald-400/30 bg-zinc-900/70 p-5 shadow-[0_22px_48px_rgba(163,230,53,0.22)] backdrop-blur-sm sm:p-6">
+        <div className="rounded-3xl border border-emerald-400/22 bg-zinc-950/80 p-5 shadow-[0_22px_48px_rgba(0,0,0,0.55)] backdrop-blur-sm sm:p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="font-semibold text-2xl sm:text-3xl">
@@ -56,11 +56,11 @@ function ListingCardItem({
   activeCurrency: CurrencyOption;
 }) {
   return (
-    <Card className="group gap-0 overflow-hidden rounded-2xl border-emerald-400/30 bg-linear-to-br from-zinc-900 via-zinc-900 to-zinc-950 py-0 text-zinc-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/45 hover:shadow-md">
+    <Card className="group gap-0 overflow-hidden rounded-2xl border-emerald-400/22 bg-linear-to-br from-zinc-900 via-zinc-900 to-zinc-950 py-0 text-zinc-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/35 hover:shadow-md">
       <CardContent className="px-4 py-4 sm:px-5 sm:py-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="font-medium text-[11px] text-lime-300 uppercase tracking-[0.16em]">
+            <p className="font-medium text-[11px] text-emerald-200 uppercase tracking-[0.16em]">
               {listing.category}
             </p>
             <p className="mt-1 font-semibold text-base leading-tight sm:text-lg">
@@ -76,7 +76,7 @@ function ListingCardItem({
         </div>
 
         <div className="mt-5 flex items-end justify-between gap-3">
-          <p className="font-semibold text-2xl text-lime-300 sm:text-3xl">
+          <p className="font-semibold text-2xl text-emerald-200 sm:text-3xl">
             {listing.volume}
           </p>
           <p className="text-right text-zinc-400 text-xs sm:text-sm">

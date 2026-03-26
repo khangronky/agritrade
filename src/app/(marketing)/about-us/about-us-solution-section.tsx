@@ -44,7 +44,7 @@ export function AboutUsSolutionSection() {
     <section className="py-14 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl border border-zinc-700/70 bg-zinc-950/90 px-6 py-8 text-zinc-100 shadow-lg sm:px-8 sm:py-10">
-          <p className="font-semibold text-lime-200 text-sm uppercase tracking-[0.18em]">
+          <p className="font-semibold text-emerald-200 text-sm uppercase tracking-[0.18em]">
             Breakthrough Solution
           </p>
           <h2 className="mt-3 max-w-3xl font-semibold text-3xl text-zinc-100 leading-tight sm:text-4xl">
@@ -63,13 +63,13 @@ export function AboutUsSolutionSection() {
               return (
                 <article
                   key={card.title}
-                  className="rounded-2xl border border-emerald-500/25 bg-zinc-900/70 p-5"
+                  className="rounded-2xl border border-emerald-500/20 bg-zinc-900/62 p-5"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-lime-300 p-2 text-zinc-950">
+                    <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/16 p-2 text-emerald-200">
                       <Icon className="size-4" />
                     </div>
-                    <h3 className="font-semibold text-base text-lime-200 sm:text-lg">
+                    <h3 className="font-semibold text-base text-emerald-200 sm:text-lg">
                       {card.title}
                     </h3>
                   </div>
@@ -81,8 +81,8 @@ export function AboutUsSolutionSection() {
             })}
           </div>
 
-          <div className="mt-6 rounded-2xl border border-zinc-700/60 bg-emerald-500/10 p-4">
-            <p className="font-semibold text-lime-200 text-sm sm:text-base">
+          <div className="mt-6 rounded-2xl border border-emerald-500/20 bg-zinc-900/75 p-4">
+            <p className="font-semibold text-emerald-200 text-sm sm:text-base">
               Neutrality commitment: NO TRANSACTIONS are performed on the
               platform.
             </p>

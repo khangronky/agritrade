@@ -45,7 +45,7 @@ export function StepToStepSection() {
     <section id="step-to-step" className="scroll-mt-20 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <div className="group relative aspect-video overflow-hidden rounded-3xl border border-emerald-500/25 bg-zinc-800/70 shadow-sm">
+          <div className="group relative aspect-video overflow-hidden rounded-3xl border border-emerald-500/20 bg-zinc-900/65 shadow-sm">
             <Image
               src="/farm.jpg"
               alt="Step-to-step AgriTrade workflow preview"
@@ -54,13 +54,13 @@ export function StepToStepSection() {
               sizes="(max-width: 1024px) 100vw, 52vw"
             />
             <div className="absolute inset-0 bg-linear-to-t from-zinc-950/60 via-zinc-900/15 to-transparent" />
-            <div className="absolute right-4 bottom-4 rounded-xl border border-zinc-700/60 bg-zinc-950/80 px-3 py-2 text-lime-200 text-xs tracking-wide sm:text-sm">
+            <div className="absolute right-4 bottom-4 rounded-xl border border-zinc-700/60 bg-zinc-950/82 px-3 py-2 text-emerald-200 text-xs tracking-wide sm:text-sm">
               Step by step workflow
             </div>
           </div>
 
           <div>
-            <p className="font-semibold text-emerald-300 text-sm uppercase tracking-[0.18em]">
+            <p className="font-semibold text-emerald-200 text-sm uppercase tracking-[0.18em]">
               Step to Step
             </p>
             <h2 className="mt-3 font-semibold text-3xl text-zinc-100 sm:text-4xl">
@@ -74,10 +74,10 @@ export function StepToStepSection() {
                 return (
                   <article
                     key={step.title}
-                    className="rounded-2xl border border-emerald-500/25 bg-zinc-900/85 px-4 py-4 shadow-sm"
+                    className="rounded-2xl border border-emerald-500/20 bg-zinc-950/82 px-4 py-4 shadow-sm"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="rounded-lg bg-zinc-800/60 p-2 text-zinc-300">
+                      <div className="rounded-lg border border-emerald-500/20 bg-zinc-900/72 p-2 text-emerald-200">
                         <Icon className="size-4" />
                       </div>
                       <div>
