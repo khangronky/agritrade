@@ -178,8 +178,8 @@ export default function MarketingPage() {
         </div>
 
         <div className="mt-14 bg-[#8de007] py-16">
-          <div className="mx-auto -mt-8 max-w-[920px] px-4 sm:px-6">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-[42px] border-4 border-[#f5f8ef] shadow-[0_18px_34px_rgba(84,137,18,0.25)]">
+          <div className="mx-auto -mt-8 max-w-230 px-4 sm:px-6">
+            <div className="relative aspect-video overflow-hidden rounded-[42px] border-4 border-[#f5f8ef] shadow-[0_18px_34px_rgba(84,137,18,0.25)]">
               <Image
                 src="/about-us/slide-8.jpg"
                 alt="Two farmers harvesting together on a tea plantation"
