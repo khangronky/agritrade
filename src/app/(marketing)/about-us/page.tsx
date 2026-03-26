@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function AboutUsPage() {
   return (
-    <div className="overflow-hidden bg-black text-zinc-100">
+    <div className="relative overflow-hidden">
       <AboutUsHeroSection />
       <AboutUsMissionSection />
       <AboutUsChallengesSection />
