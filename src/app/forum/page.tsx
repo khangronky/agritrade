@@ -1,11 +1,17 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   CheckCircle2,
+  ChevronDown,
   ChevronRight,
   CircleHelp,
   ClipboardList,
   Ellipsis,
+  ImageIcon,
+  PenSquare,
+  Search,
+  Video,
 } from 'lucide-react';
 import {
   forumFeaturedCard,
@@ -36,7 +42,7 @@ export default function ForumPage() {
       <main className="mx-auto max-w-[1320px] px-4 py-5">
         <div className="grid gap-4 md:grid-cols-[272px_minmax(0,1fr)] lg:grid-cols-[272px_minmax(0,1fr)_280px]">
           <LeftRail />
-          <CenterFeed />
+          <CenterFeed posts={forumPosts} />
           <div className="md:col-span-2 lg:col-span-1">
             <RightRail />
           </div>
@@ -325,7 +331,7 @@ function CenterFeed({ posts }: { posts: ForumPost[] }) {
       </div>
 
       <div className="space-y-4">
-        {forumPosts.map((post) => (
+        {posts.map((post) => (
           <ForumPostCard
             key={`${post.companyName}-${post.postedAt}`}
             post={post}
