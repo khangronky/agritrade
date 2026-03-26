@@ -58,16 +58,25 @@ function ForumTopHeader() {
           </Link>
 
           <nav className="hidden items-center gap-6 text-[#d1d5db] text-[11px] md:flex">
-            <Link href="/marketplace" className="transition-colors hover:text-white">
+            <Link
+              href="/marketplace"
+              className="transition-colors hover:text-white"
+            >
               Market Curation
             </Link>
             <Link href="/forum" className="font-semibold text-white">
               Sourcing Hub
             </Link>
-            <button type="button" className="flex items-center gap-1 hover:text-white">
+            <button
+              type="button"
+              className="flex items-center gap-1 hover:text-white"
+            >
               Solutions <ChevronDown className="size-3" />
             </button>
-            <button type="button" className="flex items-center gap-1 hover:text-white">
+            <button
+              type="button"
+              className="flex items-center gap-1 hover:text-white"
+            >
               Resources <ChevronDown className="size-3" />
             </button>
           </nav>
@@ -97,19 +106,32 @@ function ForumSubHeader() {
     <div className="border-[#d9dee8] border-b bg-[#f6f8fb]">
       <div className="mx-auto flex h-10 max-w-[1320px] items-center justify-between px-4 text-[#4b5563] text-[12px]">
         <div className="flex items-center gap-4">
-          <button type="button" className="flex items-center gap-1 font-medium text-[#1f2937]">
+          <button
+            type="button"
+            className="flex items-center gap-1 font-medium text-[#1f2937]"
+          >
             Sourcing Hub <ChevronDown className="size-3" />
           </button>
-          <button type="button" className="flex items-center gap-1 hover:text-[#111827]">
+          <button
+            type="button"
+            className="flex items-center gap-1 hover:text-[#111827]"
+          >
             Data &amp; Analytics <ChevronDown className="size-3" />
           </button>
         </div>
 
         <div className="flex items-center gap-4">
-          <button type="button" aria-label="Search" className="text-[#6b7280] hover:text-[#1f2937]">
+          <button
+            type="button"
+            aria-label="Search"
+            className="text-[#6b7280] hover:text-[#1f2937]"
+          >
             <Search className="size-4" />
           </button>
-          <button type="button" className="font-medium text-[#1f2937] hover:text-black">
+          <button
+            type="button"
+            className="font-medium text-[#1f2937] hover:text-black"
+          >
             Sign in
           </button>
         </div>
@@ -123,7 +145,8 @@ function ForumInfoBanner() {
     <div className="border-[#ced6e4] border-b bg-[#e2ebf9]">
       <div className="mx-auto flex h-10 max-w-[1320px] items-center justify-between gap-3 px-4 text-[#2f405f] text-[12px]">
         <p className="truncate">
-          Discover your future partners and strategically promote your company through AgriTrade Eye&apos;s intelligence-based supply chain network.
+          Discover your future partners and strategically promote your company
+          through AgriTrade Eye&apos;s intelligence-based supply chain network.
         </p>
         <button
           type="button"
@@ -160,21 +183,31 @@ function LeftRail() {
               {forumFeaturedCard.description}
             </p>
             <div className="border-[#e5e7eb] border-t pt-2">
-              <p className="text-[#6b7280] text-xs">{forumFeaturedCard.pavilionLabel}</p>
-              <p className="font-medium text-[#111827] text-sm">{forumFeaturedCard.pavilionValue}</p>
+              <p className="text-[#6b7280] text-xs">
+                {forumFeaturedCard.pavilionLabel}
+              </p>
+              <p className="font-medium text-[#111827] text-sm">
+                {forumFeaturedCard.pavilionValue}
+              </p>
             </div>
           </div>
         </article>
       </section>
 
       <section className="rounded border border-[#d8dee8] bg-white p-3">
-        <p className="font-medium text-[#6b7280] text-xs">Recommended price data</p>
+        <p className="font-medium text-[#6b7280] text-xs">
+          Recommended price data
+        </p>
 
         <div className="mt-3 rounded-xl border border-emerald-500/20 bg-zinc-900/70 p-3">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <p className="font-semibold text-[#111827] text-sm">{forumPriceInsight.commodity}</p>
-              <p className="text-[#6b7280] text-xs">{forumPriceInsight.origin}</p>
+              <p className="font-semibold text-[#111827] text-sm">
+                {forumPriceInsight.commodity}
+              </p>
+              <p className="text-[#6b7280] text-xs">
+                {forumPriceInsight.origin}
+              </p>
             </div>
             <span
               className={`rounded px-2 py-0.5 font-semibold text-xs ${
@@ -214,7 +247,9 @@ function LeftRail() {
 
           <div className="mt-3 grid grid-cols-2 gap-3">
             <div>
-              <p className="text-[#6b7280] text-[11px]">Latest Wholesale Price</p>
+              <p className="text-[#6b7280] text-[11px]">
+                Latest Wholesale Price
+              </p>
               <p className="font-semibold text-[#111827] text-lg">
                 {forumPriceInsight.latestWholesalePrice.toFixed(2)}
               </p>
@@ -223,7 +258,9 @@ function LeftRail() {
               </p>
             </div>
             <div>
-              <p className="text-[#6b7280] text-[11px]">Previous Wholesale Price</p>
+              <p className="text-[#6b7280] text-[11px]">
+                Previous Wholesale Price
+              </p>
               <p className="font-semibold text-[#111827] text-lg">
                 {forumPriceInsight.previousWholesalePrice.toFixed(2)}
               </p>
@@ -253,7 +290,10 @@ function CenterFeed({ posts }: { posts: ForumPost[] }) {
           <p className="flex items-center gap-1 font-medium text-xs text-zinc-200">
             Community feed <CircleHelp className="size-3" />
           </p>
-          <button type="button" className="flex items-center gap-1 text-[#6b7280] text-xs hover:text-[#374151]">
+          <button
+            type="button"
+            className="flex items-center gap-1 text-[#6b7280] text-xs hover:text-[#374151]"
+          >
             Personalize <ChevronRight className="size-3" />
           </button>
         </div>
@@ -267,11 +307,17 @@ function CenterFeed({ posts }: { posts: ForumPost[] }) {
         </button>
 
         <div className="mt-3 grid grid-cols-2 divide-x divide-[#e3e8f1] rounded border border-[#e3e8f1] bg-[#fbfcfe]">
-          <button type="button" className="flex items-center justify-center gap-1 py-2 text-[#4b5563] text-xs hover:bg-[#f1f5fb]">
+          <button
+            type="button"
+            className="flex items-center justify-center gap-1 py-2 text-[#4b5563] text-xs hover:bg-[#f1f5fb]"
+          >
             <ImageIcon className="size-3.5" />
             Photo
           </button>
-          <button type="button" className="flex items-center justify-center gap-1 py-2 text-[#4b5563] text-xs hover:bg-[#f1f5fb]">
+          <button
+            type="button"
+            className="flex items-center justify-center gap-1 py-2 text-[#4b5563] text-xs hover:bg-[#f1f5fb]"
+          >
             <Video className="size-3.5" />
             Video
           </button>
@@ -280,7 +326,10 @@ function CenterFeed({ posts }: { posts: ForumPost[] }) {
 
       <div className="space-y-4">
         {forumPosts.map((post) => (
-          <ForumPostCard key={`${post.companyName}-${post.postedAt}`} post={post} />
+          <ForumPostCard
+            key={`${post.companyName}-${post.postedAt}`}
+            post={post}
+          />
         ))}
       </div>
     </section>
@@ -311,24 +360,37 @@ function ForumPostCard({ post }: { post: ForumPost }) {
             <div>
               <p className="flex items-center gap-1 font-semibold text-sm text-zinc-100 leading-none">
                 {post.companyName}
-                {post.isVerified ? <CheckCircle2 className="size-4 text-[#2563eb]" /> : null}
+                {post.isVerified ? (
+                  <CheckCircle2 className="size-4 text-[#2563eb]" />
+                ) : null}
               </p>
               <p className="mt-1 text-xs text-zinc-400">
                 {post.author} - {post.postedAt}
               </p>
             </div>
           </div>
-          <button type="button" aria-label="Post menu" className="text-[#9ca3af] hover:text-[#6b7280]">
+          <button
+            type="button"
+            aria-label="Post menu"
+            className="text-[#9ca3af] hover:text-[#6b7280]"
+          >
             <Ellipsis className="size-4" />
           </button>
         </div>
 
-        <h2 className="mt-3 font-medium text-[#111827] text-sm leading-relaxed">{post.headline}</h2>
-        <p className="mt-2 text-[#374151] text-sm leading-relaxed">{post.body}</p>
+        <h2 className="mt-3 font-medium text-[#111827] text-sm leading-relaxed">
+          {post.headline}
+        </h2>
+        <p className="mt-2 text-[#374151] text-sm leading-relaxed">
+          {post.body}
+        </p>
 
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {post.media.map((item) => (
-            <figure key={item.caption} className={post.media.length === 1 ? 'sm:col-span-2' : ''}>
+            <figure
+              key={item.caption}
+              className={post.media.length === 1 ? 'sm:col-span-2' : ''}
+            >
               <div className="overflow-hidden rounded border border-[#e0e6ef]">
                 <Image
                   src={item.src}
@@ -338,7 +400,9 @@ function ForumPostCard({ post }: { post: ForumPost }) {
                   className="h-52 w-full object-cover"
                 />
               </div>
-              <figcaption className="mt-1 text-[#4b5563] text-xs">{item.caption}</figcaption>
+              <figcaption className="mt-1 text-[#4b5563] text-xs">
+                {item.caption}
+              </figcaption>
             </figure>
           ))}
         </div>
@@ -353,9 +417,13 @@ function RightRail() {
       <section className="rounded border border-[#d8dee8] bg-white p-3">
         <p className="font-medium text-[#374151] text-sm">Me</p>
         <p className="mt-2 text-[#4b5563] text-xs leading-relaxed">
-          Sign in or join AgriTrade to personalize your feed. Interested in what we offer? Click here to find out.
+          Sign in or join AgriTrade to personalize your feed. Interested in what
+          we offer? Click here to find out.
         </p>
-        <button type="button" className="mt-2 font-semibold text-[#1d4ed8] text-xs hover:text-[#1e40af]">
+        <button
+          type="button"
+          className="mt-2 font-semibold text-[#1d4ed8] text-xs hover:text-[#1e40af]"
+        >
           Sign in
         </button>
       </section>
@@ -363,7 +431,8 @@ function RightRail() {
       <section className="rounded border border-[#d8dee8] bg-white p-3">
         <p className="font-medium text-[#374151] text-sm">Market Overviews</p>
         <p className="mt-2 text-[#4b5563] text-xs leading-relaxed">
-          Discover market overviews with key data and insights on products you may be interested in.
+          Discover market overviews with key data and insights on products you
+          may be interested in.
         </p>
 
         <ul className="mt-3 space-y-2">
@@ -386,9 +455,14 @@ function RightRail() {
 
       <section className="rounded border border-[#d8dee8] bg-white p-3">
         <p className="font-medium text-[#374151] text-sm">{forumRfq.title}</p>
-        <p className="mt-2 text-[#4b5563] text-xs leading-relaxed">{forumRfq.description}</p>
+        <p className="mt-2 text-[#4b5563] text-xs leading-relaxed">
+          {forumRfq.description}
+        </p>
         <div className="mt-3 flex items-center justify-between">
-          <button type="button" className="font-semibold text-[#1d4ed8] text-xs hover:text-[#1e40af]">
+          <button
+            type="button"
+            className="font-semibold text-[#1d4ed8] text-xs hover:text-[#1e40af]"
+          >
             {forumRfq.actionLabel}
           </button>
           <ClipboardList className="size-5 text-zinc-400" />
@@ -403,7 +477,9 @@ function ForumCookieBar() {
     <div className="border-[#d8dee8] border-t bg-[#f6f8fb]">
       <div className="mx-auto flex max-w-[1320px] flex-col gap-3 px-4 py-3 text-[#4b5563] text-[11px] sm:flex-row sm:items-center sm:justify-between">
         <p>
-          By clicking "Accept Cookies," I agree to provide cookies for statistical and personalized preference purpose. To learn more about our cookies, please read our Privacy Policy.
+          By clicking "Accept Cookies," I agree to provide cookies for
+          statistical and personalized preference purpose. To learn more about
+          our cookies, please read our Privacy Policy.
         </p>
         <div className="flex items-center gap-2">
           <button
@@ -449,6 +525,3 @@ function buildSparklinePath(
     })
     .join(' ');
 }
-
-
-
