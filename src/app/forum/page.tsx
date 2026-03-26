@@ -1,34 +1,32 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import {
   CheckCircle2,
-  ChevronDown,
   ChevronRight,
   CircleHelp,
   ClipboardList,
   Ellipsis,
-  ImageIcon,
-  PenSquare,
-  Search,
-  Video,
 } from 'lucide-react';
 import {
   forumFeaturedCard,
   forumOverviewItems,
-  forumPosts,
   forumPriceInsight,
   forumRfq,
 } from './mock-data';
+import { listForumPosts } from '@/lib/forum/posts-store';
+import { ForumPostComposer } from './post-composer';
 import type { ForumPost } from './types';
 
 export const metadata: Metadata = {
   title: 'Forum',
   description:
-    'Discover market updates, product insights, and sourcing opportunities in the AgriTrade forum.',
+    'Join AgriTrade community updates to track sourcing opportunities, demand signals, and verified market activity.',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function ForumPage() {
+  const forumPosts = listForumPosts();
   return (
     <div className="min-h-screen bg-[#edf1f6] text-[#111827]">
       <ForumTopHeader />
@@ -162,12 +160,14 @@ function ForumInfoBanner() {
 }
 
 function LeftRail() {
+  const isPositiveChange = forumPriceInsight.yoyChangeRate >= 0;
+
   return (
     <aside className="space-y-4">
-      <section className="rounded border border-[#d8dee8] bg-white p-3">
-        <p className="font-medium text-[#6b7280] text-xs">Featured</p>
+      <section className="rounded-2xl border border-emerald-500/20 bg-zinc-950/88 p-3 shadow-sm">
+        <p className="font-medium text-emerald-200 text-xs">Featured network</p>
 
-        <article className="mt-2 overflow-hidden rounded border border-[#e1e6ef]">
+        <article className="mt-2 overflow-hidden rounded-xl border border-emerald-500/20 bg-zinc-900/80">
           <Image
             src={forumFeaturedCard.imageSrc}
             alt={forumFeaturedCard.imageAlt}
@@ -176,10 +176,10 @@ function LeftRail() {
             className="h-44 w-full object-cover"
           />
           <div className="space-y-2 p-3">
-            <p className="font-medium text-[#111827] text-sm leading-snug">
+            <p className="font-medium text-sm text-zinc-100 leading-snug">
               {forumFeaturedCard.title}
             </p>
-            <p className="text-[#4b5563] text-xs leading-relaxed">
+            <p className="text-xs text-zinc-300 leading-relaxed">
               {forumFeaturedCard.description}
             </p>
             <div className="border-[#e5e7eb] border-t pt-2">
@@ -199,7 +199,7 @@ function LeftRail() {
           Recommended price data
         </p>
 
-        <div className="mt-3 rounded border border-[#e4e8ef] p-3">
+        <div className="mt-3 rounded-xl border border-emerald-500/20 bg-zinc-900/70 p-3">
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="font-semibold text-[#111827] text-sm">
@@ -209,13 +209,20 @@ function LeftRail() {
                 {forumPriceInsight.origin}
               </p>
             </div>
-            <span className="rounded bg-[#fee2e2] px-2 py-0.5 font-semibold text-[#b91c1c] text-xs">
+            <span
+              className={`rounded px-2 py-0.5 font-semibold text-xs ${
+                isPositiveChange
+                  ? 'bg-emerald-500/18 text-emerald-200'
+                  : 'bg-red-500/18 text-red-300'
+              }`}
+            >
+              {isPositiveChange ? '+' : ''}
               {forumPriceInsight.yoyChangeRate}%
             </span>
           </div>
 
           <div className="mt-3">
-            <p className="text-[#6b7280] text-[11px]">YoY Change Rate</p>
+            <p className="text-[11px] text-zinc-400">YoY Change Rate</p>
             <svg
               viewBox="0 0 240 56"
               className="mt-1 h-14 w-full"
@@ -231,7 +238,7 @@ function LeftRail() {
                   5
                 )}
                 fill="none"
-                stroke="#374151"
+                stroke="#93c83f"
                 strokeLinecap="round"
                 strokeWidth="2"
               />
@@ -246,7 +253,7 @@ function LeftRail() {
               <p className="font-semibold text-[#111827] text-lg">
                 {forumPriceInsight.latestWholesalePrice.toFixed(2)}
               </p>
-              <p className="text-[#6b7280] text-[11px]">
+              <p className="text-[11px] text-zinc-400">
                 {forumPriceInsight.currency}/{forumPriceInsight.unit}
               </p>
             </div>
@@ -257,7 +264,7 @@ function LeftRail() {
               <p className="font-semibold text-[#111827] text-lg">
                 {forumPriceInsight.previousWholesalePrice.toFixed(2)}
               </p>
-              <p className="text-[#6b7280] text-[11px]">
+              <p className="text-[11px] text-zinc-400">
                 {forumPriceInsight.currency}/{forumPriceInsight.unit}
               </p>
             </div>
@@ -266,7 +273,7 @@ function LeftRail() {
 
         <button
           type="button"
-          className="mt-3 w-full rounded border border-[#d3dae6] bg-[#f8fafd] px-3 py-2 font-medium text-[#374151] text-xs hover:bg-[#eef2f8]"
+          className="mt-3 w-full rounded-lg border border-emerald-500/20 bg-zinc-900/85 px-3 py-2 font-medium text-xs text-zinc-200 hover:border-emerald-400/40 hover:text-emerald-200"
         >
           View all prices
         </button>
@@ -275,13 +282,13 @@ function LeftRail() {
   );
 }
 
-function CenterFeed() {
+function CenterFeed({ posts }: { posts: ForumPost[] }) {
   return (
     <section className="space-y-4">
-      <div className="rounded border border-[#d8dee8] bg-white p-3">
+      <div className="rounded-2xl border border-emerald-500/20 bg-zinc-950/88 p-3 shadow-sm">
         <div className="flex items-center justify-between">
-          <p className="flex items-center gap-1 font-medium text-[#374151] text-xs">
-            Personalized feed <CircleHelp className="size-3" />
+          <p className="flex items-center gap-1 font-medium text-xs text-zinc-200">
+            Community feed <CircleHelp className="size-3" />
           </p>
           <button
             type="button"
@@ -339,25 +346,25 @@ function ForumPostCard({ post }: { post: ForumPost }) {
     .toUpperCase();
 
   return (
-    <article className="rounded border border-[#d8dee8] bg-white">
-      <div className="border-[#e5e9f0] border-b px-3 py-2 text-[#6b7280] text-xs">
-        Updates | {post.companyName} from Vietnam got verified on Mar 24, 2026
+    <article className="rounded-2xl border border-emerald-500/20 bg-zinc-950/88 shadow-sm">
+      <div className="border-emerald-500/20 border-b px-3 py-2 text-xs text-zinc-400">
+        Update | {post.companyName} profile verified on Mar 24, 2026
       </div>
 
       <div className="p-3">
         <div className="flex items-start justify-between gap-3">
           <div className="flex gap-2.5">
-            <div className="flex size-9 items-center justify-center rounded-full bg-[#1f2937] font-semibold text-[11px] text-white">
+            <div className="flex size-9 items-center justify-center rounded-full border border-emerald-500/25 bg-zinc-900 font-semibold text-[11px] text-emerald-200">
               {initials}
             </div>
             <div>
-              <p className="flex items-center gap-1 font-semibold text-[#111827] text-sm leading-none">
+              <p className="flex items-center gap-1 font-semibold text-sm text-zinc-100 leading-none">
                 {post.companyName}
                 {post.isVerified ? (
                   <CheckCircle2 className="size-4 text-[#2563eb]" />
                 ) : null}
               </p>
-              <p className="mt-1 text-[#6b7280] text-xs">
+              <p className="mt-1 text-xs text-zinc-400">
                 {post.author} - {post.postedAt}
               </p>
             </div>
@@ -433,13 +440,13 @@ function RightRail() {
             <li key={item.name}>
               <button
                 type="button"
-                className="flex w-full items-center justify-between rounded border border-transparent px-1 py-1 text-[#1f2937] text-sm hover:border-[#e5e7eb] hover:bg-[#f8fafc]"
+                className="flex w-full items-center justify-between rounded-lg border border-transparent px-1 py-1 text-sm text-zinc-200 hover:border-emerald-500/20 hover:bg-zinc-900/75"
               >
                 <span className="flex items-center gap-2">
-                  <item.icon className="size-4 text-[#6b7280]" />
+                  <item.icon className="size-4 text-emerald-300" />
                   {item.name}
                 </span>
-                <ChevronRight className="size-4 text-[#9ca3af]" />
+                <ChevronRight className="size-4 text-zinc-500" />
               </button>
             </li>
           ))}
@@ -458,7 +465,7 @@ function RightRail() {
           >
             {forumRfq.actionLabel}
           </button>
-          <ClipboardList className="size-5 text-[#9ca3af]" />
+          <ClipboardList className="size-5 text-zinc-400" />
         </div>
       </section>
     </aside>

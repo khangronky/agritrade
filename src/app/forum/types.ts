@@ -27,6 +27,7 @@ export type ForumPostMedia = {
 };
 
 export type ForumPost = {
+  id: string;
   companyName: string;
   isVerified: boolean;
   author: string;
@@ -34,6 +35,25 @@ export type ForumPost = {
   headline: string;
   body: string;
   media: ForumPostMedia[];
+};
+
+export type CreateForumPostInput = {
+  companyName: string;
+  author: string;
+  headline: string;
+  body: string;
+  media?: ForumPostMedia[];
+  isVerified?: boolean;
+  postedAt?: string;
+};
+
+export type ForumPostsResponse = {
+  posts: ForumPost[];
+};
+
+export type ForumPostCreatedResponse = {
+  message: string;
+  post: ForumPost;
 };
 
 export type ForumOverviewItem = {
