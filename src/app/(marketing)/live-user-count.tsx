@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -59,14 +59,14 @@ export function LiveUserCount({
         className={cn(
           'tabular-nums transition-all duration-500',
           isAnimating &&
-            'scale-[1.02] text-amber-400 drop-shadow-[0_0_14px_rgba(245,158,11,0.4)]'
+            'scale-[1.02] text-emerald-300 drop-shadow-[0_0_14px_rgba(52,211,153,0.32)]'
         )}
       >
         {formatCount(count)}
       </span>
       <span
         className={cn(
-          'pointer-events-none absolute -top-5 right-0 font-semibold text-emerald-600 text-sm transition-all duration-500',
+          'pointer-events-none absolute -top-5 right-0 font-semibold text-emerald-400 text-sm transition-all duration-500',
           isAnimating ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'
         )}
       >

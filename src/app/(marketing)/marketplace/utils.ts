@@ -1,32 +1,10 @@
-import type { CurrencyOption, DemandLevel } from './types';
+﻿import type { CurrencyOption, DemandLevel } from './types';
 
 export const demandLevelStyles: Record<DemandLevel, string> = {
-  'High demand': 'border-emerald-200 bg-emerald-100 text-emerald-700',
-  'Balanced demand': 'border-amber-200 bg-amber-100 text-amber-700',
-  'Soft demand': 'border-rose-200 bg-rose-100 text-rose-700',
+  'High demand': 'border-emerald-400/40 bg-emerald-500/10 text-emerald-300',
+  'Balanced demand': 'border-emerald-400/30 bg-emerald-500/10 text-emerald-200',
+  'Soft demand': 'border-zinc-500/45 bg-zinc-800/55 text-zinc-200',
 };
-
-export const priceTrendChartConfig = {
-  priceHistorical: {
-    label: 'Historical price',
-    color: '#16a34a',
-  },
-  priceForecast: {
-    label: 'AI forecast',
-    color: '#0ea5e9',
-  },
-} as const;
-
-export const demandTrendChartConfig = {
-  demandHistorical: {
-    label: 'Historical demand',
-    color: '#84cc16',
-  },
-  demandForecast: {
-    label: 'AI forecast',
-    color: '#f59e0b',
-  },
-} as const;
 
 export function formatPriceByCurrency(
   priceVnd: number,

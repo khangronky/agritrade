@@ -1,214 +1,519 @@
-import type { ReactElement } from 'react';
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { useMemo, useState } from 'react';
+import {
+  Area,
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Line,
+  ReferenceLine,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
+import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import {
   NativeSelect,
   NativeSelectOption,
 } from '@/components/ui/native-select';
 import { cn } from '@/lib/utils';
 import type {
+  AiForecastSummary,
   CommodityOption,
   CurrencyCode,
   CurrencyOption,
-  ForecastSummary,
   ListingCard,
   MarketTrendPoint,
 } from './types';
-import { demandTrendChartConfig, priceTrendChartConfig } from './utils';
 
 type AseanCurrencyOption = {
   code: CurrencyCode;
 };
 
 type MarketTrendSectionProps = {
-  searchQuery: string;
-  selectedCategory: string;
-  selectedCountry: string;
   selectedCurrency: CurrencyCode;
   activeCurrency: CurrencyOption;
-  countries: string[];
   aseanCurrencies: AseanCurrencyOption[];
   commodityOptions: CommodityOption[];
   activeCommodityValue: string;
   activeListingForTrend: ListingCard | null;
   trendTimelineData: MarketTrendPoint[];
-  forecastSummary: ForecastSummary | null;
-  onSearchQueryChange: (value: string) => void;
-  onCategoryChange: (value: string) => void;
-  onCountryChange: (value: string) => void;
+  aiForecast: AiForecastSummary | null;
   onCurrencyChange: (value: CurrencyCode) => void;
   onCommodityChange: (value: string) => void;
-  onReset: () => void;
 };
 
+type TimeframeKey = '1D' | '1W' | '1M' | '3M' | '6M' | '1Y' | 'YTD';
+
+type MetricItem = {
+  label: string;
+  value: string;
+  valueClassName?: string;
+};
+
+const timeframeOrder: TimeframeKey[] = [
+  '1D',
+  '1W',
+  '1M',
+  '3M',
+  '6M',
+  '1Y',
+  'YTD',
+];
+
+const timeframePointCount: Record<
+  Exclude<TimeframeKey, '1Y' | 'YTD'>,
+  number
+> = {
+  '1D': 3,
+  '1W': 5,
+  '1M': 7,
+  '3M': 9,
+  '6M': 11,
+};
+
+const marketTrendChartConfig = {
+  historicalPrice: {
+    label: 'Historical price',
+    color: '#9ac8ff',
+  },
+  forecastPrice: {
+    label: 'AI forecast',
+    color: '#6ee7b7',
+  },
+  forecastUpper: {
+    label: 'Upper bound',
+    color: '#4ade80',
+  },
+  forecastLower: {
+    label: 'Lower bound',
+    color: '#22c55e',
+  },
+  volume: {
+    label: 'Activity volume',
+    color: '#7da8d6',
+  },
+} as const;
+
 export function MarketTrendSection({
-  searchQuery,
-  selectedCategory,
-  selectedCountry,
   selectedCurrency,
   activeCurrency,
-  countries,
   aseanCurrencies,
   commodityOptions,
   activeCommodityValue,
   activeListingForTrend,
   trendTimelineData,
-  forecastSummary,
-  onSearchQueryChange,
-  onCategoryChange,
-  onCountryChange,
+  aiForecast,
   onCurrencyChange,
   onCommodityChange,
-  onReset,
 }: MarketTrendSectionProps) {
+  const [timeframe, setTimeframe] = useState<TimeframeKey>('1M');
+
+  const selectedSeries = useMemo(
+    () => sliceByTimeframe(trendTimelineData, timeframe),
+    [trendTimelineData, timeframe]
+  );
+
+  const observedSeries = selectedSeries.filter((point) => !point.isForecast);
+  const fullObservedSeries = trendTimelineData.filter(
+    (point) => !point.isForecast
+  );
+  const latestPoint = observedSeries.at(-1) ?? selectedSeries.at(-1) ?? null;
+  const previousPoint = observedSeries.at(-2) ?? latestPoint;
+  const openPoint = observedSeries[0] ?? latestPoint;
+  const absoluteChange =
+    latestPoint && previousPoint ? latestPoint.price - previousPoint.price : 0;
+  const percentChange =
+    previousPoint && previousPoint.price !== 0
+      ? (absoluteChange / previousPoint.price) * 100
+      : 0;
+
+  const selectedRange = getPriceRange(
+    observedSeries.length > 0 ? observedSeries : selectedSeries
+  );
+  const oneYearRange = getPriceRange(
+    fullObservedSeries.length > 0 ? fullObservedSeries : trendTimelineData
+  );
+  const oneYearStart = fullObservedSeries[0]?.price ?? 0;
+  const oneYearEnd = latestPoint?.price ?? oneYearStart;
+  const oneYearChange =
+    oneYearStart !== 0 ? ((oneYearEnd - oneYearStart) / oneYearStart) * 100 : 0;
+
+  const latestActivityVolume = latestPoint?.activityVolume ?? 0;
+  const averageActivityVolume = averageActivity(observedSeries.slice(-3));
+  const emaSpread = aiForecast ? aiForecast.emaShort - aiForecast.emaLong : 0;
+
+  const statsColumns: MetricItem[][] = [
+    [
+      {
+        label: 'Previous close',
+        value: previousPoint
+          ? `${formatPriceValue(previousPoint.price, activeCurrency)} ${activeCurrency.code}`
+          : '--',
+      },
+      {
+        label: 'Open',
+        value: openPoint
+          ? `${formatPriceValue(openPoint.price, activeCurrency)} ${activeCurrency.code}`
+          : '--',
+      },
+      {
+        label: '1Y change',
+        value: `${formatPercentValue(oneYearChange)}`,
+        valueClassName:
+          oneYearChange >= 0 ? 'text-emerald-300' : 'text-rose-300',
+      },
+    ],
+    [
+      {
+        label: 'Activity volume',
+        value: latestActivityVolume
+          ? formatVolumeValue(latestActivityVolume)
+          : '--',
+      },
+      {
+        label: 'Average activity (3 periods)',
+        value: averageActivityVolume
+          ? formatVolumeValue(averageActivityVolume)
+          : '--',
+      },
+      {
+        label: 'AI confidence',
+        value: aiForecast ? `${aiForecast.confidence}%` : '--',
+        valueClassName: aiForecast ? 'text-emerald-300' : undefined,
+      },
+      {
+        label: 'Volatility (annualized)',
+        value: aiForecast ? `${aiForecast.volatilityPct.toFixed(2)}%` : '--',
+      },
+    ],
+    [
+      {
+        label: 'Day range',
+        value:
+          selectedSeries.length > 0
+            ? `${formatPriceValue(selectedRange.min, activeCurrency)} - ${formatPriceValue(
+                selectedRange.max,
+                activeCurrency
+              )}`
+            : '--',
+      },
+      {
+        label: '52-week range',
+        value:
+          trendTimelineData.length > 0
+            ? `${formatPriceValue(oneYearRange.min, activeCurrency)} - ${formatPriceValue(
+                oneYearRange.max,
+                activeCurrency
+              )}`
+            : '--',
+      },
+      {
+        label: 'RSI (6)',
+        value: aiForecast ? aiForecast.rsi.toFixed(1) : '--',
+        valueClassName:
+          aiForecast && aiForecast.rsi >= 70
+            ? 'text-rose-300'
+            : aiForecast && aiForecast.rsi <= 30
+              ? 'text-emerald-300'
+              : undefined,
+      },
+      {
+        label: 'EMA spread (5-10)',
+        value: aiForecast
+          ? `${formatSignedPriceValue(emaSpread, activeCurrency)} ${activeCurrency.code}`
+          : '--',
+        valueClassName: aiForecast
+          ? emaSpread >= 0
+            ? 'text-emerald-300'
+            : 'text-rose-300'
+          : undefined,
+      },
+    ],
+  ];
+
   return (
     <section className="relative py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-emerald-200/80 bg-white/55 p-5 shadow-[0_22px_48px_rgba(16,185,129,0.12)] backdrop-blur-sm sm:p-6">
-          <div className="flex flex-col gap-4">
-            <div className="space-y-2">
-              <h2 className="font-semibold text-2xl sm:text-3xl">
-                Market Trend Analysis & Forecasting
-              </h2>
-              <p className="max-w-3xl text-slate-600 text-sm leading-relaxed sm:text-base">
-                Securities-like timeline charts combine historical commodity
-                movement with AI-powered projections for next-cycle price and
-                buyer demand trends.
-              </p>
-            </div>
-            <div className="flex justify-center">
-              <MarketplaceFilterBar
-                searchQuery={searchQuery}
-                selectedCategory={selectedCategory}
-                selectedCountry={selectedCountry}
-                selectedCurrency={selectedCurrency}
-                countries={countries}
-                aseanCurrencies={aseanCurrencies}
-                onSearchQueryChange={onSearchQueryChange}
-                onCategoryChange={onCategoryChange}
-                onCountryChange={onCountryChange}
-                onCurrencyChange={onCurrencyChange}
-                onReset={onReset}
-              />
-            </div>
-          </div>
-
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-slate-500 text-xs sm:text-sm">
-              Timeline spans 8 historical periods + 4 AI forecast periods.
+        <div className="rounded-3xl border border-emerald-400/22 bg-zinc-950/80 p-5 shadow-[0_22px_48px_rgba(0,0,0,0.55)] backdrop-blur-sm sm:p-6">
+          <div className="space-y-2">
+            <h2 className="font-semibold text-2xl sm:text-3xl">
+              Market Trend Analysis & Forecasting
+            </h2>
+            <p className="max-w-3xl text-sm text-zinc-400 leading-relaxed sm:text-base">
+              Quant-style market panel with algorithmic AI forecasting,
+              volatility analysis, and professional market indicators.
             </p>
-            <div className="flex items-center gap-2">
-              <p className="text-slate-500 text-xs">Commodity view</p>
-              <NativeSelect
-                value={activeCommodityValue}
-                onChange={(event) => onCommodityChange(event.target.value)}
-                className="h-9 min-w-52 rounded-lg border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
-              >
-                <NativeSelectOption value="auto">
-                  Auto (top matched commodity)
-                </NativeSelectOption>
-                {commodityOptions.map((option) => (
-                  <NativeSelectOption key={option.value} value={option.value}>
-                    {option.label}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
-            </div>
           </div>
 
-          {activeListingForTrend ? (
-            <>
-              <div className="mt-6 grid gap-4 lg:grid-cols-2">
-                <TrendChartCard
-                  title={`Price timeline (${activeCurrency.code})`}
-                  description={`${activeListingForTrend.name} - ${activeListingForTrend.region}, ${activeListingForTrend.country}`}
-                  config={priceTrendChartConfig}
-                >
-                  <LineChart data={trendTimelineData}>
-                    <CartesianGrid vertical={false} />
-                    <XAxis dataKey="label" tickLine={false} axisLine={false} />
-                    <YAxis
-                      tickLine={false}
-                      axisLine={false}
-                      width={60}
-                      tickFormatter={(value) => `${value}`}
-                    />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <ChartLegend content={<ChartLegendContent />} />
-                    <Line
-                      type="monotone"
-                      dataKey="priceHistorical"
-                      stroke="var(--color-priceHistorical)"
-                      strokeWidth={2.2}
-                      dot={false}
-                      name="priceHistorical"
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="priceForecast"
-                      stroke="var(--color-priceForecast)"
-                      strokeDasharray="6 4"
-                      strokeWidth={2.2}
-                      dot={false}
-                      name="priceForecast"
-                    />
-                  </LineChart>
-                </TrendChartCard>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <NativeSelect
+              value={activeCommodityValue}
+              onChange={(event) => onCommodityChange(event.target.value)}
+              className="h-10 min-w-56 rounded-xl border-emerald-400/22 bg-zinc-950/78 text-xs text-zinc-300 focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
+            >
+              <NativeSelectOption value="auto">
+                Auto (top commodity)
+              </NativeSelectOption>
+              {commodityOptions.map((option) => (
+                <NativeSelectOption key={option.value} value={option.value}>
+                  {option.label}
+                </NativeSelectOption>
+              ))}
+            </NativeSelect>
+            <NativeSelect
+              value={selectedCurrency}
+              onChange={(event) =>
+                onCurrencyChange(event.target.value as CurrencyCode)
+              }
+              className="h-10 min-w-28 rounded-xl border-emerald-400/22 bg-zinc-950/78 text-xs text-zinc-300 focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
+            >
+              {aseanCurrencies.map((currency) => (
+                <NativeSelectOption key={currency.code} value={currency.code}>
+                  {currency.code}
+                </NativeSelectOption>
+              ))}
+            </NativeSelect>
+          </div>
 
-                <TrendChartCard
-                  title="Demand timeline (active buyers)"
-                  description="Historical demand vs AI demand forecast"
-                  config={demandTrendChartConfig}
-                >
-                  <LineChart data={trendTimelineData}>
-                    <CartesianGrid vertical={false} />
-                    <XAxis dataKey="label" tickLine={false} axisLine={false} />
-                    <YAxis tickLine={false} axisLine={false} width={44} />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <ChartLegend content={<ChartLegendContent />} />
-                    <Line
-                      type="monotone"
-                      dataKey="demandHistorical"
-                      stroke="var(--color-demandHistorical)"
-                      strokeWidth={2.2}
-                      dot={false}
-                      name="demandHistorical"
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="demandForecast"
-                      stroke="var(--color-demandForecast)"
-                      strokeDasharray="6 4"
-                      strokeWidth={2.2}
-                      dot={false}
-                      name="demandForecast"
-                    />
-                  </LineChart>
-                </TrendChartCard>
-              </div>
+          {activeListingForTrend && selectedSeries.length > 0 ? (
+            <Card className="mt-5 gap-0 rounded-2xl border-emerald-400/22 bg-zinc-950/82 py-0 text-zinc-100 shadow-sm">
+              <CardContent className="px-4 py-4 sm:px-5 sm:py-5">
+                <div>
+                  <p className="font-medium text-[11px] text-zinc-400 uppercase tracking-[0.16em]">
+                    {activeListingForTrend.name} (
+                    {toCommodityCode(activeListingForTrend.name)})
+                  </p>
+                  <div className="mt-2 flex flex-wrap items-end gap-x-3 gap-y-1">
+                    <p className="font-semibold text-4xl leading-none tracking-tight sm:text-5xl">
+                      {latestPoint
+                        ? formatPriceValue(latestPoint.price, activeCurrency)
+                        : '--'}
+                    </p>
+                    <p
+                      className={cn(
+                        'pb-1 font-semibold text-xl tabular-nums sm:text-2xl',
+                        absoluteChange > 0
+                          ? 'text-emerald-400'
+                          : absoluteChange < 0
+                            ? 'text-rose-300'
+                            : 'text-zinc-300'
+                      )}
+                    >
+                      {formatSignedPriceValue(absoluteChange, activeCurrency)} (
+                      {formatPercentValue(percentChange)})
+                    </p>
+                  </div>
+                  <p className="mt-2 text-xs text-zinc-400 sm:text-sm">
+                    Last update: {formatPointDate(latestPoint?.date)} |
+                    Currency: {activeCurrency.code}
+                  </p>
+                </div>
 
-              <ForecastSummaryGrid forecastSummary={forecastSummary} />
-            </>
+                {aiForecast ? (
+                  <div className="mt-4 rounded-xl border border-emerald-400/25 bg-emerald-500/6 px-3 py-3 sm:px-4">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p className="font-semibold text-sm text-zinc-100 sm:text-base">
+                        AI forecast ({aiForecast.horizonPeriods} periods):{' '}
+                        {formatPriceValue(
+                          aiForecast.projectedPrice,
+                          activeCurrency
+                        )}{' '}
+                        {activeCurrency.code} (
+                        {formatPercentValue(aiForecast.projectedReturnPct)})
+                      </p>
+                      <span className="rounded-md border border-emerald-300/30 bg-emerald-500/12 px-2 py-0.5 text-[11px] text-emerald-200">
+                        {aiForecast.regime}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs text-zinc-400">
+                      Model: {aiForecast.modelName} | Interval:{' '}
+                      {formatPriceValue(aiForecast.intervalLow, activeCurrency)}{' '}
+                      -{' '}
+                      {formatPriceValue(
+                        aiForecast.intervalHigh,
+                        activeCurrency
+                      )}{' '}
+                      {activeCurrency.code}
+                    </p>
+                    <ConfidenceMeter confidence={aiForecast.confidence} />
+                  </div>
+                ) : null}
+
+                <div className="mt-5 flex flex-wrap gap-2 border-zinc-700/70 border-y py-3">
+                  {timeframeOrder.map((key) => (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => setTimeframe(key)}
+                      className={cn(
+                        'rounded-md border px-2.5 py-1 font-semibold text-xs tracking-wide transition-colors',
+                        timeframe === key
+                          ? 'border-emerald-400/50 bg-emerald-500/18 text-emerald-200'
+                          : 'border-zinc-700/70 bg-zinc-950/70 text-zinc-400 hover:border-zinc-500/70 hover:text-zinc-200'
+                      )}
+                    >
+                      {key}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-4 rounded-xl border border-zinc-700/70 bg-zinc-950/76 p-3 sm:p-4">
+                  <ChartContainer
+                    config={marketTrendChartConfig}
+                    className="h-[360px] w-full"
+                  >
+                    <ComposedChart
+                      data={selectedSeries}
+                      margin={{ top: 14, right: 8, left: 0, bottom: 0 }}
+                    >
+                      <defs>
+                        <linearGradient
+                          id="market-historical-fill"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="0%"
+                            stopColor="var(--color-historicalPrice)"
+                            stopOpacity={0.34}
+                          />
+                          <stop
+                            offset="100%"
+                            stopColor="var(--color-historicalPrice)"
+                            stopOpacity={0.08}
+                          />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                      <XAxis
+                        dataKey="label"
+                        tickLine={false}
+                        axisLine={false}
+                        minTickGap={20}
+                      />
+                      <YAxis
+                        yAxisId="price"
+                        orientation="right"
+                        tickLine={false}
+                        axisLine={false}
+                        width={84}
+                        tickFormatter={(value) =>
+                          formatPriceValue(Number(value), activeCurrency)
+                        }
+                      />
+                      <YAxis yAxisId="volume" hide />
+                      <ChartTooltip
+                        cursor={{
+                          stroke: 'rgba(214, 214, 214, 0.34)',
+                          strokeDasharray: '5 5',
+                        }}
+                        content={
+                          <MarketTrendTooltip activeCurrency={activeCurrency} />
+                        }
+                      />
+                      <Bar
+                        yAxisId="volume"
+                        dataKey="activityVolume"
+                        fill="var(--color-volume)"
+                        opacity={0.38}
+                        barSize={10}
+                        radius={[3, 3, 0, 0]}
+                      />
+                      <Area
+                        yAxisId="price"
+                        type="monotone"
+                        dataKey="historicalPrice"
+                        stroke="var(--color-historicalPrice)"
+                        fill="url(#market-historical-fill)"
+                        strokeWidth={2.2}
+                        dot={false}
+                        activeDot={{ r: 3 }}
+                      />
+                      <Line
+                        yAxisId="price"
+                        type="monotone"
+                        dataKey="forecastUpper"
+                        stroke="var(--color-forecastUpper)"
+                        strokeWidth={1.2}
+                        strokeOpacity={0.55}
+                        strokeDasharray="3 4"
+                        dot={false}
+                        connectNulls
+                      />
+                      <Line
+                        yAxisId="price"
+                        type="monotone"
+                        dataKey="forecastLower"
+                        stroke="var(--color-forecastLower)"
+                        strokeWidth={1.2}
+                        strokeOpacity={0.55}
+                        strokeDasharray="3 4"
+                        dot={false}
+                        connectNulls
+                      />
+                      <Line
+                        yAxisId="price"
+                        type="monotone"
+                        dataKey="forecastPrice"
+                        stroke="var(--color-forecastPrice)"
+                        strokeWidth={2.1}
+                        strokeDasharray="7 4"
+                        dot={false}
+                        connectNulls
+                      />
+                      {latestPoint ? (
+                        <ReferenceLine
+                          yAxisId="price"
+                          y={latestPoint.price}
+                          stroke="rgba(214, 214, 214, 0.45)"
+                          strokeDasharray="5 5"
+                          ifOverflow="extendDomain"
+                        />
+                      ) : null}
+                    </ComposedChart>
+                  </ChartContainer>
+                </div>
+
+                <div className="mt-4 overflow-hidden rounded-xl border border-zinc-700/70 bg-zinc-950/76">
+                  <div className="grid divide-zinc-700/70 md:grid-cols-3 md:divide-x">
+                    {statsColumns.map((column, index) => (
+                      <div
+                        key={`${column[0]?.label}-${index}`}
+                        className="p-4 sm:p-5"
+                      >
+                        <div className="space-y-3">
+                          {column.map((metric) => (
+                            <div
+                              key={metric.label}
+                              className="flex items-center justify-between gap-4 border-zinc-700/70 border-b pb-2 last:border-none last:pb-0"
+                            >
+                              <p className="font-medium text-sm text-zinc-400">
+                                {metric.label}
+                              </p>
+                              <p
+                                className={cn(
+                                  'text-right font-semibold text-sm tabular-nums sm:text-base',
+                                  metric.valueClassName ?? 'text-zinc-100'
+                                )}
+                              >
+                                {metric.value}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           ) : (
-            <Card className="mt-6 gap-0 rounded-2xl border-emerald-200 bg-white py-0 text-slate-900 shadow-sm">
-              <CardContent className="px-5 py-8 text-center text-slate-600">
-                No timeline data available for current filters.
+            <Card className="mt-6 gap-0 rounded-2xl border-emerald-400/22 bg-zinc-950/82 py-0 text-zinc-100 shadow-sm">
+              <CardContent className="px-5 py-8 text-center text-zinc-400">
+                No timeline data available for current commodity.
               </CardContent>
             </Card>
           )}
@@ -218,183 +523,192 @@ export function MarketTrendSection({
   );
 }
 
-type MarketplaceFilterBarProps = {
-  searchQuery: string;
-  selectedCategory: string;
-  selectedCountry: string;
-  selectedCurrency: CurrencyCode;
-  countries: string[];
-  aseanCurrencies: AseanCurrencyOption[];
-  onSearchQueryChange: (value: string) => void;
-  onCategoryChange: (value: string) => void;
-  onCountryChange: (value: string) => void;
-  onCurrencyChange: (value: CurrencyCode) => void;
-  onReset: () => void;
-};
+function sliceByTimeframe(
+  points: MarketTrendPoint[],
+  timeframe: TimeframeKey
+): MarketTrendPoint[] {
+  if (points.length === 0) {
+    return [];
+  }
 
-function MarketplaceFilterBar({
-  searchQuery,
-  selectedCategory,
-  selectedCountry,
-  selectedCurrency,
-  countries,
-  aseanCurrencies,
-  onSearchQueryChange,
-  onCategoryChange,
-  onCountryChange,
-  onCurrencyChange,
-  onReset,
-}: MarketplaceFilterBarProps) {
+  const observed = points.filter((point) => !point.isForecast);
+  const forecast = points.filter((point) => point.isForecast);
+
+  if (observed.length === 0) {
+    return points;
+  }
+
+  const withForecast = (window: MarketTrendPoint[]) => [...window, ...forecast];
+
+  if (timeframe === '1Y') {
+    return withForecast(observed);
+  }
+
+  if (timeframe === 'YTD') {
+    const currentYear = new Date().getFullYear();
+    const ytdSeries = observed.filter((point) => {
+      const year = new Date(point.date).getFullYear();
+      return year === currentYear;
+    });
+
+    if (ytdSeries.length >= 2) {
+      return withForecast(ytdSeries);
+    }
+
+    return withForecast(observed.slice(-Math.min(6, observed.length)));
+  }
+
+  const count = timeframePointCount[timeframe];
+  return withForecast(observed.slice(-Math.min(count, observed.length)));
+}
+
+function getPriceRange(points: MarketTrendPoint[]) {
+  if (points.length === 0) {
+    return { min: 0, max: 0 };
+  }
+
+  let min = Number.POSITIVE_INFINITY;
+  let max = Number.NEGATIVE_INFINITY;
+
+  for (const point of points) {
+    min = Math.min(min, point.price);
+    max = Math.max(max, point.price);
+  }
+
+  return { min, max };
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function averageActivity(points: MarketTrendPoint[]) {
+  if (points.length === 0) {
+    return 0;
+  }
+
+  const total = points.reduce((sum, point) => sum + point.activityVolume, 0);
+  return Math.round(total / points.length);
+}
+
+function formatPriceValue(value: number, currency: CurrencyOption) {
+  const fractionDigits = currency.maxFractionDigits === 0 ? 0 : 2;
+  return value.toLocaleString(currency.locale, {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  });
+}
+
+function formatSignedPriceValue(value: number, currency: CurrencyOption) {
+  const sign = value > 0 ? '+' : value < 0 ? '-' : '';
+  return `${sign}${formatPriceValue(Math.abs(value), currency)}`;
+}
+
+function formatPercentValue(value: number) {
+  const sign = value > 0 ? '+' : '';
+  return `${sign}${value.toFixed(2)}%`;
+}
+
+function formatVolumeValue(value: number) {
+  return new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function formatPointDate(dateValue?: string) {
+  if (!dateValue) {
+    return '--';
+  }
+
+  return new Date(dateValue).toLocaleString('en-US', {
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+function toCommodityCode(name: string) {
+  const tokens = name.trim().split(/\s+/).filter(Boolean);
+
+  if (tokens.length === 0) {
+    return 'N/A';
+  }
+
+  if (tokens[0].length <= 5) {
+    return tokens[0].toUpperCase();
+  }
+
+  return tokens
+    .slice(0, 4)
+    .map((token) => token[0])
+    .join('')
+    .toUpperCase();
+}
+
+function ConfidenceMeter({ confidence }: { confidence: number }) {
   return (
-    <div className="flex flex-wrap gap-2">
-      <Input
-        type="text"
-        placeholder="Search by commodity"
-        value={searchQuery}
-        onChange={(event) => onSearchQueryChange(event.target.value)}
-        className="h-10 rounded-xl border-emerald-200/90 bg-white/85 text-slate-700 text-xs placeholder:text-slate-400 focus-visible:border-green-500 focus-visible:ring-green-500/20 sm:w-64"
-      />
-      <NativeSelect
-        value={selectedCategory}
-        onChange={(event) => onCategoryChange(event.target.value)}
-        className="h-10 min-w-40 rounded-xl border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
-      >
-        <NativeSelectOption value="all">
-          All listed commodities
-        </NativeSelectOption>
-        <NativeSelectOption value="grains">Grains</NativeSelectOption>
-        <NativeSelectOption value="fruits">Fruits</NativeSelectOption>
-        <NativeSelectOption value="vegetables">Vegetables</NativeSelectOption>
-        <NativeSelectOption value="aquaculture">Aquaculture</NativeSelectOption>
-      </NativeSelect>
-      <NativeSelect
-        value={selectedCountry}
-        onChange={(event) => onCountryChange(event.target.value)}
-        className="h-10 min-w-40 rounded-xl border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
-      >
-        <NativeSelectOption value="all">All countries</NativeSelectOption>
-        {countries.map((country) => (
-          <NativeSelectOption key={country} value={country}>
-            {country}
-          </NativeSelectOption>
-        ))}
-      </NativeSelect>
-      <NativeSelect
-        value={selectedCurrency}
-        onChange={(event) =>
-          onCurrencyChange(event.target.value as CurrencyCode)
-        }
-        className="h-10 min-w-36 rounded-xl border-emerald-200/90 bg-white/85 text-slate-700 text-xs focus-visible:border-green-500 focus-visible:ring-green-500/20"
-      >
-        {aseanCurrencies.map((currency) => (
-          <NativeSelectOption key={currency.code} value={currency.code}>
-            {currency.code}
-          </NativeSelectOption>
-        ))}
-      </NativeSelect>
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={onReset}
-        className="h-10 rounded-xl border-emerald-300/90 bg-white/90 text-emerald-800 text-xs hover:bg-emerald-50"
-      >
-        Reset
-      </Button>
+    <div className="mt-2">
+      <div className="flex items-center justify-between text-[11px] text-zinc-400">
+        <span>AI confidence</span>
+        <span>{confidence}%</span>
+      </div>
+      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-zinc-800/90">
+        <div
+          className="h-full rounded-full bg-emerald-400/90 transition-[width]"
+          style={{ width: `${clamp(confidence, 0, 100)}%` }}
+        />
+      </div>
     </div>
   );
 }
 
-type TrendChartCardProps = {
-  title: string;
-  description: string;
-  config: typeof priceTrendChartConfig | typeof demandTrendChartConfig;
-  children: ReactElement;
-};
-
-function TrendChartCard({
-  title,
-  description,
-  config,
-  children,
-}: TrendChartCardProps) {
-  return (
-    <Card className="gap-0 rounded-2xl border-emerald-200 bg-white/88 py-0 text-slate-900 shadow-sm">
-      <CardHeader className="px-5 pt-5 pb-2">
-        <CardTitle className="text-lg sm:text-xl">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent className="px-3 pb-4 sm:px-4">
-        <ChartContainer config={config} className="h-64 w-full">
-          {children}
-        </ChartContainer>
-      </CardContent>
-    </Card>
-  );
-}
-
-type ForecastMetricCardProps = {
-  label: string;
-  value: string;
-  valueClassName: string;
-};
-
-function ForecastMetricCard({
-  label,
-  value,
-  valueClassName,
-}: ForecastMetricCardProps) {
-  return (
-    <Card className="gap-0 rounded-xl border-emerald-200 bg-white/85 py-0">
-      <CardContent className="px-4 py-4">
-        <p className="text-slate-500 text-xs uppercase tracking-[0.14em]">
-          {label}
-        </p>
-        <p className={cn('mt-2 font-semibold text-2xl', valueClassName)}>
-          {value}
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function ForecastSummaryGrid({
-  forecastSummary,
+function MarketTrendTooltip({
+  active,
+  payload,
+  activeCurrency,
 }: {
-  forecastSummary: ForecastSummary | null;
+  active?: boolean;
+  payload?: Array<{ payload: MarketTrendPoint }>;
+  activeCurrency: CurrencyOption;
 }) {
+  if (!active || !payload?.length) {
+    return null;
+  }
+
+  const point = payload[0]?.payload;
+  if (!point) {
+    return null;
+  }
+
   return (
-    <div className="mt-4 grid gap-3 sm:grid-cols-3">
-      <ForecastMetricCard
-        label="Predicted price move"
-        value={
-          forecastSummary
-            ? `${forecastSummary.projectedPriceChange.toFixed(1)}%`
-            : '--'
-        }
-        valueClassName={
-          (forecastSummary?.projectedPriceChange ?? 0) >= 0
-            ? 'text-green-600'
-            : 'text-amber-600'
-        }
-      />
-      <ForecastMetricCard
-        label="Predicted demand move"
-        value={
-          forecastSummary
-            ? `${forecastSummary.projectedDemandChange.toFixed(1)}%`
-            : '--'
-        }
-        valueClassName={
-          (forecastSummary?.projectedDemandChange ?? 0) >= 0
-            ? 'text-green-600'
-            : 'text-amber-600'
-        }
-      />
-      <ForecastMetricCard
-        label="AI confidence"
-        value={forecastSummary ? `${forecastSummary.confidence}%` : '--'}
-        valueClassName="text-emerald-700"
-      />
+    <div className="min-w-[12rem] rounded-lg border border-zinc-700/80 bg-zinc-950/95 px-3 py-2 text-xs shadow-xl">
+      <p className="text-zinc-400">{formatPointDate(point.date)}</p>
+      <div className="mt-1 flex items-center justify-between gap-3">
+        <span className="text-zinc-400">Price</span>
+        <span className="font-semibold text-emerald-200 tabular-nums">
+          {formatPriceValue(point.price, activeCurrency)} {activeCurrency.code}
+        </span>
+      </div>
+      <div className="mt-1 flex items-center justify-between gap-3">
+        <span className="text-zinc-400">Activity volume</span>
+        <span className="font-semibold tabular-nums">
+          {formatVolumeValue(point.activityVolume)}
+        </span>
+      </div>
+      {point.isForecast ? (
+        <>
+          <div className="mt-1 flex items-center justify-between gap-3">
+            <span className="text-zinc-400">Forecast range</span>
+            <span className="font-semibold text-emerald-200 tabular-nums">
+              {point.forecastLower !== null && point.forecastUpper !== null
+                ? `${formatPriceValue(point.forecastLower, activeCurrency)} - ${formatPriceValue(point.forecastUpper, activeCurrency)} ${activeCurrency.code}`
+                : '--'}
+            </span>
+          </div>
+          <p className="mt-1 text-[11px] text-emerald-300/90">
+            AI forecast period
+          </p>
+        </>
+      ) : null}
     </div>
   );
 }

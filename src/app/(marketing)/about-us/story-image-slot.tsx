@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
@@ -68,7 +68,7 @@ export function StoryImageSlot({
   return (
     <div
       className={cn(
-        'group relative h-64 overflow-hidden rounded-2xl border border-green-200/80 bg-green-900/10 shadow-sm sm:h-72',
+        'group relative h-64 overflow-hidden rounded-2xl border border-emerald-500/25 bg-zinc-900/60 shadow-sm sm:h-72',
         className
       )}
       onMouseEnter={() => setIsPaused(true)}
@@ -108,8 +108,8 @@ export function StoryImageSlot({
               onClick={() => goToSlide(index)}
               aria-label={`Show image ${index + 1}`}
               className={cn(
-                'h-2.5 rounded-full border border-white/70 bg-white/45 transition-all duration-500',
-                isActive ? 'w-7 bg-lime-200' : 'w-2.5 hover:bg-white/80'
+                'h-2.5 rounded-full border border-zinc-500/50 bg-zinc-800/55 transition-all duration-500',
+                isActive ? 'w-7 bg-lime-200' : 'w-2.5 hover:bg-zinc-800/80'
               )}
             />
           );
@@ -122,7 +122,7 @@ export function StoryImageSlot({
             type="button"
             onClick={goToPreviousSlide}
             aria-label="Previous image"
-            className="absolute top-1/2 left-3 hidden -translate-y-1/2 rounded-full border border-green-100/70 bg-white/85 p-2 text-green-900 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 sm:inline-flex"
+            className="absolute top-1/2 left-3 hidden -translate-y-1/2 rounded-full border border-zinc-700/70 bg-zinc-900/78 p-2 text-zinc-200 shadow-md transition-all duration-300 hover:scale-105 hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 sm:inline-flex"
           >
             <ChevronLeft className="size-4" />
           </button>
@@ -130,7 +130,7 @@ export function StoryImageSlot({
             type="button"
             onClick={goToNextSlide}
             aria-label="Next image"
-            className="absolute top-1/2 right-3 hidden -translate-y-1/2 rounded-full border border-green-100/70 bg-white/85 p-2 text-green-900 shadow-md transition-all duration-300 hover:scale-105 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 sm:inline-flex"
+            className="absolute top-1/2 right-3 hidden -translate-y-1/2 rounded-full border border-zinc-700/70 bg-zinc-900/78 p-2 text-zinc-200 shadow-md transition-all duration-300 hover:scale-105 hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 sm:inline-flex"
           >
             <ChevronRight className="size-4" />
           </button>

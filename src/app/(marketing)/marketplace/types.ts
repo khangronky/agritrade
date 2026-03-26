@@ -54,11 +54,35 @@ export type DemandSignal = {
 };
 
 export type MarketTrendPoint = {
+  date: string;
   label: string;
-  priceHistorical: number | null;
-  priceForecast: number | null;
-  demandHistorical: number | null;
-  demandForecast: number | null;
+  price: number;
+  historicalPrice: number | null;
+  forecastPrice: number | null;
+  forecastUpper: number | null;
+  forecastLower: number | null;
+  activityVolume: number;
+  isForecast: boolean;
+};
+
+export type ForecastRegime =
+  | 'Trending regime'
+  | 'Mean-reverting regime'
+  | 'High-volatility regime';
+
+export type AiForecastSummary = {
+  modelName: string;
+  confidence: number;
+  regime: ForecastRegime;
+  horizonPeriods: number;
+  projectedPrice: number;
+  projectedReturnPct: number;
+  intervalLow: number;
+  intervalHigh: number;
+  volatilityPct: number;
+  rsi: number;
+  emaShort: number;
+  emaLong: number;
 };
 
 export type ExchangeCard = {
@@ -70,10 +94,4 @@ export type ExchangeCard = {
 export type CommodityOption = {
   value: string;
   label: string;
-};
-
-export type ForecastSummary = {
-  projectedPriceChange: number;
-  projectedDemandChange: number;
-  confidence: number;
 };

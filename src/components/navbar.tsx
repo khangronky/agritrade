@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import {
   ChevronDown,
@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -35,12 +35,13 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { createClient } from '@/lib/supabase/client';
+import { cn } from '@/lib/utils';
 
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us' },
   { label: 'Marketplace', href: '/marketplace' },
-  { label: 'Forum', href: '/' },
+  { label: 'Forum', href: '/forum' },
 ];
 
 type NavbarProps = {
@@ -62,6 +63,7 @@ function getInitials(name: string) {
 
 export function Navbar({ user }: NavbarProps) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
 
   const supabase = createClient();
@@ -74,20 +76,32 @@ export function Navbar({ user }: NavbarProps) {
     router.refresh();
   };
 
+  const isItemActive = (item: (typeof navItems)[number]) => {
+    if (item.label === 'Forum') {
+      return pathname.startsWith('/forum');
+    }
+
+    if (item.href === '/') {
+      return pathname === '/';
+    }
+
+    return pathname === item.href || pathname.startsWith(`${item.href}/`);
+  };
+
   const renderDesktopAuth = () => {
     if (!isLoggedIn) {
       return (
         <>
           <Button
             asChild
-            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/80"
+            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
           >
             <Link href="/login">Sign In</Link>
           </Button>
           <Button
             asChild
             variant="outline"
-            className="bg-background text-slate-800 hover:bg-background/80"
+            className="border-emerald-400/30 bg-zinc-950/70 text-zinc-200 hover:bg-zinc-900/90 hover:text-zinc-100"
           >
             <Link href="/register">Sign Up</Link>
           </Button>
@@ -100,10 +114,10 @@ export function Navbar({ user }: NavbarProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-10 gap-2 px-2 text-slate-800 hover:bg-white/80 hover:text-slate-900"
+            className="h-10 gap-2 px-2 text-zinc-200 hover:bg-zinc-900 hover:text-zinc-100"
           >
             <Avatar className="h-8 w-8">
-              <AvatarFallback className="bg-emerald-100 text-slate-800">
+              <AvatarFallback className="border border-emerald-500/25 bg-emerald-500/12 text-emerald-200">
                 {getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
@@ -136,7 +150,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full backdrop-blur-md">
+    <header className="fixed top-0 z-30 w-full border-emerald-500/20 border-b backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -150,15 +164,31 @@ export function Navbar({ user }: NavbarProps) {
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-8 md:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="font-semibold text-slate-800 text-sm transition-colors hover:text-emerald-600"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = isItemActive(item);
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                aria-current={isActive ? 'page' : undefined}
+                className={cn(
+                  'relative font-semibold text-sm transition-colors',
+                  isActive
+                    ? 'text-emerald-200'
+                    : 'text-zinc-300 hover:text-emerald-300'
+                )}
+              >
+                {item.label}
+                <span
+                  className={cn(
+                    'pointer-events-none absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full bg-emerald-300 transition-opacity duration-200',
+                    isActive ? 'opacity-100' : 'opacity-0'
+                  )}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
@@ -173,7 +203,7 @@ export function Navbar({ user }: NavbarProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-2 border-slate-300 bg-white/80 px-2 text-slate-800 hover:bg-white hover:text-slate-900"
+                    className="gap-2 border-emerald-400/25 bg-zinc-950/80 px-2 text-zinc-200 hover:bg-zinc-900 hover:text-zinc-100"
                   >
                     <Menu className="size-4" />
                   </Button>
@@ -187,16 +217,26 @@ export function Navbar({ user }: NavbarProps) {
             </SheetHeader>
 
             <nav className="mt-3 flex flex-col gap-1 px-4">
-              {navItems.map((item) => (
-                <SheetClose asChild key={item.label}>
-                  <Link
-                    href={item.href}
-                    className="rounded-md px-3 py-2 text-sm transition-colors hover:bg-zinc-800 hover:text-zinc-50"
-                  >
-                    {item.label}
-                  </Link>
-                </SheetClose>
-              ))}
+              {navItems.map((item) => {
+                const isActive = isItemActive(item);
+
+                return (
+                  <SheetClose asChild key={item.label}>
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={cn(
+                        'rounded-md px-3 py-2 text-sm transition-colors',
+                        isActive
+                          ? 'bg-emerald-500/15 text-emerald-200'
+                          : 'hover:bg-zinc-800 hover:text-zinc-50'
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </SheetClose>
+                );
+              })}
             </nav>
 
             <div className="mt-auto flex flex-col gap-2 px-4 pb-6">
@@ -205,7 +245,7 @@ export function Navbar({ user }: NavbarProps) {
                   <SheetClose asChild>
                     <Button
                       asChild
-                      className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/80"
+                      className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
                     >
                       <Link href="/login">Sign In</Link>
                     </Button>
@@ -214,7 +254,7 @@ export function Navbar({ user }: NavbarProps) {
                     <Button
                       asChild
                       variant="outline"
-                      className="bg-background text-slate-800 hover:bg-background/80"
+                      className="border-emerald-400/30 bg-zinc-950/70 text-zinc-200 hover:bg-zinc-900/90 hover:text-zinc-100"
                     >
                       <Link href="/register">Sign Up</Link>
                     </Button>
