@@ -211,9 +211,7 @@ export function RegisterForm() {
   return (
     <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(0,0,0,0.5)] backdrop-blur">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-zinc-100">
-          Create Account
-        </CardTitle>
+        <CardTitle className="text-2xl text-zinc-100">Create Account</CardTitle>
         <CardDescription className="text-zinc-300/80">
           Get started with AgriTrade
         </CardDescription>
@@ -344,5 +342,3 @@ export function RegisterForm() {
     </Card>
   );
 }
-
-

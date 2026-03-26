@@ -64,4 +64,3 @@ function ExchangeFeatureCard({ card }: { card: ExchangeCard }) {
     </Card>
   );
 }
-

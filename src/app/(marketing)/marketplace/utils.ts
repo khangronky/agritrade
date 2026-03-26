@@ -19,4 +19,3 @@ export function formatPriceByCurrency(
 export function formatPricePerKg(priceVnd: number, currency: CurrencyOption) {
   return `${formatPriceByCurrency(priceVnd, currency)} ${currency.code}/kg`;
 }
-

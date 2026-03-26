@@ -81,4 +81,3 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
     </>
   );
 }
-

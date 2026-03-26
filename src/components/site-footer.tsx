@@ -81,5 +81,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-
-

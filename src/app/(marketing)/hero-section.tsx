@@ -82,5 +82,3 @@ function Laurel({ reverse = false }: { reverse?: boolean }) {
     </div>
   );
 }
-
-

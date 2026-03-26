@@ -51,9 +51,20 @@ type MetricItem = {
   valueClassName?: string;
 };
 
-const timeframeOrder: TimeframeKey[] = ['1D', '1W', '1M', '3M', '6M', '1Y', 'YTD'];
+const timeframeOrder: TimeframeKey[] = [
+  '1D',
+  '1W',
+  '1M',
+  '3M',
+  '6M',
+  '1Y',
+  'YTD',
+];
 
-const timeframePointCount: Record<Exclude<TimeframeKey, '1Y' | 'YTD'>, number> = {
+const timeframePointCount: Record<
+  Exclude<TimeframeKey, '1Y' | 'YTD'>,
+  number
+> = {
   '1D': 3,
   '1W': 5,
   '1M': 7,
@@ -104,7 +115,9 @@ export function MarketTrendSection({
   );
 
   const observedSeries = selectedSeries.filter((point) => !point.isForecast);
-  const fullObservedSeries = trendTimelineData.filter((point) => !point.isForecast);
+  const fullObservedSeries = trendTimelineData.filter(
+    (point) => !point.isForecast
+  );
   const latestPoint = observedSeries.at(-1) ?? selectedSeries.at(-1) ?? null;
   const previousPoint = observedSeries.at(-2) ?? latestPoint;
   const openPoint = observedSeries[0] ?? latestPoint;
@@ -147,17 +160,22 @@ export function MarketTrendSection({
       {
         label: '1Y change',
         value: `${formatPercentValue(oneYearChange)}`,
-        valueClassName: oneYearChange >= 0 ? 'text-emerald-300' : 'text-rose-300',
+        valueClassName:
+          oneYearChange >= 0 ? 'text-emerald-300' : 'text-rose-300',
       },
     ],
     [
       {
         label: 'Activity volume',
-        value: latestActivityVolume ? formatVolumeValue(latestActivityVolume) : '--',
+        value: latestActivityVolume
+          ? formatVolumeValue(latestActivityVolume)
+          : '--',
       },
       {
         label: 'Average activity (3 periods)',
-        value: averageActivityVolume ? formatVolumeValue(averageActivityVolume) : '--',
+        value: averageActivityVolume
+          ? formatVolumeValue(averageActivityVolume)
+          : '--',
       },
       {
         label: 'AI confidence',
@@ -223,8 +241,8 @@ export function MarketTrendSection({
               Market Trend Analysis & Forecasting
             </h2>
             <p className="max-w-3xl text-sm text-zinc-400 leading-relaxed sm:text-base">
-              Quant-style market panel with algorithmic AI forecasting, volatility
-              analysis, and professional market indicators.
+              Quant-style market panel with algorithmic AI forecasting,
+              volatility analysis, and professional market indicators.
             </p>
           </div>
 
@@ -263,7 +281,8 @@ export function MarketTrendSection({
               <CardContent className="px-4 py-4 sm:px-5 sm:py-5">
                 <div>
                   <p className="font-medium text-[11px] text-zinc-400 uppercase tracking-[0.16em]">
-                    {activeListingForTrend.name} ({toCommodityCode(activeListingForTrend.name)})
+                    {activeListingForTrend.name} (
+                    {toCommodityCode(activeListingForTrend.name)})
                   </p>
                   <div className="mt-2 flex flex-wrap items-end gap-x-3 gap-y-1">
                     <p className="font-semibold text-4xl leading-none tracking-tight sm:text-5xl">
@@ -286,8 +305,8 @@ export function MarketTrendSection({
                     </p>
                   </div>
                   <p className="mt-2 text-xs text-zinc-400 sm:text-sm">
-                    Last update: {formatPointDate(latestPoint?.date)} | Currency:{' '}
-                    {activeCurrency.code}
+                    Last update: {formatPointDate(latestPoint?.date)} |
+                    Currency: {activeCurrency.code}
                   </p>
                 </div>
 
@@ -296,7 +315,10 @@ export function MarketTrendSection({
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <p className="font-semibold text-sm text-zinc-100 sm:text-base">
                         AI forecast ({aiForecast.horizonPeriods} periods):{' '}
-                        {formatPriceValue(aiForecast.projectedPrice, activeCurrency)}{' '}
+                        {formatPriceValue(
+                          aiForecast.projectedPrice,
+                          activeCurrency
+                        )}{' '}
                         {activeCurrency.code} (
                         {formatPercentValue(aiForecast.projectedReturnPct)})
                       </p>
@@ -306,8 +328,12 @@ export function MarketTrendSection({
                     </div>
                     <p className="mt-1 text-xs text-zinc-400">
                       Model: {aiForecast.modelName} | Interval:{' '}
-                      {formatPriceValue(aiForecast.intervalLow, activeCurrency)} -{' '}
-                      {formatPriceValue(aiForecast.intervalHigh, activeCurrency)}{' '}
+                      {formatPriceValue(aiForecast.intervalLow, activeCurrency)}{' '}
+                      -{' '}
+                      {formatPriceValue(
+                        aiForecast.intervalHigh,
+                        activeCurrency
+                      )}{' '}
                       {activeCurrency.code}
                     </p>
                     <ConfidenceMeter confidence={aiForecast.confidence} />
@@ -333,13 +359,22 @@ export function MarketTrendSection({
                 </div>
 
                 <div className="mt-4 rounded-xl border border-zinc-700/70 bg-zinc-950/76 p-3 sm:p-4">
-                  <ChartContainer config={marketTrendChartConfig} className="h-[360px] w-full">
+                  <ChartContainer
+                    config={marketTrendChartConfig}
+                    className="h-[360px] w-full"
+                  >
                     <ComposedChart
                       data={selectedSeries}
                       margin={{ top: 14, right: 8, left: 0, bottom: 0 }}
                     >
                       <defs>
-                        <linearGradient id="market-historical-fill" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient
+                          id="market-historical-fill"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
                           <stop
                             offset="0%"
                             stopColor="var(--color-historicalPrice)"
@@ -375,7 +410,9 @@ export function MarketTrendSection({
                           stroke: 'rgba(214, 214, 214, 0.34)',
                           strokeDasharray: '5 5',
                         }}
-                        content={<MarketTrendTooltip activeCurrency={activeCurrency} />}
+                        content={
+                          <MarketTrendTooltip activeCurrency={activeCurrency} />
+                        }
                       />
                       <Bar
                         yAxisId="volume"
@@ -590,10 +627,7 @@ function formatPointDate(dateValue?: string) {
 }
 
 function toCommodityCode(name: string) {
-  const tokens = name
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
+  const tokens = name.trim().split(/\s+/).filter(Boolean);
 
   if (tokens.length === 0) {
     return 'N/A';
@@ -670,7 +704,9 @@ function MarketTrendTooltip({
                 : '--'}
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-emerald-300/90">AI forecast period</p>
+          <p className="mt-1 text-[11px] text-emerald-300/90">
+            AI forecast period
+          </p>
         </>
       ) : null}
     </div>
