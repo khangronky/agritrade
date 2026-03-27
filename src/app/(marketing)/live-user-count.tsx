@@ -59,14 +59,14 @@ export function LiveUserCount({
         className={cn(
           'tabular-nums transition-all duration-500',
           isAnimating &&
-            'scale-[1.02] text-[#84c31d] drop-shadow-[0_0_14px_rgba(126,188,34,0.28)]'
+            'scale-[1.02] text-primary drop-shadow-[0_0_14px_rgba(126,188,34,0.28)]'
         )}
       >
         {formatCount(count)}
       </span>
       <span
         className={cn(
-          'pointer-events-none absolute -top-5 right-0 font-semibold text-[#6eac12] text-sm transition-all duration-500',
+          'pointer-events-none absolute -top-5 right-0 font-semibold text-primary text-sm transition-all duration-500',
           isAnimating ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'
         )}
       >

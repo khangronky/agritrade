@@ -110,7 +110,7 @@ export function ExplorePlatformSlideshow() {
         <CarouselContent className="ml-0">
           {slides.map((slide) => (
             <CarouselItem key={slide.title} className="pl-0">
-              <div className="relative overflow-hidden rounded-2xl bg-[#f8ffec] shadow-[0_12px_20px_rgba(121,177,28,0.16)]">
+              <div className="relative overflow-hidden rounded-2xl bg-lime-50 shadow-[0_12px_20px_rgba(121,177,28,0.16)]">
                 <div className="grid min-h-[390px] md:min-h-[330px] md:grid-cols-[1.05fr_0.95fr]">
                   <div className="relative min-h-[200px] md:min-h-full">
                     <Image
@@ -123,7 +123,7 @@ export function ExplorePlatformSlideshow() {
                     <div className="absolute inset-0 bg-linear-to-t from-black/20 via-black/0 to-transparent" />
                   </div>
 
-                  <article className="flex flex-col justify-between px-4 py-4 text-[#2e4b06] sm:px-5 sm:py-5">
+                  <article className="flex flex-col justify-between px-4 py-4 text-lime-950 sm:px-5 sm:py-5">
                     <div>
                       <h3 className="font-semibold text-lg leading-tight sm:text-xl">
                         {slide.title}
@@ -134,7 +134,7 @@ export function ExplorePlatformSlideshow() {
                             key={item}
                             className="flex items-start gap-2 text-sm leading-relaxed"
                           >
-                            <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#77bf12]" />
+                            <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                             <span>{item}</span>
                           </li>
                         ))}
@@ -143,7 +143,7 @@ export function ExplorePlatformSlideshow() {
 
                     <Link
                       href={slide.ctaHref}
-                      className="mt-5 inline-flex w-fit rounded-full border border-[#b8da84] bg-[#ecf9d8] px-3.5 py-1.5 font-semibold text-[#3f620a] text-sm"
+                      className="mt-5 inline-flex w-fit rounded-full border border-lime-300 bg-lime-100 px-3.5 py-1.5 font-semibold text-lime-700 text-sm"
                     >
                       {slide.ctaLabel}
                     </Link>
@@ -154,11 +154,11 @@ export function ExplorePlatformSlideshow() {
           ))}
         </CarouselContent>
 
-        <CarouselPrevious className="top-1/2 left-2 size-7 -translate-y-1/2 rounded-full border-[#d3e8b4] bg-white/90 text-[#5ca508]" />
-        <CarouselNext className="top-1/2 right-2 size-7 -translate-y-1/2 rounded-full border-[#d3e8b4] bg-white/90 text-[#5ca508]" />
+        <CarouselPrevious className="top-1/2 left-2 size-7 -translate-y-1/2 rounded-full border-lime-200 bg-white/90 text-primary" />
+        <CarouselNext className="top-1/2 right-2 size-7 -translate-y-1/2 rounded-full border-lime-200 bg-white/90 text-primary" />
 
         <div className="pointer-events-none absolute inset-x-0 bottom-2.5 flex justify-center">
-          <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-[#cfe7af] bg-[#f7fee8]/90 px-2 py-1 backdrop-blur-xs">
+          <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-lime-200 bg-lime-50/90 px-2 py-1 backdrop-blur-xs">
             {slides.map((slide, index) => (
               <button
                 key={slide.title}
@@ -167,8 +167,8 @@ export function ExplorePlatformSlideshow() {
                 className={cn(
                   'h-2 rounded-full transition-all',
                   activeIndex === index
-                    ? 'w-6 bg-[#88d11f]'
-                    : 'w-2 bg-[#b5cf90]'
+                    ? 'w-6 bg-primary'
+                    : 'w-2 bg-lime-200'
                 )}
                 aria-label={`Go to slide ${index + 1}`}
               />

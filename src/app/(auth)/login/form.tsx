@@ -56,10 +56,10 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="border-[#d0e6af] bg-white shadow-[0_12px_24px_rgba(127,181,44,0.12)]">
+    <Card className="border-lime-200 bg-white shadow-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-[#1f3800]">Welcome Back</CardTitle>
-        <CardDescription className="text-[#546a39]">
+        <CardTitle className="text-2xl text-lime-950">Welcome Back</CardTitle>
+        <CardDescription className="text-muted-foreground">
           Sign in to your AgriTrade account
         </CardDescription>
       </CardHeader>
@@ -71,12 +71,12 @@ export function LoginForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#365608]">Email</FormLabel>
+                  <FormLabel className="text-lime-700">Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
                       placeholder="you@example.com"
-                      className="border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] focus-visible:border-[#9dcb4a] focus-visible:ring-[#9dcb4a]/30"
+                      className="border-lime-200 bg-lime-50 text-lime-950 focus-visible:border-primary focus-visible:ring-ring/30"
                       {...field}
                     />
                   </FormControl>
@@ -90,10 +90,10 @@ export function LoginForm() {
               render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center justify-between">
-                    <FormLabel className="text-[#365608]">Password</FormLabel>
+                    <FormLabel className="text-lime-700">Password</FormLabel>
                     <Link
                       href="/forgot-password"
-                      className="text-[#4e820f] text-sm transition-colors hover:text-[#3d670d] hover:underline"
+                      className="text-lime-700 text-sm transition-colors hover:text-primary hover:underline"
                     >
                       Forgot password?
                     </Link>
@@ -103,14 +103,14 @@ export function LoginForm() {
                       <Input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Enter your password"
-                        className="border-[#d3e9b4] bg-[#f9fef0] pr-10 text-[#1f3800] focus-visible:border-[#9dcb4a] focus-visible:ring-[#9dcb4a]/30"
+                        className="border-lime-200 bg-lime-50 pr-10 text-lime-950 focus-visible:border-primary focus-visible:ring-ring/30"
                         {...field}
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-0 right-0 h-full px-3 text-[#6e7f5a] hover:bg-transparent hover:text-[#365608]"
+                        className="absolute top-0 right-0 h-full px-3 text-muted-foreground hover:bg-transparent hover:text-primary"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? (
@@ -127,7 +127,7 @@ export function LoginForm() {
             />
             <Button
               type="submit"
-              className="w-full bg-brand-lime font-semibold text-[#1d3706] transition-colors hover:bg-brand-lime/90"
+              className="w-full bg-brand-lime font-semibold text-lime-950 transition-colors hover:bg-brand-lime/90"
               disabled={loginMutation.isPending}
             >
               {loginMutation.isPending ? (
@@ -142,12 +142,12 @@ export function LoginForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex justify-center border-[#d7e7c2] border-t pt-6">
-        <p className="text-[#546a39] text-sm">
+      <CardFooter className="flex justify-center border-lime-200 border-t pt-6">
+        <p className="text-muted-foreground text-sm">
           Don&apos;t have an account?{' '}
           <Link
             href="/register"
-            className="font-medium text-[#3d670d] hover:underline"
+            className="font-medium text-lime-700 hover:underline"
           >
             Sign up
           </Link>

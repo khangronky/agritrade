@@ -132,12 +132,12 @@ export function ForgotPasswordForm() {
   // Stage 1: Email
   if (stage === 'email') {
     return (
-      <Card className="border-[#d0e6af] bg-white shadow-[0_12px_24px_rgba(127,181,44,0.12)]">
+      <Card className="border-lime-200 bg-white shadow-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-[#1f3800]">
+          <CardTitle className="text-2xl text-lime-950">
             Forgot Password?
           </CardTitle>
-          <CardDescription className="text-[#546a39]">
+          <CardDescription className="text-muted-foreground">
             Enter your email and we&apos;ll send you a recovery code
           </CardDescription>
         </CardHeader>
@@ -152,12 +152,12 @@ export function ForgotPasswordForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#365608]">Email</FormLabel>
+                    <FormLabel className="text-lime-700">Email</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
                         placeholder="you@example.com"
-                        className="border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] focus-visible:border-[#9dcb4a] focus-visible:ring-[#9dcb4a]/30"
+                        className="border-lime-200 bg-lime-50 text-lime-950 focus-visible:border-primary focus-visible:ring-ring/30"
                         {...field}
                       />
                     </FormControl>
@@ -167,7 +167,7 @@ export function ForgotPasswordForm() {
               />
               <Button
                 type="submit"
-                className="w-full bg-brand-lime font-semibold text-[#1d3706] transition-colors hover:bg-brand-lime/90"
+                className="w-full bg-brand-lime font-semibold text-lime-950 transition-colors hover:bg-brand-lime/90"
                 disabled={forgotPasswordMutation.isPending}
               >
                 {forgotPasswordMutation.isPending ? (
@@ -182,10 +182,10 @@ export function ForgotPasswordForm() {
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-center border-[#d7e7c2] border-t pt-6">
+        <CardFooter className="flex justify-center border-lime-200 border-t pt-6">
           <Link
             href="/login"
-            className="text-[#546a39] text-sm hover:text-[#365608] hover:underline"
+            className="text-muted-foreground text-sm hover:text-primary hover:underline"
           >
             Back to Login
           </Link>
@@ -197,14 +197,14 @@ export function ForgotPasswordForm() {
   // Stage 2: OTP
   if (stage === 'otp') {
     return (
-      <Card className="border-[#d0e6af] bg-white shadow-[0_12px_24px_rgba(127,181,44,0.12)]">
+      <Card className="border-lime-200 bg-white shadow-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-[#1f3800]">
+          <CardTitle className="text-2xl text-lime-950">
             Enter Recovery Code
           </CardTitle>
-          <CardDescription className="text-[#546a39]">
+          <CardDescription className="text-muted-foreground">
             We sent a code to{' '}
-            <span className="font-medium text-[#1f3800]">{email}</span>
+            <span className="font-medium text-lime-950">{email}</span>
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -218,33 +218,33 @@ export function ForgotPasswordForm() {
               <InputOTPGroup>
                 <InputOTPSlot
                   index={0}
-                  className="h-11 w-11 border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] data-[active=true]:border-[#89c11f] data-[active=true]:ring-[#9dcb4a]/30"
+                  className="h-11 w-11 border-lime-200 bg-lime-50 text-lime-950 data-[active=true]:border-primary data-[active=true]:ring-ring/30"
                 />
                 <InputOTPSlot
                   index={1}
-                  className="h-11 w-11 border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] data-[active=true]:border-[#89c11f] data-[active=true]:ring-[#9dcb4a]/30"
+                  className="h-11 w-11 border-lime-200 bg-lime-50 text-lime-950 data-[active=true]:border-primary data-[active=true]:ring-ring/30"
                 />
                 <InputOTPSlot
                   index={2}
-                  className="h-11 w-11 border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] data-[active=true]:border-[#89c11f] data-[active=true]:ring-[#9dcb4a]/30"
+                  className="h-11 w-11 border-lime-200 bg-lime-50 text-lime-950 data-[active=true]:border-primary data-[active=true]:ring-ring/30"
                 />
                 <InputOTPSlot
                   index={3}
-                  className="h-11 w-11 border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] data-[active=true]:border-[#89c11f] data-[active=true]:ring-[#9dcb4a]/30"
+                  className="h-11 w-11 border-lime-200 bg-lime-50 text-lime-950 data-[active=true]:border-primary data-[active=true]:ring-ring/30"
                 />
                 <InputOTPSlot
                   index={4}
-                  className="h-11 w-11 border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] data-[active=true]:border-[#89c11f] data-[active=true]:ring-[#9dcb4a]/30"
+                  className="h-11 w-11 border-lime-200 bg-lime-50 text-lime-950 data-[active=true]:border-primary data-[active=true]:ring-ring/30"
                 />
                 <InputOTPSlot
                   index={5}
-                  className="h-11 w-11 border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] data-[active=true]:border-[#89c11f] data-[active=true]:ring-[#9dcb4a]/30"
+                  className="h-11 w-11 border-lime-200 bg-lime-50 text-lime-950 data-[active=true]:border-primary data-[active=true]:ring-ring/30"
                 />
               </InputOTPGroup>
             </InputOTP>
           </div>
           <Button
-            className="w-full bg-brand-lime font-semibold text-[#1d3706] transition-colors hover:bg-brand-lime/90"
+            className="w-full bg-brand-lime font-semibold text-lime-950 transition-colors hover:bg-brand-lime/90"
             onClick={handleVerifyOtp}
             disabled={verifyRecoveryOtpMutation.isPending || otp.length !== 6}
           >
@@ -258,16 +258,16 @@ export function ForgotPasswordForm() {
             )}
           </Button>
           <div className="text-center">
-            <p className="text-[#546a39] text-sm">
+            <p className="text-muted-foreground text-sm">
               Didn&apos;t receive the code?{' '}
               {cooldown > 0 ? (
-                <span className="text-[#6e7f5a]">Resend in {cooldown}s</span>
+                <span className="text-muted-foreground">Resend in {cooldown}s</span>
               ) : (
                 <button
                   type="button"
                   onClick={handleResendOtp}
                   disabled={forgotPasswordMutation.isPending}
-                  className="font-medium text-[#3d670d] hover:underline disabled:opacity-50"
+                  className="font-medium text-lime-700 hover:underline disabled:opacity-50"
                 >
                   {forgotPasswordMutation.isPending ? 'Sending...' : 'Resend'}
                 </button>
@@ -275,11 +275,11 @@ export function ForgotPasswordForm() {
             </p>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-center border-[#d7e7c2] border-t pt-6">
+        <CardFooter className="flex justify-center border-lime-200 border-t pt-6">
           <button
             type="button"
             onClick={() => setStage('email')}
-            className="text-[#546a39] text-sm hover:text-[#365608] hover:underline"
+            className="text-muted-foreground text-sm hover:text-primary hover:underline"
           >
             Use a different email
           </button>
@@ -290,12 +290,12 @@ export function ForgotPasswordForm() {
 
   // Stage 3: New Password
   return (
-    <Card className="border-[#d0e6af] bg-white shadow-[0_12px_24px_rgba(127,181,44,0.12)]">
+    <Card className="border-lime-200 bg-white shadow-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-[#1f3800]">
+        <CardTitle className="text-2xl text-lime-950">
           Set New Password
         </CardTitle>
-        <CardDescription className="text-[#546a39]">
+        <CardDescription className="text-muted-foreground">
           Enter your new password below
         </CardDescription>
       </CardHeader>
@@ -310,20 +310,20 @@ export function ForgotPasswordForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#365608]">New Password</FormLabel>
+                  <FormLabel className="text-lime-700">New Password</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Enter new password"
-                        className="border-[#d3e9b4] bg-[#f9fef0] pr-10 text-[#1f3800] focus-visible:border-[#9dcb4a] focus-visible:ring-[#9dcb4a]/30"
+                        className="border-lime-200 bg-lime-50 pr-10 text-lime-950 focus-visible:border-primary focus-visible:ring-ring/30"
                         {...field}
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-0 right-0 h-full px-3 text-[#6e7f5a] hover:bg-transparent hover:text-[#365608]"
+                        className="absolute top-0 right-0 h-full px-3 text-muted-foreground hover:bg-transparent hover:text-primary"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? (
@@ -343,7 +343,7 @@ export function ForgotPasswordForm() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#365608]">
+                  <FormLabel className="text-lime-700">
                     Confirm Password
                   </FormLabel>
                   <FormControl>
@@ -351,14 +351,14 @@ export function ForgotPasswordForm() {
                       <Input
                         type={showConfirmPassword ? 'text' : 'password'}
                         placeholder="Confirm new password"
-                        className="border-[#d3e9b4] bg-[#f9fef0] pr-10 text-[#1f3800] focus-visible:border-[#9dcb4a] focus-visible:ring-[#9dcb4a]/30"
+                        className="border-lime-200 bg-lime-50 pr-10 text-lime-950 focus-visible:border-primary focus-visible:ring-ring/30"
                         {...field}
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-0 right-0 h-full px-3 text-[#6e7f5a] hover:bg-transparent hover:text-[#365608]"
+                        className="absolute top-0 right-0 h-full px-3 text-muted-foreground hover:bg-transparent hover:text-primary"
                         onClick={() =>
                           setShowConfirmPassword(!showConfirmPassword)
                         }
@@ -375,13 +375,13 @@ export function ForgotPasswordForm() {
                 </FormItem>
               )}
             />
-            <p className="text-[#6e7f5a] text-xs">
+            <p className="text-muted-foreground text-xs">
               Password must be at least 8 characters with uppercase, lowercase,
               number, and special character.
             </p>
             <Button
               type="submit"
-              className="w-full bg-brand-lime font-semibold text-[#1d3706] transition-colors hover:bg-brand-lime/90"
+              className="w-full bg-brand-lime font-semibold text-lime-950 transition-colors hover:bg-brand-lime/90"
               disabled={resetPasswordMutation.isPending}
             >
               {resetPasswordMutation.isPending ? (
@@ -396,10 +396,10 @@ export function ForgotPasswordForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex justify-center border-[#d7e7c2] border-t pt-6">
+      <CardFooter className="flex justify-center border-lime-200 border-t pt-6">
         <Link
           href="/login"
-          className="text-[#546a39] text-sm hover:text-[#365608] hover:underline"
+          className="text-muted-foreground text-sm hover:text-primary hover:underline"
         >
           Back to Login
         </Link>

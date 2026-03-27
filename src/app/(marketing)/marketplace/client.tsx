@@ -792,7 +792,7 @@ export default function MarketplaceClient() {
         onCurrencyChange={setMarketplaceCurrency}
       />
 
-      <div className="border-[#d7e7c2] border-t">
+      <div className="border-lime-200 border-t">
         <MarketTrendSection
           selectedCurrency={trendCurrency}
           activeCurrency={activeTrendCurrency}
@@ -807,25 +807,25 @@ export default function MarketplaceClient() {
         />
       </div>
 
-      <div className="border-[#d7e7c2] border-t">
+      <div className="border-lime-200 border-t">
         <TradingBoardSection
           listings={listings}
           activeCurrency={aseanCurrencies[0]}
         />
       </div>
 
-      <div className="border-[#d7e7c2] border-t">
+      <div className="border-lime-200 border-t">
         <DemandSignalsSection demandSignals={demandSignals} />
       </div>
 
-      <div className="border-[#d7e7c2] border-t">
+      <div className="border-lime-200 border-t">
         <ExchangeAndYieldSection
           selectedCountry="all"
           exchangeCards={exchangeCards}
         />
       </div>
 
-      <div className="border-[#d7e7c2] border-t">
+      <div className="border-lime-200 border-t">
         <MarketplaceCtaSection />
       </div>
     </>

@@ -42,7 +42,7 @@ export function HomeLiveUpdatesPanel({
     <div
       className={cn(
         isLight
-          ? 'rounded-none border border-[#c8dda8] bg-[#fbfdf8] shadow-[0_10px_28px_rgba(120,170,36,0.1)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(120,170,36,0.14)]'
+          ? 'rounded-none border border-lime-200 bg-lime-50 shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg'
           : 'rounded-[28px] border border-emerald-500/20 bg-zinc-950/88 shadow-[0_18px_42px_rgba(0,0,0,0.55)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
@@ -51,7 +51,7 @@ export function HomeLiveUpdatesPanel({
         <h3
           className={cn(
             'font-semibold',
-            isLight ? 'text-[#264307]' : 'text-zinc-100',
+            isLight ? 'text-lime-950' : 'text-zinc-100',
             compact ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
           )}
         >
@@ -61,7 +61,7 @@ export function HomeLiveUpdatesPanel({
           href="/marketplace"
           className={cn(
             isLight
-              ? 'text-[#6e7f5a] transition-colors hover:text-[#4e820f]'
+              ? 'text-muted-foreground transition-colors hover:text-primary'
               : 'text-zinc-400 transition-colors hover:text-emerald-300',
             compact ? 'text-[11px]' : 'text-sm'
           )}
@@ -72,7 +72,7 @@ export function HomeLiveUpdatesPanel({
 
       <p
         className={cn(
-          isLight ? 'mt-1 text-[#6e7f5a]' : 'mt-1 text-zinc-400',
+          isLight ? 'mt-1 text-muted-foreground' : 'mt-1 text-zinc-400',
           compact ? 'text-[11px]' : 'text-sm'
         )}
       >
@@ -91,7 +91,7 @@ export function HomeLiveUpdatesPanel({
               key={item.id}
               className={cn(
                 isLight
-                  ? 'rounded-none border border-[#cfe1b2] bg-[#eef7df] px-3 py-2.5 text-[#234005] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#bddb93] hover:bg-[#f4fbe8]'
+                  ? 'rounded-none border border-lime-200 bg-lime-100 px-3 py-2.5 text-lime-950 transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-lime-50'
                   : 'text-base text-zinc-300 leading-snug sm:text-lg'
               )}
             >
@@ -105,7 +105,7 @@ export function HomeLiveUpdatesPanel({
                 {item.farmer} {item.update}
               </p>
               {isLight ? (
-                <p className="mt-2 font-semibold text-[#5a7c2a] text-[10px] uppercase tracking-[0.08em]">
+                <p className="mt-2 font-semibold text-lime-700 text-[10px] uppercase tracking-[0.08em]">
                   {item.time}
                 </p>
               ) : null}
@@ -119,14 +119,14 @@ export function HomeLiveUpdatesPanel({
               key={item.id}
               className={cn(
                 isLight
-                  ? 'rounded-xl border border-[#d3e9b4] bg-[#f9fef0] px-4 py-3'
+                  ? 'rounded-xl border border-lime-200 bg-lime-50 px-4 py-3'
                   : 'rounded-xl border border-emerald-500/20 bg-zinc-950/78 px-4 py-3'
               )}
             >
               <p
                 className={cn(
                   'font-medium text-sm leading-relaxed sm:text-base',
-                  isLight ? 'text-[#2f4f06]' : 'text-zinc-100'
+                  isLight ? 'text-lime-950' : 'text-zinc-100'
                 )}
               >
                 {item.farmer} {item.update} ({item.country})
@@ -134,7 +134,7 @@ export function HomeLiveUpdatesPanel({
               <p
                 className={cn(
                   'mt-1 text-xs sm:text-sm',
-                  isLight ? 'text-[#60794a]' : 'text-zinc-300/85'
+                  isLight ? 'text-muted-foreground' : 'text-zinc-300/85'
                 )}
               >
                 {item.detail}
@@ -142,7 +142,7 @@ export function HomeLiveUpdatesPanel({
               <p
                 className={cn(
                   'mt-2 font-medium text-xs',
-                  isLight ? 'text-[#4e820f]' : 'text-emerald-200/90'
+                  isLight ? 'text-lime-700' : 'text-emerald-200/90'
                 )}
               >
                 {item.time}

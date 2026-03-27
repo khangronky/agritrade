@@ -19,9 +19,9 @@ type CenterFeedProps = {
 export function CenterFeed({ posts }: CenterFeedProps) {
   return (
     <section className="space-y-4">
-      <div className="rounded-xl border border-[#d0e6af] bg-white p-3 shadow-sm">
+      <div className="rounded-xl border border-lime-200 bg-white p-3 shadow-sm">
         <div className="flex items-center justify-between">
-          <p className="flex items-center gap-1 font-medium text-xs text-[#365608]">
+          <p className="flex items-center gap-1 font-medium text-xs text-lime-700">
             Community feed <CircleHelp className="size-3" />
           </p>
           <Button
@@ -39,11 +39,11 @@ export function CenterFeed({ posts }: CenterFeedProps) {
           <Input
             aria-label="Create a post"
             placeholder="Create a post"
-            className="h-10 border-[#d3e9b4] bg-[#f5f8ef] pl-9 text-sm"
+            className="h-10 border-lime-200 bg-lime-50 pl-9 text-sm"
           />
         </div>
 
-        <div className="mt-3 grid grid-cols-2 divide-x divide-[#d3e9b4] rounded-md border border-[#d3e9b4] bg-[#f5f8ef]">
+        <div className="mt-3 grid grid-cols-2 divide-x divide-lime-200 rounded-md border border-lime-200 bg-lime-50">
           <Button
             type="button"
             variant="ghost"
@@ -85,25 +85,25 @@ function ForumPostCard({ post }: { post: ForumPost }) {
     .toUpperCase();
 
   return (
-    <article className="rounded-xl border border-[#d0e6af] bg-white shadow-sm">
-      <div className="border-[#d3e9b4] border-b px-3 py-2 text-xs text-[#6e7f5a]">
+    <article className="rounded-xl border border-lime-200 bg-white shadow-sm">
+      <div className="border-lime-200 border-b px-3 py-2 text-xs text-muted-foreground">
         Update | {post.companyName} profile verified on Mar 24, 2026
       </div>
 
       <div className="p-3">
         <div className="flex items-start justify-between gap-3">
           <div className="flex gap-2.5">
-            <div className="flex size-9 items-center justify-center rounded-full border border-[#cfe5ad] bg-[#f9fef0] font-semibold text-[11px] text-[#3d670d]">
+            <div className="flex size-9 items-center justify-center rounded-full border border-lime-200 bg-lime-50 font-semibold text-[11px] text-lime-700">
               {initials}
             </div>
             <div>
-              <p className="flex items-center gap-1 font-semibold text-sm text-[#1f3800] leading-none">
+              <p className="flex items-center gap-1 font-semibold text-sm text-lime-950 leading-none">
                 {post.companyName}
                 {post.isVerified ? (
                   <CheckCircle2 className="size-4 text-primary" />
                 ) : null}
               </p>
-              <p className="mt-1 text-xs text-[#6e7f5a]">
+              <p className="mt-1 text-xs text-muted-foreground">
                 {post.author} - {post.postedAt}
               </p>
             </div>
@@ -130,7 +130,7 @@ function ForumPostCard({ post }: { post: ForumPost }) {
               key={item.caption}
               className={post.media.length === 1 ? 'sm:col-span-2' : ''}
             >
-              <div className="overflow-hidden rounded border border-[#d3e9b4]">
+              <div className="overflow-hidden rounded border border-lime-200">
                 <Image
                   src={item.src}
                   alt={item.alt}

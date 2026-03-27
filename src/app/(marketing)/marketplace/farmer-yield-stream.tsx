@@ -39,10 +39,10 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
 
   return (
     <>
-      <div className="flex items-center justify-between px-1 text-[#6e7f5a] text-xs sm:text-sm">
+      <div className="flex items-center justify-between px-1 text-muted-foreground text-xs sm:text-sm">
         <p>Auto-generated stream from ASEAN marketplace listings</p>
-        <p className="inline-flex items-center gap-2 font-medium text-[#3d670d]">
-          <span className="inline-block size-2 rounded-full bg-[#73bd12] shadow-[0_0_8px_rgba(116,189,18,0.35)]" />
+        <p className="inline-flex items-center gap-2 font-medium text-lime-700">
+          <span className="inline-block size-2 rounded-full bg-primary shadow-[0_0_8px_rgba(116,189,18,0.35)]" />
           Auto updates every 5s
         </p>
       </div>
@@ -51,20 +51,20 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
         visibleFeed.map((item) => (
           <Card
             key={item.id}
-            className="rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm"
+            className="rounded-xl border-lime-200 bg-white py-0 text-lime-950 shadow-sm"
           >
             <CardContent className="flex items-start justify-between gap-4 px-5 py-4 sm:items-center sm:py-5">
               <div>
                 <p className="font-semibold text-sm leading-tight sm:text-base">
                   {item.farmer} {item.update}
                 </p>
-                <p className="mt-1 text-[#6e7f5a] text-xs sm:text-sm">
+                <p className="mt-1 text-muted-foreground text-xs sm:text-sm">
                   {item.detail}
                 </p>
               </div>
               <Badge
                 variant="outline"
-                className="border-[#d0e6af] bg-[#f5f8ef] text-[#6e7f5a] text-xs"
+                className="border-lime-200 bg-lime-50 text-muted-foreground text-xs"
               >
                 {item.time}
               </Badge>
@@ -72,8 +72,8 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
           </Card>
         ))
       ) : (
-        <Card className="rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm">
-          <CardContent className="px-5 py-7 text-center text-[#6e7f5a] text-sm">
+        <Card className="rounded-xl border-lime-200 bg-white py-0 text-lime-950 shadow-sm">
+          <CardContent className="px-5 py-7 text-center text-muted-foreground text-sm">
             No farmer yield updates for this country yet.
           </CardContent>
         </Card>

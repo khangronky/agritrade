@@ -160,7 +160,7 @@ export function MarketTrendSection({
       {
         label: '1Y change',
         value: `${formatPercentValue(oneYearChange)}`,
-        valueClassName: oneYearChange >= 0 ? 'text-[#4e820f]' : 'text-rose-700',
+        valueClassName: oneYearChange >= 0 ? 'text-lime-700' : 'text-rose-700',
       },
     ],
     [
@@ -179,7 +179,7 @@ export function MarketTrendSection({
       {
         label: 'AI confidence',
         value: aiForecast ? `${aiForecast.confidence}%` : '--',
-        valueClassName: aiForecast ? 'text-[#4e820f]' : undefined,
+        valueClassName: aiForecast ? 'text-lime-700' : undefined,
       },
       {
         label: 'Volatility (annualized)',
@@ -214,7 +214,7 @@ export function MarketTrendSection({
           aiForecast && aiForecast.rsi >= 70
             ? 'text-rose-700'
             : aiForecast && aiForecast.rsi <= 30
-              ? 'text-[#4e820f]'
+              ? 'text-lime-700'
               : undefined,
       },
       {
@@ -224,7 +224,7 @@ export function MarketTrendSection({
           : '--',
         valueClassName: aiForecast
           ? emaSpread >= 0
-            ? 'text-[#4e820f]'
+            ? 'text-lime-700'
             : 'text-rose-700'
           : undefined,
       },
@@ -234,12 +234,12 @@ export function MarketTrendSection({
   return (
     <section className="relative px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="border border-[#d0e6af] bg-white p-5 sm:p-6">
+        <div className="border border-lime-200 bg-white p-5 sm:p-6">
           <div className="space-y-2">
             <h2 className="font-semibold text-2xl sm:text-3xl">
               Market Trend Analysis & Forecasting
             </h2>
-            <p className="max-w-3xl text-sm text-[#6e7f5a] leading-relaxed sm:text-base">
+            <p className="max-w-3xl text-sm text-muted-foreground leading-relaxed sm:text-base">
               Quant-style market panel with algorithmic AI forecasting,
               volatility analysis, and professional market indicators.
             </p>
@@ -249,7 +249,7 @@ export function MarketTrendSection({
             <NativeSelect
               value={activeCommodityValue}
               onChange={(event) => onCommodityChange(event.target.value)}
-              className="h-10 min-w-56 rounded-md border-[#d0e6af] bg-[#f5f8ef] text-xs text-[#546a39] focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
+              className="h-10 min-w-56 rounded-md border-lime-200 bg-lime-50 text-xs text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/30"
             >
               <NativeSelectOption value="auto">
                 Auto (top commodity)
@@ -265,7 +265,7 @@ export function MarketTrendSection({
               onChange={(event) =>
                 onCurrencyChange(event.target.value as CurrencyCode)
               }
-              className="h-10 min-w-28 rounded-md border-[#d0e6af] bg-[#f5f8ef] text-xs text-[#546a39] focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
+              className="h-10 min-w-28 rounded-md border-lime-200 bg-lime-50 text-xs text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/30"
             >
               {aseanCurrencies.map((currency) => (
                 <NativeSelectOption key={currency.code} value={currency.code}>
@@ -276,10 +276,10 @@ export function MarketTrendSection({
           </div>
 
           {activeListingForTrend && selectedSeries.length > 0 ? (
-            <Card className="mt-5 gap-0 rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm">
+            <Card className="mt-5 gap-0 rounded-xl border-lime-200 bg-white py-0 text-lime-950 shadow-sm">
               <CardContent className="px-4 py-4 sm:px-5 sm:py-5">
                 <div>
-                  <p className="font-medium text-[11px] text-[#6e7f5a] uppercase tracking-[0.16em]">
+                  <p className="font-medium text-[11px] text-muted-foreground uppercase tracking-[0.16em]">
                     {activeListingForTrend.name} (
                     {toCommodityCode(activeListingForTrend.name)})
                   </p>
@@ -293,26 +293,26 @@ export function MarketTrendSection({
                       className={cn(
                         'pb-1 font-semibold text-xl tabular-nums sm:text-2xl',
                         absoluteChange > 0
-                          ? 'text-[#5ca508]'
+                          ? 'text-primary'
                           : absoluteChange < 0
                             ? 'text-rose-700'
-                            : 'text-[#546a39]'
+                            : 'text-muted-foreground'
                       )}
                     >
                       {formatSignedPriceValue(absoluteChange, activeCurrency)} (
                       {formatPercentValue(percentChange)})
                     </p>
                   </div>
-                  <p className="mt-2 text-xs text-[#6e7f5a] sm:text-sm">
+                  <p className="mt-2 text-xs text-muted-foreground sm:text-sm">
                     Last update: {formatPointDate(latestPoint?.date)} |
                     Currency: {activeCurrency.code}
                   </p>
                 </div>
 
                 {aiForecast ? (
-                  <div className="mt-4 rounded-lg border border-[#cce4a8] bg-[#f5f8ef] px-3 py-3 sm:px-4">
+                  <div className="mt-4 rounded-lg border border-lime-200 bg-lime-50 px-3 py-3 sm:px-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <p className="font-semibold text-sm text-[#1f3800] sm:text-base">
+                      <p className="font-semibold text-sm text-lime-950 sm:text-base">
                         AI forecast ({aiForecast.horizonPeriods} periods):{' '}
                         {formatPriceValue(
                           aiForecast.projectedPrice,
@@ -321,11 +321,11 @@ export function MarketTrendSection({
                         {activeCurrency.code} (
                         {formatPercentValue(aiForecast.projectedReturnPct)})
                       </p>
-                      <span className="rounded-md border border-[#b8d98e] bg-[#edf8dd] px-2 py-0.5 text-[11px] text-[#3d670d]">
+                      <span className="rounded-md border border-lime-300 bg-lime-100 px-2 py-0.5 text-[11px] text-lime-700">
                         {aiForecast.regime}
                       </span>
                     </div>
-                    <p className="mt-1 text-xs text-[#6e7f5a]">
+                    <p className="mt-1 text-xs text-muted-foreground">
                       Model: {aiForecast.modelName} | Interval:{' '}
                       {formatPriceValue(aiForecast.intervalLow, activeCurrency)}{' '}
                       -{' '}
@@ -339,7 +339,7 @@ export function MarketTrendSection({
                   </div>
                 ) : null}
 
-                <div className="mt-5 flex flex-wrap gap-2 border-[#d3e9b4] border-y py-3">
+                <div className="mt-5 flex flex-wrap gap-2 border-lime-200 border-y py-3">
                   {timeframeOrder.map((key) => (
                     <button
                       key={key}
@@ -348,8 +348,8 @@ export function MarketTrendSection({
                       className={cn(
                         'rounded-md border px-2.5 py-1 font-semibold text-xs tracking-wide transition-colors',
                         timeframe === key
-                          ? 'border-[#9dcb4a] bg-[#e7f7cd] text-[#3d670d]'
-                          : 'border-[#d3e9b4] bg-[#f5f8ef] text-[#6e7f5a] hover:border-[#b8d98e] hover:text-[#365608]'
+                          ? 'border-primary bg-lime-100 text-lime-700'
+                          : 'border-lime-200 bg-lime-50 text-muted-foreground hover:border-lime-300 hover:text-primary'
                       )}
                     >
                       {key}
@@ -357,7 +357,7 @@ export function MarketTrendSection({
                   ))}
                 </div>
 
-                <div className="mt-4 rounded-lg border border-[#d3e9b4] bg-[#f5f8ef] p-3 sm:p-4">
+                <div className="mt-4 rounded-lg border border-lime-200 bg-lime-50 p-3 sm:p-4">
                   <ChartContainer
                     config={marketTrendChartConfig}
                     className="h-[360px] w-full"
@@ -476,8 +476,8 @@ export function MarketTrendSection({
                   </ChartContainer>
                 </div>
 
-                <div className="mt-4 overflow-hidden rounded-lg border border-[#d3e9b4] bg-[#f5f8ef]">
-                  <div className="grid divide-[#d3e9b4] md:grid-cols-3 md:divide-x">
+                <div className="mt-4 overflow-hidden rounded-lg border border-lime-200 bg-lime-50">
+                  <div className="grid divide-lime-200 md:grid-cols-3 md:divide-x">
                     {statsColumns.map((column, index) => (
                       <div
                         key={`${column[0]?.label}-${index}`}
@@ -487,15 +487,15 @@ export function MarketTrendSection({
                           {column.map((metric) => (
                             <div
                               key={metric.label}
-                              className="flex items-center justify-between gap-4 border-[#d3e9b4] border-b pb-2 last:border-none last:pb-0"
+                              className="flex items-center justify-between gap-4 border-lime-200 border-b pb-2 last:border-none last:pb-0"
                             >
-                              <p className="font-medium text-sm text-[#6e7f5a]">
+                              <p className="font-medium text-sm text-muted-foreground">
                                 {metric.label}
                               </p>
                               <p
                                 className={cn(
                                   'text-right font-semibold text-sm tabular-nums sm:text-base',
-                                  metric.valueClassName ?? 'text-[#1f3800]'
+                                  metric.valueClassName ?? 'text-lime-950'
                                 )}
                               >
                                 {metric.value}
@@ -510,8 +510,8 @@ export function MarketTrendSection({
               </CardContent>
             </Card>
           ) : (
-            <Card className="mt-6 gap-0 rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm">
-              <CardContent className="px-5 py-8 text-center text-[#6e7f5a]">
+            <Card className="mt-6 gap-0 rounded-xl border-lime-200 bg-white py-0 text-lime-950 shadow-sm">
+              <CardContent className="px-5 py-8 text-center text-muted-foreground">
                 No timeline data available for current commodity.
               </CardContent>
             </Card>
@@ -646,13 +646,13 @@ function toCommodityCode(name: string) {
 function ConfidenceMeter({ confidence }: { confidence: number }) {
   return (
     <div className="mt-2">
-      <div className="flex items-center justify-between text-[11px] text-[#6e7f5a]">
+      <div className="flex items-center justify-between text-[11px] text-muted-foreground">
         <span>AI confidence</span>
         <span>{confidence}%</span>
       </div>
-      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-[#dbeec0]">
+      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-lime-100">
         <div
-          className="h-full rounded-full bg-[#73bd12] transition-[width]"
+          className="h-full rounded-full bg-primary transition-[width]"
           style={{ width: `${clamp(confidence, 0, 100)}%` }}
         />
       </div>
@@ -679,16 +679,16 @@ function MarketTrendTooltip({
   }
 
   return (
-    <div className="min-w-[12rem] rounded-lg border border-[#d3e9b4] bg-white px-3 py-2 text-xs shadow-xl">
-      <p className="text-[#6e7f5a]">{formatPointDate(point.date)}</p>
+    <div className="min-w-[12rem] rounded-lg border border-lime-200 bg-white px-3 py-2 text-xs shadow-xl">
+      <p className="text-muted-foreground">{formatPointDate(point.date)}</p>
       <div className="mt-1 flex items-center justify-between gap-3">
-        <span className="text-[#6e7f5a]">Price</span>
-        <span className="font-semibold text-[#3d670d] tabular-nums">
+        <span className="text-muted-foreground">Price</span>
+        <span className="font-semibold text-lime-700 tabular-nums">
           {formatPriceValue(point.price, activeCurrency)} {activeCurrency.code}
         </span>
       </div>
       <div className="mt-1 flex items-center justify-between gap-3">
-        <span className="text-[#6e7f5a]">Activity volume</span>
+        <span className="text-muted-foreground">Activity volume</span>
         <span className="font-semibold tabular-nums">
           {formatVolumeValue(point.activityVolume)}
         </span>
@@ -696,14 +696,14 @@ function MarketTrendTooltip({
       {point.isForecast ? (
         <>
           <div className="mt-1 flex items-center justify-between gap-3">
-            <span className="text-[#6e7f5a]">Forecast range</span>
-            <span className="font-semibold text-[#3d670d] tabular-nums">
+            <span className="text-muted-foreground">Forecast range</span>
+            <span className="font-semibold text-lime-700 tabular-nums">
               {point.forecastLower !== null && point.forecastUpper !== null
                 ? `${formatPriceValue(point.forecastLower, activeCurrency)} - ${formatPriceValue(point.forecastUpper, activeCurrency)} ${activeCurrency.code}`
                 : '--'}
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-[#4e820f]/90">
+          <p className="mt-1 text-[11px] text-primary/90">
             AI forecast period
           </p>
         </>

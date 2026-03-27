@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 
 export default function MarketplacePage() {
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-[#f5f8ef] pt-16 text-[#1d3706]">
+    <div className="min-h-[calc(100vh-4rem)] bg-lime-50 pt-16 text-lime-950">
       <div className="w-full">
-        <div className="overflow-hidden border border-[#d9e8c6] bg-[#f5f8ef]">
+        <div className="overflow-hidden border border-lime-200 bg-lime-50">
           <MarketplaceClient />
         </div>
       </div>

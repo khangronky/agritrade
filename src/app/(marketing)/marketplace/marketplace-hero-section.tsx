@@ -21,7 +21,7 @@ export function MarketplaceHeroSection({
       <div className="mx-auto max-w-305">
         <div className="space-y-8">
           <div>
-            <p className="font-semibold text-[#64ad06] text-[11px] uppercase tracking-[0.22em]">
+            <p className="font-semibold text-primary text-[11px] uppercase tracking-[0.22em]">
               * Marketplace
             </p>
             <h1 className="max-w-3xl font-semibold text-3xl leading-tight sm:text-4xl lg:text-5xl">
@@ -29,7 +29,7 @@ export function MarketplaceHeroSection({
               trade smarter.
             </h1>
 
-            <p className="mt-4 max-w-3xl text-[#6e7f5a] text-sm leading-relaxed sm:text-base">
+            <p className="mt-4 max-w-3xl text-muted-foreground text-sm leading-relaxed sm:text-base">
               AgriTrade combines real-time supply, market analytics, and AI
               forecasting so traders, cooperatives, and businesses can execute
               faster decisions with lower risk.

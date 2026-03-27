@@ -94,14 +94,14 @@ export function Navbar({ user }: NavbarProps) {
         <>
           <Button
             asChild
-            className="bg-brand-lime font-semibold text-[#1d3706] hover:bg-brand-lime/90"
+            className="bg-brand-lime font-semibold text-lime-950 hover:bg-brand-lime/90"
           >
             <Link href="/login">Sign In</Link>
           </Button>
           <Button
             asChild
             variant="outline"
-            className="border-[#d3e9b4] bg-white text-[#365608] hover:bg-[#eef7e0] hover:text-[#2a4305]"
+            className="border-lime-200 bg-white text-lime-700 hover:bg-lime-100 hover:text-lime-950"
           >
             <Link href="/register">Sign Up</Link>
           </Button>
@@ -114,10 +114,10 @@ export function Navbar({ user }: NavbarProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-10 gap-2 px-2 text-[#365608] hover:bg-[#eef7e0] hover:text-[#2a4305]"
+            className="h-10 gap-2 px-2 text-lime-700 hover:bg-lime-100 hover:text-lime-950"
           >
             <Avatar className="h-8 w-8">
-              <AvatarFallback className="border border-[#cfe5ad] bg-[#edf8dd] text-[#3d670d]">
+              <AvatarFallback className="border border-lime-200 bg-lime-100 text-lime-700">
                 {getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
@@ -150,7 +150,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full border-[#d3e9b4] border-b bg-[#f5f8ef]/95 backdrop-blur-md">
+    <header className="fixed top-0 z-30 w-full border-lime-200 border-b bg-lime-50/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -201,7 +201,7 @@ export function Navbar({ user }: NavbarProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-2 border-[#d3e9b4] bg-white px-2 text-[#365608] hover:bg-[#eef7e0] hover:text-[#2a4305]"
+                    className="gap-2 border-lime-200 bg-white px-2 text-lime-700 hover:bg-lime-100 hover:text-lime-950"
                   >
                     <Menu className="size-4" />
                   </Button>
@@ -226,8 +226,8 @@ export function Navbar({ user }: NavbarProps) {
                       className={cn(
                         'rounded-md px-3 py-2 text-sm transition-colors',
                         isActive
-                          ? 'bg-[#eaf7d5] text-[#3d670d]'
-                          : 'text-[#365608] hover:bg-[#eef7e0] hover:text-[#2a4305]'
+                          ? 'bg-lime-100 text-lime-700'
+                          : 'text-lime-700 hover:bg-lime-100 hover:text-lime-950'
                       )}
                     >
                       {item.label}
@@ -243,7 +243,7 @@ export function Navbar({ user }: NavbarProps) {
                   <SheetClose asChild>
                     <Button
                       asChild
-                      className="bg-brand-lime font-semibold text-[#1d3706] hover:bg-brand-lime/90"
+                      className="bg-brand-lime font-semibold text-lime-950 hover:bg-brand-lime/90"
                     >
                       <Link href="/login">Sign In</Link>
                     </Button>
@@ -252,7 +252,7 @@ export function Navbar({ user }: NavbarProps) {
                     <Button
                       asChild
                       variant="outline"
-                      className="border-[#d3e9b4] bg-white text-[#365608] hover:bg-[#eef7e0] hover:text-[#2a4305]"
+                      className="border-lime-200 bg-white text-lime-700 hover:bg-lime-100 hover:text-lime-950"
                     >
                       <Link href="/register">Sign Up</Link>
                     </Button>

@@ -10,12 +10,12 @@ export function AboutUsMissionSection() {
   return (
     <section className="py-14 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-6 rounded-3xl border border-[#cfe5ad] bg-[#f9fef0] p-6 shadow-sm lg:grid-cols-[1.2fr_0.8fr] lg:gap-8 lg:p-8">
+        <div className="grid gap-6 rounded-3xl border border-lime-200 bg-lime-50 p-6 shadow-sm lg:grid-cols-[1.2fr_0.8fr] lg:gap-8 lg:p-8">
           <div>
-            <p className="font-semibold text-[#4e820f] text-sm uppercase tracking-[0.18em]">
+            <p className="font-semibold text-lime-700 text-sm uppercase tracking-[0.18em]">
               Our Mission
             </p>
-            <p className="mt-3 text-base text-[#546a39] leading-relaxed">
+            <p className="mt-3 text-base text-muted-foreground leading-relaxed">
               Deliver accurate, timely, and actionable market intelligence that
               empowers every participant in the agricultural supply chain to
               make smarter decisions.
@@ -26,10 +26,10 @@ export function AboutUsMissionSection() {
             {missionPillars.map((pillar) => (
               <div
                 key={pillar}
-                className="flex items-start gap-3 rounded-xl border border-[#d3e9b4] bg-[#f9fef0] px-4 py-3"
+                className="flex items-start gap-3 rounded-xl border border-lime-200 bg-lime-50 px-4 py-3"
               >
-                <Sprout className="mt-0.5 size-4 shrink-0 text-[#4e820f]" />
-                <p className="font-medium text-[#365608] text-sm sm:text-base">
+                <Sprout className="mt-0.5 size-4 shrink-0 text-lime-700" />
+                <p className="font-medium text-lime-700 text-sm sm:text-base">
                   {pillar}
                 </p>
               </div>

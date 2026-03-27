@@ -19,7 +19,7 @@ export function ExchangeAndYieldSection({
           <h2 className="font-semibold text-2xl sm:text-3xl">
             Exchange & trading market
           </h2>
-          <p className="max-w-2xl text-[#6e7f5a] text-sm sm:text-base">
+          <p className="max-w-2xl text-muted-foreground text-sm sm:text-base">
             Match lot-based demand: exchange, pre-buy, or lock deliveries by
             season with full visibility.
           </p>
@@ -35,7 +35,7 @@ export function ExchangeAndYieldSection({
           <h2 className="font-semibold text-2xl sm:text-3xl">
             Farmer yield stream
           </h2>
-          <p className="max-w-2xl text-[#6e7f5a] text-sm sm:text-base">
+          <p className="max-w-2xl text-muted-foreground text-sm sm:text-base">
             Transparent updates: location, quantity, and harvest timing in one
             feed.
           </p>
@@ -53,12 +53,12 @@ function ExchangeFeatureCard({ card }: { card: ExchangeCard }) {
   const Icon = card.icon;
 
   return (
-    <Card className="rounded-xl border-[#d0e6af] bg-[#f5f8ef] py-0 text-[#1f3800] shadow-sm">
+    <Card className="rounded-xl border-lime-200 bg-lime-50 py-0 text-lime-950 shadow-sm">
       <CardHeader className="px-5 pt-5 pb-2">
         <Icon className="size-5 text-lime-600" />
         <CardTitle className="mt-3 text-lg sm:text-xl">{card.title}</CardTitle>
       </CardHeader>
-      <CardContent className="px-5 pb-5 text-[#6e7f5a] text-sm leading-relaxed">
+      <CardContent className="px-5 pb-5 text-muted-foreground text-sm leading-relaxed">
         {card.description}
       </CardContent>
     </Card>
