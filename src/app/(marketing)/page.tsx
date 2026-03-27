@@ -56,7 +56,7 @@ export default function MarketingPage() {
         </div>
       </section>
 
-      <section className="relative border-[#d7e7c2] border-y bg-[#86da05] pt-14 pb-10 sm:pt-16 sm:pb-11">
+      <section className="relative border-[#d7e7c2] border-y bg-[#f5f8ef] pt-14 pb-10 sm:pt-16 sm:pb-11">
         <div className="absolute -top-5 left-0 z-20">
           <div className="inline-flex items-end gap-2 rounded-r-3xl border border-[#d7e7c2] border-l-0 bg-[#f5f8ef] px-4 py-1.5 shadow-[0_4px_0_rgba(88,145,16,0.35)] sm:px-7">
             <Sprout
