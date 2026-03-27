@@ -13,7 +13,7 @@ export default async function MarketingLayout({
   } = await supabase.auth.getUser();
 
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative min-h-screen">
       <Navbar
         user={
           user
