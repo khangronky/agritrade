@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import {
   Carousel,
@@ -12,21 +13,55 @@ import {
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 
-const slides = [
+type ExploreSlide = {
+  src: string;
+  alt: string;
+  title: string;
+  contentItems: string[];
+  ctaLabel: string;
+  ctaHref: string;
+  imagePosition?: string;
+};
+
+const slides: ExploreSlide[] = [
+  {
+    src: '/business-model-insights.jpg',
+    alt: 'Aerial farmland with market and analytics overlays',
+    title: 'Real-Time Market Intelligence',
+    contentItems: [
+      'Live price updates',
+      'Historical trends',
+      'Demand predictions',
+    ],
+    ctaLabel: 'View Price Dashboard →',
+    ctaHref: '/marketplace',
+    imagePosition: 'object-center',
+  },
   {
     src: '/about-us/slide-5.jpg',
     alt: 'Farmers working across tea rows in the highlands',
-    caption: 'Track field-level updates from trusted farmer communities.',
+    title: 'Connect with Buyers and Sellers',
+    contentItems: [
+      'Farmers post available products',
+      'Buyers search and compare',
+      'Direct negotiation',
+    ],
+    ctaLabel: 'Explore Marketplace →',
+    ctaHref: '/marketplace',
+    imagePosition: 'object-center',
   },
   {
-    src: '/about-us/slide-8.jpg',
-    alt: 'Two farmers harvesting together on a tea plantation',
-    caption: 'Compare market signals with practical production context.',
-  },
-  {
-    src: '/farm.jpg',
-    alt: 'Farmer harvesting crops in a green field',
-    caption: 'See clear price movement before deciding where to sell.',
+    src: '/about-us/slide-6.jpg',
+    alt: 'Farmers inspecting crop quality before market delivery',
+    title: 'Meet Export Standards with Confidence',
+    contentItems: [
+      'Country-specific regulations',
+      'Quality standards',
+      'Alerts & reminders',
+    ],
+    ctaLabel: 'Access Farmer Tools →',
+    ctaHref: '/forum',
+    imagePosition: 'object-center',
   },
 ];
 
@@ -74,39 +109,66 @@ export function ExplorePlatformSlideshow() {
       >
         <CarouselContent className="ml-0">
           {slides.map((slide) => (
-            <CarouselItem key={slide.src} className="pl-0">
-              <div className="group relative aspect-[16/9] overflow-hidden rounded-[28px] border border-[#cfe7af] bg-white shadow-[0_12px_20px_rgba(121,177,28,0.16)] lg:aspect-[16/6.6]">
-                <Image
-                  src={slide.src}
-                  alt={slide.alt}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 1024px) 100vw, 56vw"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/28 via-black/5 to-transparent" />
-                <p className="absolute right-3 bottom-2.5 left-3 font-medium text-white/95 text-xs sm:text-sm">
-                  {slide.caption}
-                </p>
+            <CarouselItem key={slide.title} className="pl-0">
+              <div className="relative overflow-hidden rounded-2xl bg-[#f8ffec] shadow-[0_12px_20px_rgba(121,177,28,0.16)]">
+                <div className="grid min-h-[390px] md:min-h-[330px] md:grid-cols-[1.05fr_0.95fr]">
+                  <div className="relative min-h-[200px] md:min-h-full">
+                    <Image
+                      src={slide.src}
+                      alt={slide.alt}
+                      fill
+                      className={cn('object-cover', slide.imagePosition)}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 88vw, 70vw"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/20 via-black/0 to-transparent" />
+                  </div>
+
+                  <article className="flex flex-col justify-between px-4 py-4 text-[#2e4b06] sm:px-5 sm:py-5">
+                    <div>
+                      <h3 className="font-semibold text-lg leading-tight sm:text-xl">
+                        {slide.title}
+                      </h3>
+                      <ul className="mt-3 space-y-2">
+                        {slide.contentItems.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-2 text-sm leading-relaxed"
+                          >
+                            <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#77bf12]" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <Link
+                      href={slide.ctaHref}
+                      className="mt-5 inline-flex w-fit rounded-full border border-[#b8da84] bg-[#ecf9d8] px-3.5 py-1.5 font-semibold text-[#3f620a] text-sm"
+                    >
+                      {slide.ctaLabel}
+                    </Link>
+                  </article>
+                </div>
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
 
-        <CarouselPrevious className="top-1/2 left-2 size-8 -translate-y-1/2 rounded-full border-[#d3e8b4] bg-white/90 text-[#5ca508] hover:bg-white" />
-        <CarouselNext className="top-1/2 right-2 size-8 -translate-y-1/2 rounded-full border-[#d3e8b4] bg-white/90 text-[#5ca508] hover:bg-white" />
+        <CarouselPrevious className="top-1/2 left-2 size-7 -translate-y-1/2 rounded-full border-[#d3e8b4] bg-white/90 text-[#5ca508]" />
+        <CarouselNext className="top-1/2 right-2 size-7 -translate-y-1/2 rounded-full border-[#d3e8b4] bg-white/90 text-[#5ca508]" />
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-2 flex justify-center">
-          <div className="pointer-events-auto flex items-center gap-1.5 rounded-full bg-black/15 px-2 py-1 backdrop-blur-xs">
+        <div className="pointer-events-none absolute inset-x-0 bottom-2.5 flex justify-center">
+          <div className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-[#cfe7af] bg-[#f7fee8]/90 px-2 py-1 backdrop-blur-xs">
             {slides.map((slide, index) => (
               <button
-                key={slide.src}
+                key={slide.title}
                 type="button"
                 onClick={() => api?.scrollTo(index)}
                 className={cn(
                   'h-2 rounded-full transition-all',
                   activeIndex === index
-                    ? 'w-6 bg-[#9ae735]'
-                    : 'w-2 bg-white/70 hover:bg-white'
+                    ? 'w-6 bg-[#88d11f]'
+                    : 'w-2 bg-[#b5cf90]'
                 )}
                 aria-label={`Go to slide ${index + 1}`}
               />

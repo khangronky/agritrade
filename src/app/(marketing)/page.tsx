@@ -1,6 +1,7 @@
 import { Sprout } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ExplorePlatformSlideshow } from './explore-platform-slideshow';
 import { HomeLiveUpdatesPanel } from './home-live-updates-panel';
 import { HomepageSignupCta } from './homepage-signup-cta';
@@ -69,7 +70,7 @@ export default function MarketingPage() {
         </div>
 
         <div className="relative mx-auto max-w-305 px-4 sm:px-6 lg:px-8">
-          <div className="mt-6 space-y-3 pl-1 font-semibold text-[#1c3200] text-base uppercase leading-tight sm:mt-7 sm:pl-28 sm:text-[2rem]">
+          <div className="mt-6 space-y-2.5 pl-1 font-medium text-[#1f3800] text-sm leading-snug tracking-[0.02em] sm:mt-7 sm:pl-28 sm:text-[1.6rem] lg:text-[1.75rem]">
             {helpPoints.map((point) => (
               <p key={point}>{point}</p>
             ))}
@@ -93,10 +94,11 @@ export default function MarketingPage() {
               ABOUT US
             </h2>
             <p className="mt-4 text-[#546a39] text-lg leading-relaxed">
-              AgriTrade helps agriculture communities make better selling
-              decisions before each season starts. We bring pricing signals,
-              demand updates, and practical market standards into one trusted
-              place.
+              AgriTrade is a AI-driven platform that provides real-time market
+              prices, demand insights, and direct connections between farmers
+              and buyers. By making market information transparent and
+              accessible, we help all participants within ASEAN-China make
+              better decisions.
             </p>
             <div className="absolute top-1 -right-10 hidden h-[calc(100%-0.25rem)] flex-col items-center lg:flex">
               <Sprout className="size-6 text-[#74c010]" strokeWidth={2.4} />
@@ -108,52 +110,57 @@ export default function MarketingPage() {
 
       <section id="business-model" className="scroll-mt-20 pb-14">
         <div className="mx-auto max-w-305 px-4 sm:px-6 lg:px-8">
-          <h2 className="font-extrabold text-5xl text-[#64ad06] uppercase leading-[0.92] sm:text-7xl">
-            Business
-            <br />
-            Model
-          </h2>
+          <div className="flex flex-col">
+            <h2 className="font-extrabold text-5xl text-[#64ad06] uppercase leading-[0.92] sm:text-7xl">
+              Business
+              <br />
+              Model
+            </h2>
+          </div>
 
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            <article className="rounded-[28px] border border-[#cce4a8] bg-white p-5 text-[#4f6640] shadow-[0_12px_24px_rgba(131,188,40,0.14)]">
-              <p className="font-semibold text-base leading-relaxed">
-                Farmers list available yield and receive demand directly from
-                traders, cooperatives, and buyers in the same workflow.
-              </p>
-            </article>
-
-            <div className="relative aspect-16/11 overflow-hidden rounded-[28px] border border-[#cee5ad]">
+          <div className="mt-8 grid gap-4 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-0">
+            <div className="relative h-60 overflow-hidden rounded-[28px] border border-[#cee5ad] sm:h-72 lg:h-[290px] lg:rounded-br-none">
               <Image
-                src="/farm.jpg"
-                alt="Farmer harvesting crops in a green field"
+                src="/business-model-insights.jpg"
+                alt="Aerial farmland with market and analytics overlays"
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 33vw"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
 
-            <article className="rounded-[28px] border border-[#cce4a8] bg-white p-5 text-[#4f6640] shadow-[0_12px_24px_rgba(131,188,40,0.14)]">
-              <p className="font-semibold text-base leading-relaxed">
-                Price and quality information is updated continuously so every
-                participant can compare alternatives before committing.
+            <article className="h-fit px-2 py-1 text-[#4f6640] sm:px-3">
+              <span className="mb-3 block h-0.5 w-14 bg-[#9dcf4f]" />
+              <h3 className="font-semibold text-base leading-snug sm:text-[1.04rem]">
+                Collect Market Data and turn Data into Insights
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed sm:text-base">
+                We aggregate price data, demand signals, and market activity
+                from users and diverse sources to analyze trends, providing
+                real-time prices and demand forecasts.
               </p>
             </article>
           </div>
 
-          <div className="mt-4 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-            <article className="rounded-4xl bg-[#f0de00] p-6 font-semibold text-[#4c5207] text-base leading-relaxed">
-              AgriTrade supports multiple execution paths: direct buyer
-              transactions, middleman-supported logistics, and phased delivery
-              models adapted to real farm conditions.
+          <div className="mt-4 grid gap-4 lg:mt-0 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-0">
+            <article className="h-fit px-2 py-2 text-[#4c5207] sm:px-3">
+              <span className="mb-3 block h-0.5 w-16 bg-[#d3be0a]" />
+              <h3 className="font-semibold text-base leading-snug sm:text-[1.08rem]">
+                Share with All Market Participants
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed sm:text-base">
+                Farmers, traders, and businesses access the same information,
+                enabling fairer and more efficient transactions.
+              </p>
             </article>
 
-            <div className="relative aspect-16/11 overflow-hidden rounded-[28px] border border-[#cee5ad]">
+            <div className="relative h-60 overflow-hidden rounded-[28px] border border-[#cee5ad] sm:h-72 lg:h-[290px] lg:rounded-tl-none">
               <Image
-                src="/about-us/slide-7.jpg"
-                alt="Farmers inspecting crop quality before market delivery"
+                src="/business-model-sharing.jpg"
+                alt="Farm machinery and field statistics overlays"
                 fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 28vw"
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -163,39 +170,47 @@ export default function MarketingPage() {
       <section id="step-to-step" className="scroll-mt-20 py-14">
         <div className="mx-auto max-w-1140px px-4 sm:px-6 lg:px-8">
           <h2 className="text-center font-extrabold text-4xl text-[#68b308] uppercase sm:text-5xl">
-            Explore Platform
+            Explore our Platform
           </h2>
 
-          <div className="mt-7 grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-stretch">
-            <article className="flex h-full w-full items-center rounded-[28px] bg-[#87d80d] p-5 text-[#2d4d03] shadow-[0_12px_20px_rgba(122,182,30,0.18)] sm:p-6">
-              <p className="font-semibold text-lg leading-relaxed sm:text-xl">
-                Explore live boards, compare price movement across commodities,
-                and track field-level updates from farmers in real time.
-              </p>
-            </article>
-
-            <div className="w-full min-w-0">
+          <div className="mt-7">
+            <div className="mx-auto w-full min-w-0 max-w-5xl">
               <ExplorePlatformSlideshow />
             </div>
           </div>
         </div>
 
-        <div className="mt-14 bg-[#8de007] py-16">
+        <div className="mt-14 bg-[#f5f8ef] py-16">
           <div className="mx-auto -mt-8 max-w-230 px-4 sm:px-6">
-            <div className="relative aspect-video overflow-hidden rounded-[42px] border-4 border-[#f5f8ef] shadow-[0_18px_34px_rgba(84,137,18,0.25)]">
-              <Image
-                src="/about-us/slide-8.jpg"
-                alt="Two farmers harvesting together on a tea plantation"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 76vw"
-              />
+            <div className="mx-auto max-w-3xl text-center">
+              <h3 className="font-extrabold text-3xl text-[#68b308] sm:text-4xl">
+                See How It Works in Action
+              </h3>
+              <p className="mt-4 text-[#4f6640] text-lg leading-relaxed">
+                A quick walkthrough of how farmers and traders use AgriTrade to
+                make better decisions.
+              </p>
             </div>
-            <p className="mt-8 text-center text-[#eaf7d5] text-lg leading-relaxed">
-              The platform is designed for practical action: discover demand,
-              verify pricing, align quality expectations, and close deals with
-              fewer surprises for every side.
-            </p>
+
+            <div className="relative mt-8 aspect-video overflow-hidden rounded-[42px] border-4 border-[#f5f8ef] shadow-[0_18px_34px_rgba(84,137,18,0.25)]">
+              <video
+                controls
+                preload="metadata"
+                poster="/about-us/slide-8.jpg"
+                className="h-full w-full object-cover"
+              >
+                <source src="/about-us/how-it-works.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div className="mt-8 flex justify-center">
+              <Link
+                href="/register"
+                className="inline-flex items-center rounded-full border border-[#b8da84] bg-[#ecf9d8] px-5 py-2.5 font-semibold text-[#3f620a] text-base"
+              >
+                Start using AgriTrade today →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
