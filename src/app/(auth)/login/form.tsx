@@ -56,10 +56,10 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="border-emerald-500/25 bg-zinc-900/85 shadow-[0_20px_48px_rgba(0,0,0,0.5)] backdrop-blur">
+    <Card className="border-[#d0e6af] bg-white shadow-[0_12px_24px_rgba(127,181,44,0.12)]">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-zinc-100">Welcome Back</CardTitle>
-        <CardDescription className="text-zinc-300/80">
+        <CardTitle className="text-2xl text-[#1f3800]">Welcome Back</CardTitle>
+        <CardDescription className="text-[#546a39]">
           Sign in to your AgriTrade account
         </CardDescription>
       </CardHeader>
@@ -71,12 +71,12 @@ export function LoginForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-zinc-200">Email</FormLabel>
+                  <FormLabel className="text-[#365608]">Email</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
                       placeholder="you@example.com"
-                      className="border-emerald-500/25 bg-zinc-950/80 focus-visible:border-emerald-400/35 focus-visible:ring-emerald-400/20"
+                      className="border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] focus-visible:border-[#9dcb4a] focus-visible:ring-[#9dcb4a]/30"
                       {...field}
                     />
                   </FormControl>
@@ -90,10 +90,10 @@ export function LoginForm() {
               render={({ field }) => (
                 <FormItem>
                   <div className="flex items-center justify-between">
-                    <FormLabel className="text-zinc-200">Password</FormLabel>
+                    <FormLabel className="text-[#365608]">Password</FormLabel>
                     <Link
                       href="/forgot-password"
-                      className="text-zinc-300/80 text-sm transition-colors hover:text-zinc-100 hover:underline"
+                      className="text-[#4e820f] text-sm transition-colors hover:text-[#3d670d] hover:underline"
                     >
                       Forgot password?
                     </Link>
@@ -103,14 +103,14 @@ export function LoginForm() {
                       <Input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Enter your password"
-                        className="border-emerald-500/25 bg-zinc-950/80 pr-10 focus-visible:border-emerald-400/35 focus-visible:ring-emerald-400/20"
+                        className="border-[#d3e9b4] bg-[#f9fef0] pr-10 text-[#1f3800] focus-visible:border-[#9dcb4a] focus-visible:ring-[#9dcb4a]/30"
                         {...field}
                       />
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="absolute top-0 right-0 h-full px-3 text-zinc-400/80 hover:text-zinc-200"
+                        className="absolute top-0 right-0 h-full px-3 text-[#6e7f5a] hover:bg-transparent hover:text-[#365608]"
                         onClick={() => setShowPassword(!showPassword)}
                       >
                         {showPassword ? (
@@ -127,7 +127,7 @@ export function LoginForm() {
             />
             <Button
               type="submit"
-              className="w-full bg-brand-lime font-semibold text-zinc-950 transition-colors hover:bg-brand-lime/85"
+              className="w-full bg-brand-lime font-semibold text-[#1d3706] transition-colors hover:bg-brand-lime/90"
               disabled={loginMutation.isPending}
             >
               {loginMutation.isPending ? (
@@ -142,12 +142,12 @@ export function LoginForm() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex justify-center border-zinc-700/70 border-t pt-6">
-        <p className="text-zinc-300/85 text-sm">
+      <CardFooter className="flex justify-center border-[#d7e7c2] border-t pt-6">
+        <p className="text-[#546a39] text-sm">
           Don&apos;t have an account?{' '}
           <Link
             href="/register"
-            className="font-medium text-zinc-100 hover:underline"
+            className="font-medium text-[#3d670d] hover:underline"
           >
             Sign up
           </Link>

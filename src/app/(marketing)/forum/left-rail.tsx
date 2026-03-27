@@ -6,10 +6,10 @@ export function LeftRail() {
 
   return (
     <aside className="space-y-4">
-      <section className="rounded-2xl border border-[#d3e9b4] bg-white p-3 shadow-sm">
+      <section className="rounded-xl border border-[#d0e6af] bg-white p-3 shadow-sm">
         <p className="font-medium text-[#3d670d] text-xs">Featured network</p>
 
-        <article className="mt-2 overflow-hidden rounded-xl border border-[#d3e9b4] bg-[#f9fef0]">
+        <article className="mt-2 overflow-hidden rounded-lg border border-[#d3e9b4] bg-[#f5f8ef]">
           <Image
             src={forumFeaturedCard.imageSrc}
             alt={forumFeaturedCard.imageAlt}
@@ -36,12 +36,12 @@ export function LeftRail() {
         </article>
       </section>
 
-      <section className="rounded border border-[#d3e9b4] bg-white p-3">
+      <section className="rounded-xl border border-[#d0e6af] bg-white p-3 shadow-sm">
         <p className="font-medium text-muted-foreground text-xs">
           Recommended price data
         </p>
 
-        <div className="mt-3 rounded-xl border border-[#d3e9b4] bg-[#f9fef0] p-3">
+        <div className="mt-3 rounded-lg border border-[#d3e9b4] bg-[#f5f8ef] p-3">
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="font-semibold text-primary text-sm">
@@ -115,7 +115,7 @@ export function LeftRail() {
 
         <button
           type="button"
-          className="mt-3 w-full rounded-lg border border-[#d3e9b4] bg-[#f9fef0] px-3 py-2 font-medium text-xs text-[#365608] hover:border-[#b5d889] hover:text-[#3d670d]"
+          className="mt-3 w-full rounded-md border border-[#d3e9b4] bg-[#f5f8ef] px-3 py-2 font-medium text-xs text-[#365608] hover:border-[#b5d889] hover:text-[#3d670d]"
         >
           View all prices
         </button>

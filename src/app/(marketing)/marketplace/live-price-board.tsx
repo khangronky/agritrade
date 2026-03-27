@@ -111,8 +111,8 @@ export default function LivePriceBoard({
   onCurrencyChange,
 }: LivePriceBoardProps) {
   return (
-    <Card className="gap-0 rounded-3xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-[0_16px_32px_rgba(127,181,44,0.16)]">
-      <CardHeader className="px-5 pt-5 pb-4 sm:px-6">
+    <Card className="gap-0 rounded-none border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-none">
+      <CardHeader className="border-[#d7e7c2] border-b px-5 pt-5 pb-4 sm:px-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-xl sm:text-2xl">
             Live price board
@@ -126,7 +126,7 @@ export default function LivePriceBoard({
               onChange={(event) =>
                 onCurrencyChange(event.target.value as CurrencyCode)
               }
-              className="h-8 min-w-24 rounded-lg border-[#d1e6af] bg-white text-[#546a39] text-xs focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
+              className="h-8 min-w-24 rounded-md border-[#d0e6af] bg-white text-[#546a39] text-xs focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
             >
               {aseanCurrencies.map((currency) => (
                 <NativeSelectOption key={currency.code} value={currency.code}>
@@ -149,7 +149,7 @@ export default function LivePriceBoard({
             return (
               <div
                 key={row.name}
-                className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 rounded-xl border border-[#d3e9b4] bg-[#f9fef0] px-3 py-2.5"
+                className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 rounded-md border border-[#d3e9b4] bg-[#f5f8ef] px-3 py-2.5"
               >
                 <div className="min-w-0">
                   <p className="font-semibold tracking-[0.08em] text-[#1f3800]">
@@ -171,7 +171,7 @@ export default function LivePriceBoard({
 
                 <div
                   className={cn(
-                    'w-fit justify-self-end rounded-lg border px-1.5 py-1 text-right tabular-nums sm:px-2',
+                    'w-fit justify-self-end rounded-md border px-1.5 py-1 text-right tabular-nums sm:px-2',
                     trendBadgeClass(trend)
                   )}
                 >
@@ -190,7 +190,7 @@ export default function LivePriceBoard({
             );
           })
         ) : (
-          <div className="rounded-xl border border-[#d3e9b4] bg-[#f9fef0] px-4 py-5 text-center text-[#6e7f5a] text-sm">
+          <div className="rounded-lg border border-[#d3e9b4] bg-[#f5f8ef] px-4 py-5 text-center text-[#6e7f5a] text-sm">
             No featured commodities available right now.
           </div>
         )}

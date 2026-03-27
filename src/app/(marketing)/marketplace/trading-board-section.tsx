@@ -14,9 +14,9 @@ export function TradingBoardSection({
   activeCurrency,
 }: TradingBoardSectionProps) {
   return (
-    <section className="relative pb-4 sm:pb-8">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-[#d1e6af] bg-[#f9fef0] p-5 shadow-[0_16px_32px_rgba(127,181,44,0.16)] sm:p-6">
+    <section className="relative px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="border border-[#d0e6af] bg-white p-5 sm:p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="font-semibold text-2xl sm:text-3xl">
@@ -35,7 +35,7 @@ export function TradingBoardSection({
                 />
               ))
             ) : (
-              <Card className="gap-0 rounded-2xl border-[#c6dfa0] bg-[#f9fef0] py-0 text-[#1f3800] shadow-sm sm:col-span-2 xl:col-span-4">
+              <Card className="gap-0 rounded-xl border-[#c6dfa0] bg-[#f5f8ef] py-0 text-[#1f3800] shadow-sm sm:col-span-2 xl:col-span-4">
                 <CardContent className="px-5 py-8 text-center text-[#6e7f5a]">
                   No marketplace listings available right now.
                 </CardContent>
@@ -56,7 +56,7 @@ function ListingCardItem({
   activeCurrency: CurrencyOption;
 }) {
   return (
-    <Card className="group gap-0 overflow-hidden rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#b8d98e] hover:shadow-md">
+    <Card className="group gap-0 overflow-hidden rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#b8d98e] hover:shadow-md">
       <CardContent className="px-4 py-4 sm:px-5 sm:py-5">
         <div className="flex items-start justify-between gap-3">
           <div>

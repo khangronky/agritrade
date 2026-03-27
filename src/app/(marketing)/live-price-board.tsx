@@ -236,14 +236,14 @@ type LivePriceBoardProps = {
 function trendBadgeClass(trend: Trend, theme: 'dark' | 'light') {
   if (theme === 'light') {
     if (trend === 'up') {
-      return 'border-emerald-300 bg-emerald-100 text-emerald-700';
+      return 'border-emerald-300 bg-emerald-100/85 text-emerald-700';
     }
 
     if (trend === 'down') {
-      return 'border-rose-300 bg-rose-100 text-rose-700';
+      return 'border-rose-300 bg-rose-100/85 text-rose-700';
     }
 
-    return 'border-zinc-300 bg-zinc-100 text-zinc-600';
+    return 'border-zinc-300 bg-zinc-100/80 text-zinc-600';
   }
 
   if (trend === 'up') {
@@ -280,7 +280,7 @@ export function LivePriceBoard({
     <div
       className={cn(
         isLight
-          ? 'rounded-[28px] border border-[#c8e5a0] bg-white shadow-[0_16px_34px_rgba(123,178,40,0.18)]'
+          ? 'rounded-[26px] border border-[#c8dda8] bg-[#fbfdf8] shadow-[0_10px_28px_rgba(120,170,36,0.1)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(120,170,36,0.14)]'
           : 'rounded-[28px] border border-emerald-500/20 bg-zinc-950/88 shadow-[0_18px_42px_rgba(0,0,0,0.55)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
@@ -289,7 +289,7 @@ export function LivePriceBoard({
         <h3
           className={cn(
             'font-semibold',
-            isLight ? 'text-[#4b760f]' : 'text-zinc-100',
+            isLight ? 'text-[#264307]' : 'text-zinc-100',
             compact ? 'text-lg sm:text-xl' : 'text-2xl'
           )}
         >
@@ -315,7 +315,7 @@ export function LivePriceBoard({
             }
             className={cn(
               isLight
-                ? 'rounded-lg border border-[#c9e5a0] bg-[#f5fbe8] text-[#3b5d0e] outline-hidden transition-colors focus:border-[#89d011]'
+                ? 'rounded-xl border border-[#c8dda8] bg-[#f2f7e8] text-[#3b5d0e] outline-hidden transition-colors focus:border-[#89d011]'
                 : 'rounded-lg border border-emerald-500/20 bg-zinc-950/82 text-zinc-200 outline-hidden transition-colors focus:border-emerald-400/55',
               compact ? 'px-2 py-1 text-[11px]' : 'px-2.5 py-1.5 text-xs'
             )}
@@ -335,7 +335,7 @@ export function LivePriceBoard({
             key={item.code}
             className={cn(
               isLight
-                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-xl border border-[#d3e9b4] bg-[#f9fef0]'
+                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-[18px] border border-[#d4e5bc] bg-[#f4f8ec] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#bddb93] hover:bg-[#f8fbed]'
                 : 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-xl border border-zinc-700/70 bg-zinc-950/76',
               compact ? 'gap-1.5 px-2.5 py-2' : 'gap-2 px-3 py-2.5'
             )}

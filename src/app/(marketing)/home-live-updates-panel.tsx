@@ -42,7 +42,7 @@ export function HomeLiveUpdatesPanel({
     <div
       className={cn(
         isLight
-          ? 'rounded-[28px] border border-[#c8e5a0] bg-white shadow-[0_16px_34px_rgba(123,178,40,0.18)]'
+          ? 'rounded-[26px] border border-[#c8dda8] bg-[#fbfdf8] shadow-[0_10px_28px_rgba(120,170,36,0.1)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(120,170,36,0.14)]'
           : 'rounded-[28px] border border-emerald-500/20 bg-zinc-950/88 shadow-[0_18px_42px_rgba(0,0,0,0.55)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
@@ -51,7 +51,7 @@ export function HomeLiveUpdatesPanel({
         <h3
           className={cn(
             'font-semibold',
-            isLight ? 'text-[#4b760f]' : 'text-zinc-100',
+            isLight ? 'text-[#264307]' : 'text-zinc-100',
             compact ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
           )}
         >
@@ -91,7 +91,7 @@ export function HomeLiveUpdatesPanel({
               key={item.id}
               className={cn(
                 isLight
-                  ? 'rounded-xl border border-[#d3e9b4] bg-[#8cde07] px-3 py-2.5 text-[#234005]'
+                  ? 'rounded-[18px] border border-[#cfe1b2] bg-[#eef7df] px-3 py-2.5 text-[#234005] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#bddb93] hover:bg-[#f4fbe8]'
                   : 'text-base text-zinc-300 leading-snug sm:text-lg'
               )}
             >
@@ -105,7 +105,7 @@ export function HomeLiveUpdatesPanel({
                 {item.farmer} {item.update}
               </p>
               {isLight ? (
-                <p className="mt-2 font-semibold text-[#4c730f] text-[10px] uppercase tracking-[0.08em]">
+                <p className="mt-2 font-semibold text-[#5a7c2a] text-[10px] uppercase tracking-[0.08em]">
                   {item.time}
                 </p>
               ) : null}

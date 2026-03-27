@@ -233,9 +233,9 @@ export function MarketTrendSection({
   ];
 
   return (
-    <section className="relative py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-[#d1e6af] bg-[#f9fef0] p-5 shadow-[0_16px_32px_rgba(127,181,44,0.16)] sm:p-6">
+    <section className="relative px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="border border-[#d0e6af] bg-white p-5 sm:p-6">
           <div className="space-y-2">
             <h2 className="font-semibold text-2xl sm:text-3xl">
               Market Trend Analysis & Forecasting
@@ -250,7 +250,7 @@ export function MarketTrendSection({
             <NativeSelect
               value={activeCommodityValue}
               onChange={(event) => onCommodityChange(event.target.value)}
-              className="h-10 min-w-56 rounded-xl border-[#d1e6af] bg-[#f9fef0] text-xs text-[#546a39] focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
+              className="h-10 min-w-56 rounded-md border-[#d0e6af] bg-[#f5f8ef] text-xs text-[#546a39] focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
             >
               <NativeSelectOption value="auto">
                 Auto (top commodity)
@@ -266,7 +266,7 @@ export function MarketTrendSection({
               onChange={(event) =>
                 onCurrencyChange(event.target.value as CurrencyCode)
               }
-              className="h-10 min-w-28 rounded-xl border-[#d1e6af] bg-[#f9fef0] text-xs text-[#546a39] focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
+              className="h-10 min-w-28 rounded-md border-[#d0e6af] bg-[#f5f8ef] text-xs text-[#546a39] focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
             >
               {aseanCurrencies.map((currency) => (
                 <NativeSelectOption key={currency.code} value={currency.code}>
@@ -277,7 +277,7 @@ export function MarketTrendSection({
           </div>
 
           {activeListingForTrend && selectedSeries.length > 0 ? (
-            <Card className="mt-5 gap-0 rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm">
+            <Card className="mt-5 gap-0 rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm">
               <CardContent className="px-4 py-4 sm:px-5 sm:py-5">
                 <div>
                   <p className="font-medium text-[11px] text-[#6e7f5a] uppercase tracking-[0.16em]">
@@ -311,7 +311,7 @@ export function MarketTrendSection({
                 </div>
 
                 {aiForecast ? (
-                  <div className="mt-4 rounded-xl border border-[#cce4a8] bg-[#f2fbe7] px-3 py-3 sm:px-4">
+                  <div className="mt-4 rounded-lg border border-[#cce4a8] bg-[#f5f8ef] px-3 py-3 sm:px-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <p className="font-semibold text-sm text-[#1f3800] sm:text-base">
                         AI forecast ({aiForecast.horizonPeriods} periods):{' '}
@@ -350,7 +350,7 @@ export function MarketTrendSection({
                         'rounded-md border px-2.5 py-1 font-semibold text-xs tracking-wide transition-colors',
                         timeframe === key
                           ? 'border-[#9dcb4a] bg-[#e7f7cd] text-[#3d670d]'
-                          : 'border-[#d3e9b4] bg-[#f9fef0] text-[#6e7f5a] hover:border-[#b8d98e] hover:text-[#365608]'
+                          : 'border-[#d3e9b4] bg-[#f5f8ef] text-[#6e7f5a] hover:border-[#b8d98e] hover:text-[#365608]'
                       )}
                     >
                       {key}
@@ -358,7 +358,7 @@ export function MarketTrendSection({
                   ))}
                 </div>
 
-                <div className="mt-4 rounded-xl border border-[#d3e9b4] bg-[#f9fef0] p-3 sm:p-4">
+                <div className="mt-4 rounded-lg border border-[#d3e9b4] bg-[#f5f8ef] p-3 sm:p-4">
                   <ChartContainer
                     config={marketTrendChartConfig}
                     className="h-[360px] w-full"
@@ -477,7 +477,7 @@ export function MarketTrendSection({
                   </ChartContainer>
                 </div>
 
-                <div className="mt-4 overflow-hidden rounded-xl border border-[#d3e9b4] bg-[#f9fef0]">
+                <div className="mt-4 overflow-hidden rounded-lg border border-[#d3e9b4] bg-[#f5f8ef]">
                   <div className="grid divide-[#d3e9b4] md:grid-cols-3 md:divide-x">
                     {statsColumns.map((column, index) => (
                       <div
@@ -511,7 +511,7 @@ export function MarketTrendSection({
               </CardContent>
             </Card>
           ) : (
-            <Card className="mt-6 gap-0 rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm">
+            <Card className="mt-6 gap-0 rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm">
               <CardContent className="px-5 py-8 text-center text-[#6e7f5a]">
                 No timeline data available for current commodity.
               </CardContent>

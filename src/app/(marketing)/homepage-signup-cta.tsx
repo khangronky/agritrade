@@ -38,11 +38,11 @@ export function HomepageSignupCta() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-10 max-w-md">
+    <form onSubmit={handleSubmit} className="mt-9 max-w-md">
       <label htmlFor="homepage-signup" className="sr-only">
         Email or phone number
       </label>
-      <div className="flex flex-col gap-2 sm:flex-row">
+      <div className="flex flex-col gap-2.5 sm:flex-row">
         <input
           id="homepage-signup"
           type="text"
@@ -54,11 +54,11 @@ export function HomepageSignupCta() {
             }
           }}
           placeholder="Email/Phone number"
-          className="h-11 flex-1 rounded-xl border border-[#d3e8b5] bg-white px-4 text-[#2e4f05] text-sm placeholder:text-[#7e9364] focus:border-[#7fc411] focus:outline-hidden"
+          className="h-11 flex-1 rounded-2xl border border-[#c8dda8] bg-white px-4 text-[#2e4f05] text-sm placeholder:text-[#7e9364] transition-colors duration-300 focus:border-[#7fc411] focus:outline-hidden"
         />
         <button
           type="submit"
-          className="h-11 rounded-xl bg-[#7ecb0f] px-6 font-semibold text-[#1f3800] transition-colors hover:bg-[#74bc0c]"
+          className="h-11 rounded-2xl border border-[#7dc313] bg-[#86d20f] px-6 font-semibold text-[#1f3800] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#77c10d]"
         >
           Sign Up
         </button>

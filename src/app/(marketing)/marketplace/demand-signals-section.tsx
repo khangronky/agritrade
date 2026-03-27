@@ -10,9 +10,9 @@ export function DemandSignalsSection({
   demandSignals: DemandSignal[];
 }) {
   return (
-    <section className="relative pb-4 sm:pb-8">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-[#d1e6af] bg-[#f9fef0] p-5 shadow-[0_16px_32px_rgba(127,181,44,0.16)] sm:p-6">
+    <section className="relative px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="border border-[#d0e6af] bg-white p-5 sm:p-6">
           <div className="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <h2 className="font-semibold text-2xl sm:text-3xl">
@@ -25,7 +25,7 @@ export function DemandSignalsSection({
             </div>
             <Badge
               variant="outline"
-              className="w-fit border-[#cce4a8] bg-[#f9fef0] text-[#3d670d] text-xs"
+              className="w-fit border-[#cce4a8] bg-[#f5f8ef] text-[#3d670d] text-xs"
             >
               Derived from existing ASEAN listing data
             </Badge>
@@ -40,7 +40,7 @@ export function DemandSignalsSection({
                 />
               ))
             ) : (
-              <Card className="gap-0 rounded-2xl border-[#c6dfa0] bg-[#f9fef0] py-0 text-[#1f3800] shadow-sm sm:col-span-2 xl:col-span-4">
+              <Card className="gap-0 rounded-xl border-[#c6dfa0] bg-[#f5f8ef] py-0 text-[#1f3800] shadow-sm sm:col-span-2 xl:col-span-4">
                 <CardContent className="px-5 py-8 text-center text-[#6e7f5a]">
                   No demand signal available for the selected filters.
                 </CardContent>
@@ -55,7 +55,7 @@ export function DemandSignalsSection({
 
 function DemandSignalCard({ signal }: { signal: DemandSignal }) {
   return (
-    <Card className="gap-0 rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm">
+    <Card className="gap-0 rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm">
       <CardContent className="px-4 py-4 sm:px-5 sm:py-5">
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -90,7 +90,7 @@ function DemandSignalCard({ signal }: { signal: DemandSignal }) {
           </span>
         </div>
 
-        <div className="mt-4 rounded-xl border border-[#d3e9b4] bg-[#f9fef0] px-3 py-2.5">
+        <div className="mt-4 rounded-lg border border-[#d3e9b4] bg-[#f5f8ef] px-3 py-2.5">
           <p className="font-medium text-[#546a39] text-xs">{signal.status}</p>
           <p className="mt-1 text-[#6e7f5a] text-xs leading-relaxed">
             {signal.insight}

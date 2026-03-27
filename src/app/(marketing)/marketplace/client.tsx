@@ -792,32 +792,42 @@ export default function MarketplaceClient() {
         onCurrencyChange={setMarketplaceCurrency}
       />
 
-      <MarketTrendSection
-        selectedCurrency={trendCurrency}
-        activeCurrency={activeTrendCurrency}
-        aseanCurrencies={aseanCurrencies}
-        commodityOptions={commodityOptions}
-        activeCommodityValue={activeCommodityValue}
-        activeListingForTrend={activeListingForTrend}
-        trendTimelineData={trendTimelineData?.points ?? []}
-        aiForecast={trendTimelineData?.aiForecast ?? null}
-        onCurrencyChange={setTrendCurrency}
-        onCommodityChange={setSelectedCommodity}
-      />
+      <div className="border-[#d7e7c2] border-t">
+        <MarketTrendSection
+          selectedCurrency={trendCurrency}
+          activeCurrency={activeTrendCurrency}
+          aseanCurrencies={aseanCurrencies}
+          commodityOptions={commodityOptions}
+          activeCommodityValue={activeCommodityValue}
+          activeListingForTrend={activeListingForTrend}
+          trendTimelineData={trendTimelineData?.points ?? []}
+          aiForecast={trendTimelineData?.aiForecast ?? null}
+          onCurrencyChange={setTrendCurrency}
+          onCommodityChange={setSelectedCommodity}
+        />
+      </div>
 
-      <TradingBoardSection
-        listings={listings}
-        activeCurrency={aseanCurrencies[0]}
-      />
+      <div className="border-[#d7e7c2] border-t">
+        <TradingBoardSection
+          listings={listings}
+          activeCurrency={aseanCurrencies[0]}
+        />
+      </div>
 
-      <DemandSignalsSection demandSignals={demandSignals} />
+      <div className="border-[#d7e7c2] border-t">
+        <DemandSignalsSection demandSignals={demandSignals} />
+      </div>
 
-      <ExchangeAndYieldSection
-        selectedCountry="all"
-        exchangeCards={exchangeCards}
-      />
+      <div className="border-[#d7e7c2] border-t">
+        <ExchangeAndYieldSection
+          selectedCountry="all"
+          exchangeCards={exchangeCards}
+        />
+      </div>
 
-      <MarketplaceCtaSection />
+      <div className="border-[#d7e7c2] border-t">
+        <MarketplaceCtaSection />
+      </div>
     </>
   );
 }

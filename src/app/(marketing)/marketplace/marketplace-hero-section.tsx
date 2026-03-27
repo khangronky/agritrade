@@ -17,10 +17,13 @@ export function MarketplaceHeroSection({
   onCurrencyChange,
 }: MarketplaceHeroSectionProps) {
   return (
-    <section className="relative border-[#c6dfa0] border-b pt-16 pb-12 sm:pt-20 sm:pb-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative px-4 py-7 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-305">
         <div className="space-y-8">
           <div>
+            <p className="font-semibold text-[#64ad06] text-[11px] uppercase tracking-[0.22em]">
+              * Marketplace
+            </p>
             <h1 className="max-w-3xl font-semibold text-3xl leading-tight sm:text-4xl lg:text-5xl">
               AI-powered agriculture marketplace: track prices, forecast trends,
               trade smarter.

@@ -4,7 +4,7 @@ import { forumOverviewItems, forumRfq } from './mock-data';
 export function RightRail() {
   return (
     <aside className="space-y-4">
-      <section className="rounded border border-[#d3e9b4] bg-white p-3">
+      <section className="rounded-xl border border-[#d0e6af] bg-white p-3 shadow-sm">
         <p className="font-medium text-sm">Me</p>
         <p className="mt-2 text-xs leading-relaxed">
           Sign in or join AgriTrade to personalize your feed. Interested in what
@@ -18,7 +18,7 @@ export function RightRail() {
         </button>
       </section>
 
-      <section className="rounded border border-[#d3e9b4] bg-white p-3">
+      <section className="rounded-xl border border-[#d0e6af] bg-white p-3 shadow-sm">
         <p className="font-medium text-sm">Market Overviews</p>
         <p className="mt-2 text-xs leading-relaxed">
           Discover market overviews with key data and insights on products you
@@ -30,7 +30,7 @@ export function RightRail() {
             <li key={item.name}>
               <button
                 type="button"
-                className="flex w-full items-center justify-between rounded-lg border border-transparent px-1 py-1 text-sm text-[#365608] hover:border-[#d3e9b4] hover:bg-[#f9fef0]"
+                className="flex w-full items-center justify-between rounded-md border border-transparent px-1 py-1 text-sm text-[#365608] hover:border-[#d3e9b4] hover:bg-[#f5f8ef]"
               >
                 <span className="flex items-center gap-2">
                   <item.icon className="size-4 text-[#4e820f]" />
@@ -43,7 +43,7 @@ export function RightRail() {
         </ul>
       </section>
 
-      <section className="rounded border border-[#d3e9b4] bg-white p-3">
+      <section className="rounded-xl border border-[#d0e6af] bg-white p-3 shadow-sm">
         <p className="font-medium text-muted-foreground text-sm">
           {forumRfq.title}
         </p>

@@ -51,7 +51,7 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
         visibleFeed.map((item) => (
           <Card
             key={item.id}
-            className="rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm"
+            className="rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm"
           >
             <CardContent className="flex items-start justify-between gap-4 px-5 py-4 sm:items-center sm:py-5">
               <div>
@@ -64,7 +64,7 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
               </div>
               <Badge
                 variant="outline"
-                className="border-[#d1e6af] bg-[#f9fef0] text-[#6e7f5a] text-xs"
+                className="border-[#d0e6af] bg-[#f5f8ef] text-[#6e7f5a] text-xs"
               >
                 {item.time}
               </Badge>
@@ -72,7 +72,7 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
           </Card>
         ))
       ) : (
-        <Card className="rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm">
+        <Card className="rounded-xl border-[#d0e6af] bg-white py-0 text-[#1f3800] shadow-sm">
           <CardContent className="px-5 py-7 text-center text-[#6e7f5a] text-sm">
             No farmer yield updates for this country yet.
           </CardContent>

@@ -13,8 +13,8 @@ export function ExchangeAndYieldSection({
   exchangeCards,
 }: ExchangeAndYieldSectionProps) {
   return (
-    <section className="relative border-[#c6dfa0] border-t py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
           <h2 className="font-semibold text-2xl sm:text-3xl">
             Exchange & trading market
@@ -53,7 +53,7 @@ function ExchangeFeatureCard({ card }: { card: ExchangeCard }) {
   const Icon = card.icon;
 
   return (
-    <Card className="rounded-2xl border-[#c6dfa0] bg-[#f9fef0] py-0 text-[#1f3800] shadow-sm">
+    <Card className="rounded-xl border-[#d0e6af] bg-[#f5f8ef] py-0 text-[#1f3800] shadow-sm">
       <CardHeader className="px-5 pt-5 pb-2">
         <Icon className="size-5 text-lime-600" />
         <CardTitle className="mt-3 text-lg sm:text-xl">{card.title}</CardTitle>

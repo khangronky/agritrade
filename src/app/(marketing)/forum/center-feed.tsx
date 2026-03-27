@@ -19,7 +19,7 @@ type CenterFeedProps = {
 export function CenterFeed({ posts }: CenterFeedProps) {
   return (
     <section className="space-y-4">
-      <div className="rounded-2xl border border-[#d3e9b4] bg-white p-3 shadow-sm">
+      <div className="rounded-xl border border-[#d0e6af] bg-white p-3 shadow-sm">
         <div className="flex items-center justify-between">
           <p className="flex items-center gap-1 font-medium text-xs text-[#365608]">
             Community feed <CircleHelp className="size-3" />
@@ -39,11 +39,11 @@ export function CenterFeed({ posts }: CenterFeedProps) {
           <Input
             aria-label="Create a post"
             placeholder="Create a post"
-            className="h-10 border-[#d3e9b4] bg-[#f9fef0] pl-9 text-sm"
+            className="h-10 border-[#d3e9b4] bg-[#f5f8ef] pl-9 text-sm"
           />
         </div>
 
-        <div className="mt-3 grid grid-cols-2 divide-x divide-[#d3e9b4] rounded border border-[#d3e9b4] bg-[#f9fef0]">
+        <div className="mt-3 grid grid-cols-2 divide-x divide-[#d3e9b4] rounded-md border border-[#d3e9b4] bg-[#f5f8ef]">
           <Button
             type="button"
             variant="ghost"
@@ -85,7 +85,7 @@ function ForumPostCard({ post }: { post: ForumPost }) {
     .toUpperCase();
 
   return (
-    <article className="rounded-2xl border border-[#d3e9b4] bg-white shadow-sm">
+    <article className="rounded-xl border border-[#d0e6af] bg-white shadow-sm">
       <div className="border-[#d3e9b4] border-b px-3 py-2 text-xs text-[#6e7f5a]">
         Update | {post.companyName} profile verified on Mar 24, 2026
       </div>
