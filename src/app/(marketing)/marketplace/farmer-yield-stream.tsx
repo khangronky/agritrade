@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
@@ -39,10 +39,10 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
 
   return (
     <>
-      <div className="flex items-center justify-between px-1 text-zinc-400 text-xs sm:text-sm">
+      <div className="flex items-center justify-between px-1 text-[#6e7f5a] text-xs sm:text-sm">
         <p>Auto-generated stream from ASEAN marketplace listings</p>
-        <p className="inline-flex items-center gap-2 font-medium text-emerald-200">
-          <span className="inline-block size-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.24)]" />
+        <p className="inline-flex items-center gap-2 font-medium text-[#3d670d]">
+          <span className="inline-block size-2 rounded-full bg-[#73bd12] shadow-[0_0_8px_rgba(116,189,18,0.35)]" />
           Auto updates every 5s
         </p>
       </div>
@@ -51,20 +51,20 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
         visibleFeed.map((item) => (
           <Card
             key={item.id}
-            className="rounded-2xl border-emerald-400/22 bg-zinc-950/82 py-0 text-zinc-100 shadow-sm"
+            className="rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm"
           >
             <CardContent className="flex items-start justify-between gap-4 px-5 py-4 sm:items-center sm:py-5">
               <div>
                 <p className="font-semibold text-sm leading-tight sm:text-base">
                   {item.farmer} {item.update}
                 </p>
-                <p className="mt-1 text-zinc-400 text-xs sm:text-sm">
+                <p className="mt-1 text-[#6e7f5a] text-xs sm:text-sm">
                   {item.detail}
                 </p>
               </div>
               <Badge
                 variant="outline"
-                className="border-emerald-400/22 bg-zinc-900/75 text-zinc-400 text-xs"
+                className="border-[#d1e6af] bg-[#f9fef0] text-[#6e7f5a] text-xs"
               >
                 {item.time}
               </Badge>
@@ -72,8 +72,8 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
           </Card>
         ))
       ) : (
-        <Card className="rounded-2xl border-emerald-400/22 bg-zinc-950/82 py-0 text-zinc-100 shadow-sm">
-          <CardContent className="px-5 py-7 text-center text-zinc-400 text-sm">
+        <Card className="rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm">
+          <CardContent className="px-5 py-7 text-center text-[#6e7f5a] text-sm">
             No farmer yield updates for this country yet.
           </CardContent>
         </Card>

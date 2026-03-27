@@ -38,7 +38,7 @@ export function HomepageSignupCta() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 max-w-md">
+    <form onSubmit={handleSubmit} className="mt-10 max-w-md">
       <label htmlFor="homepage-signup" className="sr-only">
         Email or phone number
       </label>

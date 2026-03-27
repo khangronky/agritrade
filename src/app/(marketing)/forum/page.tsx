@@ -14,7 +14,7 @@ export default function ForumPage() {
   const forumPosts = listForumPosts();
 
   return (
-    <div className="relative mt-8 overflow-hidden px-4 py-12">
+    <div className="relative mt-8 overflow-hidden bg-[#f5f8ef] px-4 py-12 text-[#1d3706]">
       <div className="grid gap-4 md:grid-cols-[272px_minmax(0,1fr)] lg:grid-cols-[272px_minmax(0,1fr)_280px]">
         <LeftRail />
         <CenterFeed posts={forumPosts} />

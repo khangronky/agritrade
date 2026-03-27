@@ -1,4 +1,4 @@
-﻿import {
+import {
   BrainCircuit,
   Globe2,
   Handshake,
@@ -43,14 +43,14 @@ export function AboutUsSolutionSection() {
   return (
     <section className="py-14 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-zinc-700/70 bg-zinc-950/90 px-6 py-8 text-zinc-100 shadow-lg sm:px-8 sm:py-10">
-          <p className="font-semibold text-emerald-200 text-sm uppercase tracking-[0.18em]">
+        <div className="rounded-3xl border border-[#d3e9b4] bg-white px-6 py-8 text-[#1f3800] shadow-lg sm:px-8 sm:py-10">
+          <p className="font-semibold text-[#3d670d] text-sm uppercase tracking-[0.18em]">
             Breakthrough Solution
           </p>
-          <h2 className="mt-3 max-w-3xl font-semibold text-3xl text-zinc-100 leading-tight sm:text-4xl">
+          <h2 className="mt-3 max-w-3xl font-semibold text-3xl text-[#1f3800] leading-tight sm:text-4xl">
             A neutral data platform that helps every actor move smarter.
           </h2>
-          <p className="mt-4 max-w-3xl text-zinc-200/90 leading-relaxed">
+          <p className="mt-4 max-w-3xl text-[#365608] leading-relaxed">
             AgriTrade serves as an independent information hub, not a
             marketplace operator. We provide the intelligence and tools that
             reduce uncertainty across the supply chain.
@@ -63,17 +63,17 @@ export function AboutUsSolutionSection() {
               return (
                 <article
                   key={card.title}
-                  className="rounded-2xl border border-emerald-500/20 bg-zinc-900/62 p-5"
+                  className="rounded-2xl border border-[#d3e9b4] bg-[#f9fef0] p-5"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/16 p-2 text-emerald-200">
+                    <div className="rounded-lg border border-[#cfe5ad] bg-[#eaf7d5] p-2 text-[#3d670d]">
                       <Icon className="size-4" />
                     </div>
-                    <h3 className="font-semibold text-base text-emerald-200 sm:text-lg">
+                    <h3 className="font-semibold text-base text-[#3d670d] sm:text-lg">
                       {card.title}
                     </h3>
                   </div>
-                  <p className="mt-3 text-zinc-200/90 text-sm leading-relaxed">
+                  <p className="mt-3 text-[#365608] text-sm leading-relaxed">
                     {card.description}
                   </p>
                 </article>
@@ -81,12 +81,12 @@ export function AboutUsSolutionSection() {
             })}
           </div>
 
-          <div className="mt-6 rounded-2xl border border-emerald-500/20 bg-zinc-900/75 p-4">
-            <p className="font-semibold text-emerald-200 text-sm sm:text-base">
+          <div className="mt-6 rounded-2xl border border-[#d3e9b4] bg-[#f9fef0] p-4">
+            <p className="font-semibold text-[#3d670d] text-sm sm:text-base">
               Neutrality commitment: NO TRANSACTIONS are performed on the
               platform.
             </p>
-            <p className="mt-2 text-zinc-300/85 text-sm leading-relaxed">
+            <p className="mt-2 text-[#546a39] text-sm leading-relaxed">
               Actors self-contact for transactions. AgriTrade exists to make
               information transparent, trusted, and actionable.
             </p>

@@ -62,14 +62,14 @@ function getTrend(changePercent: number): Trend {
 
 function trendBadgeClass(trend: Trend) {
   if (trend === 'up') {
-    return 'border-emerald-400/35 bg-emerald-500/14 text-emerald-300';
+    return 'border-[#b8d98e] bg-[#eaf7d5] text-[#4e820f]';
   }
 
   if (trend === 'down') {
-    return 'border-rose-400/35 bg-rose-500/14 text-rose-300';
+    return 'border-rose-300 bg-rose-100 text-rose-700';
   }
 
-  return 'border-zinc-500/40 bg-zinc-700/35 text-zinc-300';
+  return 'border-[#c7df9f] bg-[#edf7de] text-[#546a39]';
 }
 
 function toCommodityCode(name: string) {
@@ -111,14 +111,14 @@ export default function LivePriceBoard({
   onCurrencyChange,
 }: LivePriceBoardProps) {
   return (
-    <Card className="gap-0 rounded-3xl border-emerald-400/22 bg-zinc-950/84 py-0 text-zinc-100 shadow-[0_24px_48px_rgba(0,0,0,0.55)]">
+    <Card className="gap-0 rounded-3xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-[0_16px_32px_rgba(127,181,44,0.16)]">
       <CardHeader className="px-5 pt-5 pb-4 sm:px-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-xl sm:text-2xl">
             Live price board
           </CardTitle>
           <div className="flex items-center gap-2 sm:gap-3">
-            <CardDescription className="text-zinc-400 text-xs sm:text-sm">
+            <CardDescription className="text-[#6e7f5a] text-xs sm:text-sm">
               Snapshot of featured commodities
             </CardDescription>
             <NativeSelect
@@ -126,7 +126,7 @@ export default function LivePriceBoard({
               onChange={(event) =>
                 onCurrencyChange(event.target.value as CurrencyCode)
               }
-              className="h-8 min-w-24 rounded-lg border-emerald-400/22 bg-zinc-950/82 text-zinc-300 text-xs focus-visible:border-emerald-400/55 focus-visible:ring-emerald-400/20"
+              className="h-8 min-w-24 rounded-lg border-[#d1e6af] bg-white text-[#546a39] text-xs focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
             >
               {aseanCurrencies.map((currency) => (
                 <NativeSelectOption key={currency.code} value={currency.code}>
@@ -149,22 +149,22 @@ export default function LivePriceBoard({
             return (
               <div
                 key={row.name}
-                className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 rounded-xl border border-zinc-700/70 bg-zinc-950/76 px-3 py-2.5"
+                className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 rounded-xl border border-[#d3e9b4] bg-[#f9fef0] px-3 py-2.5"
               >
                 <div className="min-w-0">
-                  <p className="font-semibold tracking-[0.08em] text-zinc-100">
+                  <p className="font-semibold tracking-[0.08em] text-[#1f3800]">
                     {code}
                   </p>
-                  <p className="mt-0.5 truncate text-xs text-zinc-400">
+                  <p className="mt-0.5 truncate text-xs text-[#6e7f5a]">
                     {row.name}
                   </p>
                 </div>
 
                 <div className="text-right">
-                  <p className="font-semibold text-base tabular-nums text-emerald-200">
+                  <p className="font-semibold text-base tabular-nums text-[#3d670d]">
                     {formatPriceByCurrency(row.priceVnd, activeCurrency)}
                   </p>
-                  <p className="mt-0.5 text-xs tabular-nums text-zinc-500">
+                  <p className="mt-0.5 text-xs tabular-nums text-[#8a9c72]">
                     Vol {formatVolume(volume)}
                   </p>
                 </div>
@@ -190,15 +190,15 @@ export default function LivePriceBoard({
             );
           })
         ) : (
-          <div className="rounded-xl border border-zinc-700/70 bg-zinc-900/82 px-4 py-5 text-center text-zinc-400 text-sm">
+          <div className="rounded-xl border border-[#d3e9b4] bg-[#f9fef0] px-4 py-5 text-center text-[#6e7f5a] text-sm">
             No featured commodities available right now.
           </div>
         )}
 
-        <div className="mt-3 flex items-center justify-between text-zinc-400 text-xs sm:text-sm">
+        <div className="mt-3 flex items-center justify-between text-[#6e7f5a] text-xs sm:text-sm">
           <p>Reference pricing in {activeCurrency.code}</p>
-          <p className="inline-flex items-center gap-2 font-medium text-emerald-300">
-            <span className="inline-block size-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.24)]" />
+          <p className="inline-flex items-center gap-2 font-medium text-[#4e820f]">
+            <span className="inline-block size-2 rounded-full bg-[#73bd12] shadow-[0_0_8px_rgba(116,189,18,0.35)]" />
             Live
           </p>
         </div>

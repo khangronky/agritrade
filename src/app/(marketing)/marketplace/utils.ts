@@ -1,9 +1,9 @@
-﻿import type { CurrencyOption, DemandLevel } from './types';
+import type { CurrencyOption, DemandLevel } from './types';
 
 export const demandLevelStyles: Record<DemandLevel, string> = {
-  'High demand': 'border-emerald-400/40 bg-emerald-500/10 text-emerald-300',
-  'Balanced demand': 'border-emerald-400/30 bg-emerald-500/10 text-emerald-200',
-  'Soft demand': 'border-zinc-500/45 bg-zinc-800/55 text-zinc-200',
+  'High demand': 'border-[#b5d889] bg-[#edf8dd] text-[#4e820f]',
+  'Balanced demand': 'border-[#c6dfa0] bg-[#edf8dd] text-[#3d670d]',
+  'Soft demand': 'border-[#c7df9f] bg-[#edf7de] text-[#365608]',
 };
 
 export function formatPriceByCurrency(

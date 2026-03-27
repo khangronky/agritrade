@@ -161,7 +161,7 @@ export function MarketTrendSection({
         label: '1Y change',
         value: `${formatPercentValue(oneYearChange)}`,
         valueClassName:
-          oneYearChange >= 0 ? 'text-emerald-300' : 'text-rose-300',
+          oneYearChange >= 0 ? 'text-[#4e820f]' : 'text-rose-700',
       },
     ],
     [
@@ -180,7 +180,7 @@ export function MarketTrendSection({
       {
         label: 'AI confidence',
         value: aiForecast ? `${aiForecast.confidence}%` : '--',
-        valueClassName: aiForecast ? 'text-emerald-300' : undefined,
+        valueClassName: aiForecast ? 'text-[#4e820f]' : undefined,
       },
       {
         label: 'Volatility (annualized)',
@@ -213,9 +213,9 @@ export function MarketTrendSection({
         value: aiForecast ? aiForecast.rsi.toFixed(1) : '--',
         valueClassName:
           aiForecast && aiForecast.rsi >= 70
-            ? 'text-rose-300'
+            ? 'text-rose-700'
             : aiForecast && aiForecast.rsi <= 30
-              ? 'text-emerald-300'
+              ? 'text-[#4e820f]'
               : undefined,
       },
       {
@@ -225,8 +225,8 @@ export function MarketTrendSection({
           : '--',
         valueClassName: aiForecast
           ? emaSpread >= 0
-            ? 'text-emerald-300'
-            : 'text-rose-300'
+            ? 'text-[#4e820f]'
+            : 'text-rose-700'
           : undefined,
       },
     ],
@@ -235,12 +235,12 @@ export function MarketTrendSection({
   return (
     <section className="relative py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-emerald-400/22 bg-zinc-950/80 p-5 shadow-[0_22px_48px_rgba(0,0,0,0.55)] backdrop-blur-sm sm:p-6">
+        <div className="rounded-3xl border border-[#d1e6af] bg-[#f9fef0] p-5 shadow-[0_16px_32px_rgba(127,181,44,0.16)] sm:p-6">
           <div className="space-y-2">
             <h2 className="font-semibold text-2xl sm:text-3xl">
               Market Trend Analysis & Forecasting
             </h2>
-            <p className="max-w-3xl text-sm text-zinc-400 leading-relaxed sm:text-base">
+            <p className="max-w-3xl text-sm text-[#6e7f5a] leading-relaxed sm:text-base">
               Quant-style market panel with algorithmic AI forecasting,
               volatility analysis, and professional market indicators.
             </p>
@@ -250,7 +250,7 @@ export function MarketTrendSection({
             <NativeSelect
               value={activeCommodityValue}
               onChange={(event) => onCommodityChange(event.target.value)}
-              className="h-10 min-w-56 rounded-xl border-emerald-400/22 bg-zinc-950/78 text-xs text-zinc-300 focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
+              className="h-10 min-w-56 rounded-xl border-[#d1e6af] bg-[#f9fef0] text-xs text-[#546a39] focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
             >
               <NativeSelectOption value="auto">
                 Auto (top commodity)
@@ -266,7 +266,7 @@ export function MarketTrendSection({
               onChange={(event) =>
                 onCurrencyChange(event.target.value as CurrencyCode)
               }
-              className="h-10 min-w-28 rounded-xl border-emerald-400/22 bg-zinc-950/78 text-xs text-zinc-300 focus-visible:border-emerald-400 focus-visible:ring-emerald-400/20"
+              className="h-10 min-w-28 rounded-xl border-[#d1e6af] bg-[#f9fef0] text-xs text-[#546a39] focus-visible:border-[#89c11f] focus-visible:ring-[#9dcb4a]/30"
             >
               {aseanCurrencies.map((currency) => (
                 <NativeSelectOption key={currency.code} value={currency.code}>
@@ -277,10 +277,10 @@ export function MarketTrendSection({
           </div>
 
           {activeListingForTrend && selectedSeries.length > 0 ? (
-            <Card className="mt-5 gap-0 rounded-2xl border-emerald-400/22 bg-zinc-950/82 py-0 text-zinc-100 shadow-sm">
+            <Card className="mt-5 gap-0 rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm">
               <CardContent className="px-4 py-4 sm:px-5 sm:py-5">
                 <div>
-                  <p className="font-medium text-[11px] text-zinc-400 uppercase tracking-[0.16em]">
+                  <p className="font-medium text-[11px] text-[#6e7f5a] uppercase tracking-[0.16em]">
                     {activeListingForTrend.name} (
                     {toCommodityCode(activeListingForTrend.name)})
                   </p>
@@ -294,26 +294,26 @@ export function MarketTrendSection({
                       className={cn(
                         'pb-1 font-semibold text-xl tabular-nums sm:text-2xl',
                         absoluteChange > 0
-                          ? 'text-emerald-400'
+                          ? 'text-[#5ca508]'
                           : absoluteChange < 0
-                            ? 'text-rose-300'
-                            : 'text-zinc-300'
+                            ? 'text-rose-700'
+                            : 'text-[#546a39]'
                       )}
                     >
                       {formatSignedPriceValue(absoluteChange, activeCurrency)} (
                       {formatPercentValue(percentChange)})
                     </p>
                   </div>
-                  <p className="mt-2 text-xs text-zinc-400 sm:text-sm">
+                  <p className="mt-2 text-xs text-[#6e7f5a] sm:text-sm">
                     Last update: {formatPointDate(latestPoint?.date)} |
                     Currency: {activeCurrency.code}
                   </p>
                 </div>
 
                 {aiForecast ? (
-                  <div className="mt-4 rounded-xl border border-emerald-400/25 bg-emerald-500/6 px-3 py-3 sm:px-4">
+                  <div className="mt-4 rounded-xl border border-[#cce4a8] bg-[#f2fbe7] px-3 py-3 sm:px-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <p className="font-semibold text-sm text-zinc-100 sm:text-base">
+                      <p className="font-semibold text-sm text-[#1f3800] sm:text-base">
                         AI forecast ({aiForecast.horizonPeriods} periods):{' '}
                         {formatPriceValue(
                           aiForecast.projectedPrice,
@@ -322,11 +322,11 @@ export function MarketTrendSection({
                         {activeCurrency.code} (
                         {formatPercentValue(aiForecast.projectedReturnPct)})
                       </p>
-                      <span className="rounded-md border border-emerald-300/30 bg-emerald-500/12 px-2 py-0.5 text-[11px] text-emerald-200">
+                      <span className="rounded-md border border-[#b8d98e] bg-[#edf8dd] px-2 py-0.5 text-[11px] text-[#3d670d]">
                         {aiForecast.regime}
                       </span>
                     </div>
-                    <p className="mt-1 text-xs text-zinc-400">
+                    <p className="mt-1 text-xs text-[#6e7f5a]">
                       Model: {aiForecast.modelName} | Interval:{' '}
                       {formatPriceValue(aiForecast.intervalLow, activeCurrency)}{' '}
                       -{' '}
@@ -340,7 +340,7 @@ export function MarketTrendSection({
                   </div>
                 ) : null}
 
-                <div className="mt-5 flex flex-wrap gap-2 border-zinc-700/70 border-y py-3">
+                <div className="mt-5 flex flex-wrap gap-2 border-[#d3e9b4] border-y py-3">
                   {timeframeOrder.map((key) => (
                     <button
                       key={key}
@@ -349,8 +349,8 @@ export function MarketTrendSection({
                       className={cn(
                         'rounded-md border px-2.5 py-1 font-semibold text-xs tracking-wide transition-colors',
                         timeframe === key
-                          ? 'border-emerald-400/50 bg-emerald-500/18 text-emerald-200'
-                          : 'border-zinc-700/70 bg-zinc-950/70 text-zinc-400 hover:border-zinc-500/70 hover:text-zinc-200'
+                          ? 'border-[#9dcb4a] bg-[#e7f7cd] text-[#3d670d]'
+                          : 'border-[#d3e9b4] bg-[#f9fef0] text-[#6e7f5a] hover:border-[#b8d98e] hover:text-[#365608]'
                       )}
                     >
                       {key}
@@ -358,7 +358,7 @@ export function MarketTrendSection({
                   ))}
                 </div>
 
-                <div className="mt-4 rounded-xl border border-zinc-700/70 bg-zinc-950/76 p-3 sm:p-4">
+                <div className="mt-4 rounded-xl border border-[#d3e9b4] bg-[#f9fef0] p-3 sm:p-4">
                   <ChartContainer
                     config={marketTrendChartConfig}
                     className="h-[360px] w-full"
@@ -477,8 +477,8 @@ export function MarketTrendSection({
                   </ChartContainer>
                 </div>
 
-                <div className="mt-4 overflow-hidden rounded-xl border border-zinc-700/70 bg-zinc-950/76">
-                  <div className="grid divide-zinc-700/70 md:grid-cols-3 md:divide-x">
+                <div className="mt-4 overflow-hidden rounded-xl border border-[#d3e9b4] bg-[#f9fef0]">
+                  <div className="grid divide-[#d3e9b4] md:grid-cols-3 md:divide-x">
                     {statsColumns.map((column, index) => (
                       <div
                         key={`${column[0]?.label}-${index}`}
@@ -488,15 +488,15 @@ export function MarketTrendSection({
                           {column.map((metric) => (
                             <div
                               key={metric.label}
-                              className="flex items-center justify-between gap-4 border-zinc-700/70 border-b pb-2 last:border-none last:pb-0"
+                              className="flex items-center justify-between gap-4 border-[#d3e9b4] border-b pb-2 last:border-none last:pb-0"
                             >
-                              <p className="font-medium text-sm text-zinc-400">
+                              <p className="font-medium text-sm text-[#6e7f5a]">
                                 {metric.label}
                               </p>
                               <p
                                 className={cn(
                                   'text-right font-semibold text-sm tabular-nums sm:text-base',
-                                  metric.valueClassName ?? 'text-zinc-100'
+                                  metric.valueClassName ?? 'text-[#1f3800]'
                                 )}
                               >
                                 {metric.value}
@@ -511,8 +511,8 @@ export function MarketTrendSection({
               </CardContent>
             </Card>
           ) : (
-            <Card className="mt-6 gap-0 rounded-2xl border-emerald-400/22 bg-zinc-950/82 py-0 text-zinc-100 shadow-sm">
-              <CardContent className="px-5 py-8 text-center text-zinc-400">
+            <Card className="mt-6 gap-0 rounded-2xl border-[#d1e6af] bg-white py-0 text-[#1f3800] shadow-sm">
+              <CardContent className="px-5 py-8 text-center text-[#6e7f5a]">
                 No timeline data available for current commodity.
               </CardContent>
             </Card>
@@ -647,13 +647,13 @@ function toCommodityCode(name: string) {
 function ConfidenceMeter({ confidence }: { confidence: number }) {
   return (
     <div className="mt-2">
-      <div className="flex items-center justify-between text-[11px] text-zinc-400">
+      <div className="flex items-center justify-between text-[11px] text-[#6e7f5a]">
         <span>AI confidence</span>
         <span>{confidence}%</span>
       </div>
-      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-zinc-800/90">
+      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-[#dbeec0]">
         <div
-          className="h-full rounded-full bg-emerald-400/90 transition-[width]"
+          className="h-full rounded-full bg-[#73bd12] transition-[width]"
           style={{ width: `${clamp(confidence, 0, 100)}%` }}
         />
       </div>
@@ -680,16 +680,16 @@ function MarketTrendTooltip({
   }
 
   return (
-    <div className="min-w-[12rem] rounded-lg border border-zinc-700/80 bg-zinc-950/95 px-3 py-2 text-xs shadow-xl">
-      <p className="text-zinc-400">{formatPointDate(point.date)}</p>
+    <div className="min-w-[12rem] rounded-lg border border-[#d3e9b4] bg-white px-3 py-2 text-xs shadow-xl">
+      <p className="text-[#6e7f5a]">{formatPointDate(point.date)}</p>
       <div className="mt-1 flex items-center justify-between gap-3">
-        <span className="text-zinc-400">Price</span>
-        <span className="font-semibold text-emerald-200 tabular-nums">
+        <span className="text-[#6e7f5a]">Price</span>
+        <span className="font-semibold text-[#3d670d] tabular-nums">
           {formatPriceValue(point.price, activeCurrency)} {activeCurrency.code}
         </span>
       </div>
       <div className="mt-1 flex items-center justify-between gap-3">
-        <span className="text-zinc-400">Activity volume</span>
+        <span className="text-[#6e7f5a]">Activity volume</span>
         <span className="font-semibold tabular-nums">
           {formatVolumeValue(point.activityVolume)}
         </span>
@@ -697,14 +697,14 @@ function MarketTrendTooltip({
       {point.isForecast ? (
         <>
           <div className="mt-1 flex items-center justify-between gap-3">
-            <span className="text-zinc-400">Forecast range</span>
-            <span className="font-semibold text-emerald-200 tabular-nums">
+            <span className="text-[#6e7f5a]">Forecast range</span>
+            <span className="font-semibold text-[#3d670d] tabular-nums">
               {point.forecastLower !== null && point.forecastUpper !== null
                 ? `${formatPriceValue(point.forecastLower, activeCurrency)} - ${formatPriceValue(point.forecastUpper, activeCurrency)} ${activeCurrency.code}`
                 : '--'}
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-emerald-300/90">
+          <p className="mt-1 text-[11px] text-[#4e820f]/90">
             AI forecast period
           </p>
         </>

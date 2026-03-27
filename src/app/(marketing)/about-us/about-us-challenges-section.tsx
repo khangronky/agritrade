@@ -1,4 +1,4 @@
-﻿import { type LucideIcon, Scale, TrendingUp, Waves } from 'lucide-react';
+import { type LucideIcon, Scale, TrendingUp, Waves } from 'lucide-react';
 import type { StoryImageFrame } from './story-image-slot';
 import { StoryImageSlot } from './story-image-slot';
 
@@ -54,13 +54,13 @@ export function AboutUsChallengesSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div className="space-y-4">
-            <p className="font-semibold text-emerald-300 text-sm uppercase tracking-[0.18em]">
+            <p className="font-semibold text-[#4e820f] text-sm uppercase tracking-[0.18em]">
               The Challenges We Solve
             </p>
-            <h2 className="font-semibold text-3xl text-zinc-100 leading-tight sm:text-4xl">
+            <h2 className="font-semibold text-3xl text-[#1f3800] leading-tight sm:text-4xl">
               Farmers deserve decisions based on facts, not uncertainty.
             </h2>
-            <p className="text-base text-zinc-300/90 leading-relaxed">
+            <p className="text-base text-[#546a39] leading-relaxed">
               For too long, agricultural decisions have been shaped by delayed
               information, weak negotiating power, and fragmented market
               visibility.
@@ -75,17 +75,17 @@ export function AboutUsChallengesSection() {
               return (
                 <article
                   key={card.title}
-                  className="rounded-2xl border border-emerald-500/25 bg-zinc-900/85 p-5 shadow-sm"
+                  className="rounded-2xl border border-[#cfe5ad] bg-[#f9fef0] p-5 shadow-sm"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-emerald-500/20 p-2 text-emerald-200">
+                    <div className="rounded-lg bg-[#e6f6c9] p-2 text-[#3d670d]">
                       <Icon className="size-4" />
                     </div>
-                    <h3 className="font-semibold text-zinc-100 text-lg">
+                    <h3 className="font-semibold text-[#1f3800] text-lg">
                       {card.title}
                     </h3>
                   </div>
-                  <p className="mt-3 text-zinc-300/90 text-sm leading-relaxed sm:text-base">
+                  <p className="mt-3 text-[#546a39] text-sm leading-relaxed sm:text-base">
                     {card.description}
                   </p>
                 </article>

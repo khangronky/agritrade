@@ -32,14 +32,17 @@ export default function MarketingPage() {
                 <LiveUserCount className="text-[#6db40e]" />
               </p>
               <p className="mt-4 max-w-md font-semibold text-[#2f480b] text-xl sm:text-3xl">
-                Farmers and Traders
-                <br />
-                Trusted market information
+                farmers and traders trust our data
               </p>
 
               <div className="mt-7 inline-flex rounded-full bg-[#89d70f] px-7 py-3 font-semibold text-[#2f4909] text-sm uppercase tracking-[0.08em] sm:text-base">
                 Before plant, grow, and sell.
               </div>
+
+              <p className="mt-5 max-w-md text-[#516838] text-sm leading-relaxed sm:text-base">
+                A data platform bringing real-time agricultural market insights
+                across ASEAN
+              </p>
 
               <HomepageSignupCta />
             </div>
