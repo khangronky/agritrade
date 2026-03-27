@@ -15,7 +15,7 @@ export async function GET() {
 
     const { data: user, error } = await supabase
       .from('users')
-      .select('*')
+      .select('*, user_profile(full_name)')
       .eq('id', authUser.id)
       .single();
 
@@ -23,7 +23,10 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json(user);
+    return NextResponse.json({
+      ...user,
+      full_name: user.user_profile?.full_name,
+    });
   } catch (error) {
     console.error('Get current user error:', error);
     return NextResponse.json(
@@ -53,13 +56,13 @@ export async function PATCH(request: Request) {
       );
     }
 
-    const updates = parsed.data;
+    const { full_name, username } = parsed.data;
 
-    if (updates.username) {
+    if (username) {
       const { data: existingUser, error: existingUserError } = await supabase
         .from('users')
         .select('id')
-        .eq('username', updates.username)
+        .eq('username', username)
         .neq('id', authUser.id)
         .maybeSingle();
 
@@ -78,11 +81,25 @@ export async function PATCH(request: Request) {
       }
     }
 
-    const { data: user, error } = await supabase
+    const { error: profileError } = await supabase
+      .from('user_profile')
+      .update({
+        full_name: full_name,
+      })
+      .eq('user_id', authUser.id);
+
+    if (profileError) {
+      return NextResponse.json(
+        { error: profileError.message },
+        { status: 500 }
+      );
+    }
+
+    const { error } = await supabase
       .from('users')
-      .update(updates)
+      .update({ username })
       .eq('id', authUser.id)
-      .select('*')
+      .select('id')
       .single();
 
     if (error) {
@@ -96,7 +113,20 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json(user);
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('*, user_profile(full_name)')
+      .eq('id', authUser.id)
+      .single();
+
+    if (userError) {
+      return NextResponse.json({ error: userError.message }, { status: 500 });
+    }
+
+    return NextResponse.json({
+      ...user,
+      full_name: user.user_profile?.full_name,
+    });
   } catch (error) {
     console.error('Update user error:', error);
     return NextResponse.json(

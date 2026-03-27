@@ -9,45 +9,105 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      user_profile: {
+        Row: {
+          address: string | null;
+          avatar_url: string | null;
+          bio: string | null;
+          created_at: string;
+          dob: string | null;
+          full_name: string | null;
+          phone_number: string | null;
+          user_id: string;
+        };
+        Insert: {
+          address?: string | null;
+          avatar_url?: string | null;
+          bio?: string | null;
+          created_at?: string;
+          dob?: string | null;
+          full_name?: string | null;
+          phone_number?: string | null;
+          user_id?: string;
+        };
+        Update: {
+          address?: string | null;
+          avatar_url?: string | null;
+          bio?: string | null;
+          created_at?: string;
+          dob?: string | null;
+          full_name?: string | null;
+          phone_number?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_profile_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: true;
+            referencedRelation: 'user_full_view';
+            referencedColumns: ['user_id'];
+          },
+          {
+            foreignKeyName: 'user_profile_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: true;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       users: {
         Row: {
           created_at: string;
           email: string;
-          full_name: string | null;
           id: string;
           onboarding_completed_at: string | null;
           onboarding_status: string;
           onboarding_step: number;
           role: string | null;
-          username: string | null;
+          username: string;
         };
         Insert: {
           created_at?: string;
           email: string;
-          full_name?: string | null;
           id?: string;
           onboarding_completed_at?: string | null;
           onboarding_status?: string;
           onboarding_step?: number;
           role?: string | null;
-          username?: string | null;
+          username: string;
         };
         Update: {
           created_at?: string;
           email?: string;
-          full_name?: string | null;
           id?: string;
           onboarding_completed_at?: string | null;
           onboarding_status?: string;
           onboarding_step?: number;
           role?: string | null;
-          username?: string | null;
+          username?: string;
         };
         Relationships: [];
       };
     };
     Views: {
-      [_ in never]: never;
+      user_full_view: {
+        Row: {
+          address: string | null;
+          avatar_url: string | null;
+          bio: string | null;
+          created_at: string | null;
+          dob: string | null;
+          email: string | null;
+          full_name: string | null;
+          phone_number: string | null;
+          role: string | null;
+          user_id: string | null;
+          username: string | null;
+        };
+        Relationships: [];
+      };
     };
     Functions: {
       [_ in never]: never;

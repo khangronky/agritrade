@@ -22,15 +22,25 @@ export default async function DashboardLayout({
 
   const { data: onboardingUser, error: onboardingError } = await supabase
     .from('users')
-    .select(
-      'id, email, full_name, role, onboarding_status, onboarding_step, onboarding_completed_at'
-    )
+    .select('*, user_profile(full_name)')
     .eq('id', user.id)
     .single();
 
   if (onboardingError || !onboardingUser) {
     throw new Error(onboardingError?.message ?? 'Failed to load onboarding');
   }
+
+  const initialOnboardingData: OnboardingStatus = {
+    id: onboardingUser.id,
+    email: onboardingUser.email,
+    full_name: onboardingUser.user_profile?.full_name ?? null,
+    username: onboardingUser.username,
+    role: onboardingUser.role as OnboardingStatus['role'],
+    onboarding_status:
+      onboardingUser.onboarding_status as OnboardingStatus['onboarding_status'],
+    onboarding_step: onboardingUser.onboarding_step,
+    onboarding_completed_at: onboardingUser.onboarding_completed_at,
+  };
 
   return (
     <SidebarProvider>
@@ -63,7 +73,7 @@ export default async function DashboardLayout({
         </main>
 
         <SettingsDialog />
-        <OnboardingDialog initialData={onboardingUser as OnboardingStatus} />
+        <OnboardingDialog initialData={initialOnboardingData} />
       </div>
     </SidebarProvider>
   );

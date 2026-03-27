@@ -15,9 +15,7 @@ export async function GET() {
 
     const { data: user, error } = await supabase
       .from('users')
-      .select(
-        'id, email, full_name, role, onboarding_status, onboarding_step, onboarding_completed_at'
-      )
+      .select('*, user_profile(full_name)')
       .eq('id', authUser.id)
       .single();
 
@@ -55,24 +53,56 @@ export async function PATCH(request: Request) {
       );
     }
 
-    const updates = Object.fromEntries(
-      Object.entries(parsed.data).filter(([, value]) => value !== undefined)
+    const { full_name, role, onboarding_step } = parsed.data;
+    const userUpdates = Object.fromEntries(
+      Object.entries({ role, onboarding_step }).filter(
+        ([, value]) => value !== undefined
+      )
     );
 
-    if (Object.keys(updates).length === 0) {
+    if (full_name === undefined && Object.keys(userUpdates).length === 0) {
       return NextResponse.json(
         { error: 'No onboarding fields provided' },
         { status: 400 }
       );
     }
 
+    if (full_name !== undefined) {
+      const { error: profileError } = await supabase
+        .from('user_profile')
+        .update({
+          full_name: full_name,
+        })
+        .eq('user_id', authUser.id);
+
+      if (profileError) {
+        return NextResponse.json(
+          { error: profileError.message },
+          { status: 500 }
+        );
+      }
+    }
+
+    if (Object.keys(userUpdates).length > 0) {
+      const { error: updateError } = await supabase
+        .from('users')
+        .update(userUpdates)
+        .eq('id', authUser.id)
+        .select('id')
+        .single();
+
+      if (updateError) {
+        return NextResponse.json(
+          { error: updateError.message },
+          { status: 500 }
+        );
+      }
+    }
+
     const { data: user, error } = await supabase
       .from('users')
-      .update(updates)
+      .select('*, user_profile(full_name)')
       .eq('id', authUser.id)
-      .select(
-        'id, email, full_name, role, onboarding_status, onboarding_step, onboarding_completed_at'
-      )
       .single();
 
     if (error) {

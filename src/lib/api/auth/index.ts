@@ -71,7 +71,7 @@ interface CurrentUser {
   id: string;
   email: string;
   full_name: string | null;
-  username: string | null;
+  username: string;
   role: OnboardingRole | null;
   onboarding_status: 'pending' | 'completed';
   onboarding_step: number;
@@ -82,7 +82,7 @@ export interface OnboardingStatus {
   id: string;
   email: string;
   full_name: string | null;
-  username?: string | null;
+  username: string;
   role: OnboardingRole | null;
   onboarding_status: 'pending' | 'completed';
   onboarding_step: number;
