@@ -35,7 +35,7 @@ import {
   useResendOtpMutation,
   useVerifyOtpMutation,
 } from '@/lib/api/auth';
-import { registerSchema, type RegisterSchema } from '@/lib/schema/auth';
+import { type RegisterSchema, registerSchema } from '@/lib/schema/auth';
 
 export function RegisterForm() {
   const router = useRouter();
@@ -95,7 +95,8 @@ export function RegisterForm() {
     try {
       await verifyOtpMutation.mutateAsync({ email, otp });
       toast.success('Email verified successfully!');
-      router.push('/login');
+      router.push('/dashboard');
+      router.refresh();
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : 'Invalid verification code'

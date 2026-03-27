@@ -43,11 +43,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-.trigger/
-certificates
-
-# Claude Code
-.claude/
-CLAUDE.md
-tmpclaude-*

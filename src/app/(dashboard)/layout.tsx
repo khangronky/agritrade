@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation';
-import { SettingsDialog } from '@/components/settings-dialog';
+import { OnboardingDialog } from '@/components/onboarding/dialog';
 import Sidebar from '@/components/Sidebar';
+import { SettingsDialog } from '@/components/settings-dialog';
+import type { OnboardingStatus } from '@/lib/api/auth';
 import { createClient } from '@/lib/supabase/server';
 
 export default async function DashboardLayout({
@@ -15,6 +17,18 @@ export default async function DashboardLayout({
 
   if (!user) {
     redirect('/login');
+  }
+
+  const { data: onboardingUser, error: onboardingError } = await supabase
+    .from('users')
+    .select(
+      'id, email, full_name, role, onboarding_status, onboarding_step, onboarding_completed_at'
+    )
+    .eq('id', user.id)
+    .single();
+
+  if (onboardingError || !onboardingUser) {
+    throw new Error(onboardingError?.message ?? 'Failed to load onboarding');
   }
 
   return (
@@ -48,6 +62,7 @@ export default async function DashboardLayout({
       </main>
 
       <SettingsDialog />
+      <OnboardingDialog initialData={onboardingUser as OnboardingStatus} />
     </div>
   );
 }
