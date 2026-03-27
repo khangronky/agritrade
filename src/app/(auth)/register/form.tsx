@@ -182,7 +182,9 @@ export function RegisterForm() {
             <p className="text-muted-foreground text-sm">
               Didn&apos;t receive the code?{' '}
               {cooldown > 0 ? (
-                <span className="text-muted-foreground">Resend in {cooldown}s</span>
+                <span className="text-muted-foreground">
+                  Resend in {cooldown}s
+                </span>
               ) : (
                 <button
                   type="button"
@@ -212,9 +214,7 @@ export function RegisterForm() {
   return (
     <Card className="border-lime-200 bg-white shadow-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-lime-950">
-          Create Account
-        </CardTitle>
+        <CardTitle className="text-2xl text-lime-950">Create Account</CardTitle>
         <CardDescription className="text-muted-foreground">
           Get started with AgriTrade
         </CardDescription>

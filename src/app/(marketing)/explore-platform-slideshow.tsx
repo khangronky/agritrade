@@ -166,9 +166,7 @@ export function ExplorePlatformSlideshow() {
                 onClick={() => api?.scrollTo(index)}
                 className={cn(
                   'h-2 rounded-full transition-all',
-                  activeIndex === index
-                    ? 'w-6 bg-primary'
-                    : 'w-2 bg-lime-200'
+                  activeIndex === index ? 'w-6 bg-primary' : 'w-2 bg-lime-200'
                 )}
                 aria-label={`Go to slide ${index + 1}`}
               />
