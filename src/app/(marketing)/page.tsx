@@ -87,7 +87,10 @@ export default function MarketingPage() {
             </div>
           </section>
 
-          <section id="about-us" className="scroll-mt-20 border-[#d7e7c2] border-t px-4 py-8 sm:px-6 lg:px-8">
+          <section
+            id="about-us"
+            className="scroll-mt-20 border-[#d7e7c2] border-t px-4 py-8 sm:px-6 lg:px-8"
+          >
             <div className="mx-auto grid max-w-305 gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div className="relative aspect-video overflow-hidden border border-[#d0e6af] bg-white shadow-[0_10px_24px_rgba(127,181,44,0.14)]">
                 <Image
@@ -116,7 +119,10 @@ export default function MarketingPage() {
             </div>
           </section>
 
-          <section id="business-model" className="scroll-mt-20 border-[#d7e7c2] border-t px-4 py-8 sm:px-6 lg:px-8">
+          <section
+            id="business-model"
+            className="scroll-mt-20 border-[#d7e7c2] border-t px-4 py-8 sm:px-6 lg:px-8"
+          >
             <div className="mx-auto max-w-305">
               <p className="font-semibold text-[#64ad06] text-[11px] uppercase tracking-[0.22em]">
                 * Business Model
@@ -177,7 +183,10 @@ export default function MarketingPage() {
             </div>
           </section>
 
-          <section id="step-to-step" className="scroll-mt-20 border-[#d7e7c2] border-t px-4 py-8 sm:px-6 lg:px-8">
+          <section
+            id="step-to-step"
+            className="scroll-mt-20 border-[#d7e7c2] border-t px-4 py-8 sm:px-6 lg:px-8"
+          >
             <div className="mx-auto max-w-1140px">
               <p className="text-center font-semibold text-[#64ad06] text-[11px] uppercase tracking-[0.22em]">
                 * Platform Walkthrough

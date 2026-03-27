@@ -160,8 +160,7 @@ export function MarketTrendSection({
       {
         label: '1Y change',
         value: `${formatPercentValue(oneYearChange)}`,
-        valueClassName:
-          oneYearChange >= 0 ? 'text-[#4e820f]' : 'text-rose-700',
+        valueClassName: oneYearChange >= 0 ? 'text-[#4e820f]' : 'text-rose-700',
       },
     ],
     [

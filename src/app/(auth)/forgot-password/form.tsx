@@ -151,15 +151,15 @@ export function ForgotPasswordForm() {
                 control={emailForm.control}
                 name="email"
                 render={({ field }) => (
-                <FormItem>
+                  <FormItem>
                     <FormLabel className="text-[#365608]">Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="you@example.com"
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="you@example.com"
                         className="border-[#d3e9b4] bg-[#f9fef0] text-[#1f3800] focus-visible:border-[#9dcb4a] focus-visible:ring-[#9dcb4a]/30"
-                      {...field}
-                    />
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
