@@ -703,9 +703,7 @@ function MarketTrendTooltip({
                 : '--'}
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-primary/90">
-            AI forecast period
-          </p>
+          <p className="mt-1 text-[11px] text-primary/90">AI forecast period</p>
         </>
       ) : null}
     </div>

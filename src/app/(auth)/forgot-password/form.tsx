@@ -261,7 +261,9 @@ export function ForgotPasswordForm() {
             <p className="text-muted-foreground text-sm">
               Didn&apos;t receive the code?{' '}
               {cooldown > 0 ? (
-                <span className="text-muted-foreground">Resend in {cooldown}s</span>
+                <span className="text-muted-foreground">
+                  Resend in {cooldown}s
+                </span>
               ) : (
                 <button
                   type="button"

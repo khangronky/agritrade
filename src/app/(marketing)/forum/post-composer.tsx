@@ -117,7 +117,9 @@ export function ForumPostComposer() {
         >
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="space-y-1">
-              <span className="text-xs text-muted-foreground">Company Name *</span>
+              <span className="text-xs text-muted-foreground">
+                Company Name *
+              </span>
               <input
                 value={form.companyName}
                 onChange={(event) =>
@@ -156,7 +158,9 @@ export function ForumPostComposer() {
           </label>
 
           <label className="block space-y-1">
-            <span className="text-xs text-muted-foreground">Post Content *</span>
+            <span className="text-xs text-muted-foreground">
+              Post Content *
+            </span>
             <textarea
               value={form.body}
               onChange={(event) => updateField('body', event.target.value)}
@@ -181,7 +185,9 @@ export function ForumPostComposer() {
             </label>
 
             <label className="space-y-1">
-              <span className="text-xs text-muted-foreground">Image Caption</span>
+              <span className="text-xs text-muted-foreground">
+                Image Caption
+              </span>
               <input
                 value={form.imageCaption}
                 onChange={(event) =>
