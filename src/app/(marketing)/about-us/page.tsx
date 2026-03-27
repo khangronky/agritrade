@@ -93,13 +93,13 @@ export default function AboutUsPage() {
 
               <div className="mx-auto max-w-[760px] space-y-4 text-center">
                 <p className="mx-auto max-w-[720px] font-semibold text-[#2f480b] text-base leading-snug sm:text-lg">
-                  In an era of rapid economic shifts, the backbone of
-                  ASEAN—our farmers—remains disconnected from the digital pulse
-                  of global trade. Relying on intuition rather than data creates
-                  systemic fragility. By embedding AI and predictive analytics
-                  into the heart of regional commerce, we are turning
-                  historical challenges into a competitive advantage for every
-                  smallholder and agri-business in the region.
+                  In an era of rapid economic shifts, the backbone of ASEAN—our
+                  farmers—remains disconnected from the digital pulse of global
+                  trade. Relying on intuition rather than data creates systemic
+                  fragility. By embedding AI and predictive analytics into the
+                  heart of regional commerce, we are turning historical
+                  challenges into a competitive advantage for every smallholder
+                  and agri-business in the region.
                 </p>
                 <p className="font-semibold text-[#64ad06] text-base leading-snug sm:text-lg">
                   “Actionable Intelligence”

@@ -8,10 +8,7 @@ type DevelopmentItem = {
   id: string;
   label: string;
   description: string;
-  images: [
-    { src: string; alt: string },
-    { src: string; alt: string },
-  ];
+  images: [{ src: string; alt: string }, { src: string; alt: string }];
 };
 
 const developmentItems: DevelopmentItem[] = [

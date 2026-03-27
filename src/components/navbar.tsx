@@ -174,9 +174,7 @@ export function Navbar({ user }: NavbarProps) {
                 aria-current={isActive ? 'page' : undefined}
                 className={cn(
                   'relative font-semibold text-sm transition-colors',
-                  isActive
-                    ? 'text-black'
-                    : 'text-black/85 hover:text-black'
+                  isActive ? 'text-black' : 'text-black/85 hover:text-black'
                 )}
               >
                 {item.label}
