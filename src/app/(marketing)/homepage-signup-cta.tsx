@@ -54,11 +54,11 @@ export function HomepageSignupCta() {
             }
           }}
           placeholder="Email/Phone number"
-          className="h-11 flex-1 rounded-2xl border border-[#c8dda8] bg-white px-4 text-[#2e4f05] text-sm placeholder:text-[#7e9364] transition-colors duration-300 focus:border-[#7fc411] focus:outline-hidden"
+          className="h-11 flex-1 rounded-none border border-[#c8dda8] bg-white px-4 text-[#2e4f05] text-sm placeholder:text-[#7e9364] transition-colors duration-300 focus:border-[#7fc411] focus:outline-hidden"
         />
         <button
           type="submit"
-          className="h-11 rounded-2xl border border-[#7dc313] bg-[#86d20f] px-6 font-semibold text-[#1f3800] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#77c10d]"
+          className="h-11 rounded-none border border-[#7dc313] bg-[#86d20f] px-6 font-semibold text-[#1f3800] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#77c10d]"
         >
           Sign Up
         </button>

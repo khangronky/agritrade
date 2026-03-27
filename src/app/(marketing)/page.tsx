@@ -27,7 +27,7 @@ export default function MarketingPage() {
           <section id="main" className="scroll-mt-20 px-4 py-7 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-305">
               <div className="grid items-start gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-                <div className="rounded-[26px] border border-[#c8dda8] bg-[#fbfdf8] px-6 py-7 shadow-[0_10px_28px_rgba(120,170,36,0.1)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(120,170,36,0.14)] sm:px-8 sm:py-9">
+                <div className="rounded-none border border-[#c8dda8] bg-[#fbfdf8] px-6 py-7 shadow-[0_10px_28px_rgba(120,170,36,0.1)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(120,170,36,0.14)] sm:px-8 sm:py-9">
                   <p className="font-medium text-[#64ad06] text-[11px] uppercase tracking-[0.24em]">
                     [Home]
                   </p>
@@ -38,7 +38,7 @@ export default function MarketingPage() {
                     farmers and traders trust our data
                   </p>
 
-                  <div className="mt-7 inline-flex rounded-full border border-[#b8da84] bg-[#edf6dc] px-6 py-2.5 font-semibold text-[#3f620a] text-xs uppercase tracking-[0.1em] sm:text-sm">
+                  <div className="mt-7 inline-flex rounded-none border border-[#b8da84] bg-[#edf6dc] px-6 py-2.5 font-semibold text-[#3f620a] text-xs uppercase tracking-[0.1em] sm:text-sm">
                     Before plant, grow, and sell
                   </div>
 

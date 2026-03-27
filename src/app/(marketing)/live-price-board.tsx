@@ -280,7 +280,7 @@ export function LivePriceBoard({
     <div
       className={cn(
         isLight
-          ? 'rounded-[26px] border border-[#c8dda8] bg-[#fbfdf8] shadow-[0_10px_28px_rgba(120,170,36,0.1)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(120,170,36,0.14)]'
+          ? 'rounded-none border border-[#c8dda8] bg-[#fbfdf8] shadow-[0_10px_28px_rgba(120,170,36,0.1)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(120,170,36,0.14)]'
           : 'rounded-[28px] border border-emerald-500/20 bg-zinc-950/88 shadow-[0_18px_42px_rgba(0,0,0,0.55)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
@@ -315,7 +315,7 @@ export function LivePriceBoard({
             }
             className={cn(
               isLight
-                ? 'rounded-xl border border-[#c8dda8] bg-[#f2f7e8] text-[#3b5d0e] outline-hidden transition-colors focus:border-[#89d011]'
+                ? 'rounded-none border border-[#c8dda8] bg-[#f2f7e8] text-[#3b5d0e] outline-hidden transition-colors focus:border-[#89d011]'
                 : 'rounded-lg border border-emerald-500/20 bg-zinc-950/82 text-zinc-200 outline-hidden transition-colors focus:border-emerald-400/55',
               compact ? 'px-2 py-1 text-[11px]' : 'px-2.5 py-1.5 text-xs'
             )}
@@ -335,7 +335,7 @@ export function LivePriceBoard({
             key={item.code}
             className={cn(
               isLight
-                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-[18px] border border-[#d4e5bc] bg-[#f4f8ec] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#bddb93] hover:bg-[#f8fbed]'
+                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-none border border-[#d4e5bc] bg-[#f4f8ec] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#bddb93] hover:bg-[#f8fbed]'
                 : 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-xl border border-zinc-700/70 bg-zinc-950/76',
               compact ? 'gap-1.5 px-2.5 py-2' : 'gap-2 px-3 py-2.5'
             )}
@@ -394,7 +394,7 @@ export function LivePriceBoard({
 
             <div
               className={cn(
-                'rounded-lg border text-right tabular-nums',
+                'rounded-none border text-right tabular-nums',
                 compact
                   ? 'w-fit justify-self-end px-1.5 py-0.5'
                   : 'min-w-[82px] px-2 py-1',
