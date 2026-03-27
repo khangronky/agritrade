@@ -14,14 +14,19 @@ export default function ForumPage() {
   const forumPosts = listForumPosts();
 
   return (
-    <div className="relative mt-8 overflow-hidden px-4 py-12">
-      <div className="grid gap-4 md:grid-cols-[272px_minmax(0,1fr)] lg:grid-cols-[272px_minmax(0,1fr)_280px]">
-        <LeftRail />
-        <CenterFeed posts={forumPosts} />
-        <div className="md:col-span-2 lg:col-span-1">
-          <RightRail />
+    <div className="min-h-[calc(100vh-4rem)] overflow-hidden pt-16">
+      <section className="px-4 py-7 sm:px-6 lg:px-8">
+        <p className="font-semibold text-[11px] text-primary uppercase tracking-[0.22em]">
+          * Community Forum
+        </p>
+        <div className="mt-4 grid gap-4 md:grid-cols-[272px_minmax(0,1fr)] lg:grid-cols-[272px_minmax(0,1fr)_280px]">
+          <LeftRail />
+          <CenterFeed posts={forumPosts} />
+          <div className="md:col-span-2 lg:col-span-1">
+            <RightRail />
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

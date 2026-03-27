@@ -161,18 +161,6 @@ function getTrend(change: number): Trend {
   return 'flat';
 }
 
-function trendBadgeClass(trend: Trend) {
-  if (trend === 'up') {
-    return 'border-emerald-400/35 bg-emerald-500/14 text-emerald-300';
-  }
-
-  if (trend === 'down') {
-    return 'border-rose-400/35 bg-rose-500/14 text-rose-300';
-  }
-
-  return 'border-zinc-500/40 bg-zinc-700/35 text-zinc-300';
-}
-
 function formatPriceByCurrency(priceVnd: number, currency: CurrencyOption) {
   const converted = priceVnd * currency.rateFromVnd;
 
@@ -242,11 +230,40 @@ function createNextRows(previousRows: PriceRow[]) {
 
 type LivePriceBoardProps = {
   compact?: boolean;
+  theme?: 'dark' | 'light';
 };
 
-export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
+function trendBadgeClass(trend: Trend, theme: 'dark' | 'light') {
+  if (theme === 'light') {
+    if (trend === 'up') {
+      return 'border-emerald-300 bg-emerald-100/85 text-emerald-700';
+    }
+
+    if (trend === 'down') {
+      return 'border-rose-300 bg-rose-100/85 text-rose-700';
+    }
+
+    return 'border-zinc-300 bg-zinc-100/80 text-zinc-600';
+  }
+
+  if (trend === 'up') {
+    return 'border-emerald-400/35 bg-emerald-500/14 text-emerald-300';
+  }
+
+  if (trend === 'down') {
+    return 'border-rose-400/35 bg-rose-500/14 text-rose-300';
+  }
+
+  return 'border-zinc-500/40 bg-zinc-700/35 text-zinc-300';
+}
+
+export function LivePriceBoard({
+  compact = false,
+  theme = 'dark',
+}: LivePriceBoardProps) {
   const [rows, setRows] = useState<PriceRow[]>(createInitialRows);
   const [currencyCode, setCurrencyCode] = useState<CurrencyCode>('VND');
+  const isLight = theme === 'light';
   const selectedCurrency =
     aseanCurrencies.find((currency) => currency.code === currencyCode) ??
     aseanCurrencies[0];
@@ -262,14 +279,17 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
   return (
     <div
       className={cn(
-        'rounded-[28px] border border-emerald-500/20 bg-zinc-950/88 shadow-[0_18px_42px_rgba(0,0,0,0.55)] backdrop-blur-xl',
+        isLight
+          ? 'rounded-none border border-lime-200 bg-lime-50 shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg'
+          : 'rounded-[28px] border border-emerald-500/20 bg-zinc-950/88 shadow-[0_18px_42px_rgba(0,0,0,0.55)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
     >
       <div className="flex items-start justify-between gap-4">
         <h3
           className={cn(
-            'font-semibold text-zinc-100',
+            'font-semibold',
+            isLight ? 'text-lime-950' : 'text-zinc-100',
             compact ? 'text-lg sm:text-xl' : 'text-2xl'
           )}
         >
@@ -277,7 +297,10 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
         </h3>
         <div className="space-y-2 text-right">
           <p
-            className={cn('text-zinc-400', compact ? 'text-[11px]' : 'text-sm')}
+            className={cn(
+              isLight ? 'text-muted-foreground' : 'text-zinc-400',
+              compact ? 'text-[11px]' : 'text-sm'
+            )}
           >
             Updated every 5s
           </p>
@@ -291,7 +314,9 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
               setCurrencyCode(event.target.value as CurrencyCode)
             }
             className={cn(
-              'rounded-lg border border-emerald-500/20 bg-zinc-950/82 text-zinc-200 outline-hidden transition-colors focus:border-emerald-400/55',
+              isLight
+                ? 'rounded-none border border-lime-200 bg-lime-50 text-lime-700 outline-hidden transition-colors focus:border-ring'
+                : 'rounded-lg border border-emerald-500/20 bg-zinc-950/82 text-zinc-200 outline-hidden transition-colors focus:border-emerald-400/55',
               compact ? 'px-2 py-1 text-[11px]' : 'px-2.5 py-1.5 text-xs'
             )}
           >
@@ -309,14 +334,17 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
           <div
             key={item.code}
             className={cn(
-              'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-xl border border-zinc-700/70 bg-zinc-950/76',
+              isLight
+                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-none border border-lime-200 bg-lime-50 transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-lime-50'
+                : 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-xl border border-zinc-700/70 bg-zinc-950/76',
               compact ? 'gap-1.5 px-2.5 py-2' : 'gap-2 px-3 py-2.5'
             )}
           >
             <div className="min-w-0">
               <p
                 className={cn(
-                  'font-semibold tracking-[0.08em] text-zinc-100',
+                  'font-semibold tracking-[0.08em]',
+                  isLight ? 'text-lime-700' : 'text-zinc-100',
                   compact ? 'text-sm' : 'text-base'
                 )}
               >
@@ -324,14 +352,20 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
               </p>
               <p
                 className={cn(
-                  'mt-0.5 truncate text-zinc-400',
+                  'mt-0.5 truncate',
+                  isLight ? 'text-muted-foreground' : 'text-zinc-400',
                   compact ? 'text-[10px]' : 'text-xs'
                 )}
               >
                 {item.product}
               </p>
               {!compact ? (
-                <p className="mt-0.5 truncate text-[11px] text-zinc-500">
+                <p
+                  className={cn(
+                    'mt-0.5 truncate text-[11px]',
+                    isLight ? 'text-muted-foreground' : 'text-zinc-500'
+                  )}
+                >
                   {item.subtitle}
                 </p>
               ) : null}
@@ -340,7 +374,8 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
             <div className="text-right">
               <p
                 className={cn(
-                  'font-semibold tabular-nums text-emerald-200',
+                  'font-semibold tabular-nums',
+                  isLight ? 'text-lime-700' : 'text-emerald-200',
                   compact ? 'text-sm' : 'text-base'
                 )}
               >
@@ -348,7 +383,8 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
               </p>
               <p
                 className={cn(
-                  'mt-0.5 tabular-nums text-zinc-500',
+                  'mt-0.5 tabular-nums',
+                  isLight ? 'text-muted-foreground' : 'text-zinc-500',
                   compact ? 'text-[10px]' : 'text-xs'
                 )}
               >
@@ -358,9 +394,11 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
 
             <div
               className={cn(
-                'rounded-lg border px-2 py-1 text-right tabular-nums',
-                compact ? 'min-w-[70px]' : 'min-w-[82px]',
-                trendBadgeClass(item.trend)
+                'rounded-none border text-right tabular-nums',
+                compact
+                  ? 'w-fit justify-self-end px-1.5 py-0.5'
+                  : 'min-w-[82px] px-2 py-1',
+                trendBadgeClass(item.trend, theme)
               )}
             >
               <p
@@ -394,14 +432,24 @@ export function LivePriceBoard({ compact = false }: LivePriceBoardProps) {
           compact ? 'mt-4 text-xs' : 'mt-5 text-sm'
         )}
       >
-        <p className="text-zinc-400">Reference prices (mock FX rates)</p>
+        <p className={cn(isLight ? 'text-muted-foreground' : 'text-zinc-400')}>
+          Reference prices (mock FX rates)
+        </p>
         <div
           className={cn(
-            'flex items-center gap-2 text-emerald-300',
+            'flex items-center gap-2',
+            isLight ? 'text-lime-700' : 'text-emerald-300',
             compact && 'text-xs'
           )}
         >
-          <span className="inline-block size-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.22)]" />
+          <span
+            className={cn(
+              'inline-block size-2 rounded-full',
+              isLight
+                ? 'bg-primary shadow-[0_0_8px_rgba(116,189,18,0.45)]'
+                : 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.22)]'
+            )}
+          />
           Live
         </div>
       </div>

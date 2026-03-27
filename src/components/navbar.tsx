@@ -40,7 +40,7 @@ import { cn } from '@/lib/utils';
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us' },
-  { label: 'Marketplace', href: '/marketplace' },
+  { label: 'Market', href: '/marketplace' },
   { label: 'Forum', href: '/forum' },
 ];
 
@@ -94,14 +94,14 @@ export function Navbar({ user }: NavbarProps) {
         <>
           <Button
             asChild
-            className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
+            className="bg-brand-lime font-semibold text-lime-950 hover:bg-brand-lime/90"
           >
             <Link href="/login">Sign In</Link>
           </Button>
           <Button
             asChild
             variant="outline"
-            className="border-emerald-400/30 bg-zinc-950/70 text-zinc-200 hover:bg-zinc-900/90 hover:text-zinc-100"
+            className="border-lime-200 bg-white text-lime-700 hover:bg-lime-100 hover:text-lime-950"
           >
             <Link href="/register">Sign Up</Link>
           </Button>
@@ -114,10 +114,10 @@ export function Navbar({ user }: NavbarProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-10 gap-2 px-2 text-zinc-200 hover:bg-zinc-900 hover:text-zinc-100"
+            className="h-10 gap-2 px-2 text-lime-700 hover:bg-lime-100 hover:text-lime-950"
           >
             <Avatar className="h-8 w-8">
-              <AvatarFallback className="border border-emerald-500/25 bg-emerald-500/12 text-emerald-200">
+              <AvatarFallback className="border border-lime-200 bg-lime-100 text-lime-700">
                 {getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
@@ -150,7 +150,7 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   return (
-    <header className="fixed top-0 z-30 w-full border-emerald-500/20 border-b backdrop-blur-md">
+    <header className="fixed top-0 z-30 w-full border-lime-200 border-b bg-lime-50/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
         <Link href="/" className="flex items-center">
           <Image
@@ -174,15 +174,13 @@ export function Navbar({ user }: NavbarProps) {
                 aria-current={isActive ? 'page' : undefined}
                 className={cn(
                   'relative font-semibold text-sm transition-colors',
-                  isActive
-                    ? 'text-emerald-200'
-                    : 'text-zinc-300 hover:text-emerald-300'
+                  isActive ? 'text-black' : 'text-black/85 hover:text-black'
                 )}
               >
                 {item.label}
                 <span
                   className={cn(
-                    'pointer-events-none absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full bg-emerald-300 transition-opacity duration-200',
+                    'pointer-events-none absolute -bottom-1.5 left-0 h-0.5 w-full rounded-full bg-black transition-opacity duration-200',
                     isActive ? 'opacity-100' : 'opacity-0'
                   )}
                 />
@@ -203,7 +201,7 @@ export function Navbar({ user }: NavbarProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-2 border-emerald-400/25 bg-zinc-950/80 px-2 text-zinc-200 hover:bg-zinc-900 hover:text-zinc-100"
+                    className="gap-2 border-lime-200 bg-white px-2 text-lime-700 hover:bg-lime-100 hover:text-lime-950"
                   >
                     <Menu className="size-4" />
                   </Button>
@@ -228,8 +226,8 @@ export function Navbar({ user }: NavbarProps) {
                       className={cn(
                         'rounded-md px-3 py-2 text-sm transition-colors',
                         isActive
-                          ? 'bg-emerald-500/15 text-emerald-200'
-                          : 'hover:bg-zinc-800 hover:text-zinc-50'
+                          ? 'bg-lime-100 text-lime-700'
+                          : 'text-lime-700 hover:bg-lime-100 hover:text-lime-950'
                       )}
                     >
                       {item.label}
@@ -245,7 +243,7 @@ export function Navbar({ user }: NavbarProps) {
                   <SheetClose asChild>
                     <Button
                       asChild
-                      className="bg-brand-lime font-semibold text-zinc-950 hover:bg-brand-lime/90"
+                      className="bg-brand-lime font-semibold text-lime-950 hover:bg-brand-lime/90"
                     >
                       <Link href="/login">Sign In</Link>
                     </Button>
@@ -254,7 +252,7 @@ export function Navbar({ user }: NavbarProps) {
                     <Button
                       asChild
                       variant="outline"
-                      className="border-emerald-400/30 bg-zinc-950/70 text-zinc-200 hover:bg-zinc-900/90 hover:text-zinc-100"
+                      className="border-lime-200 bg-white text-lime-700 hover:bg-lime-100 hover:text-lime-950"
                     >
                       <Link href="/register">Sign Up</Link>
                     </Button>
@@ -263,14 +261,14 @@ export function Navbar({ user }: NavbarProps) {
               ) : (
                 <>
                   <SheetClose asChild>
-                    <Button asChild variant="default" className="text-zinc-100">
+                    <Button asChild variant="default" className="text-white">
                       <Link href="/dashboard">Dashboard</Link>
                     </Button>
                   </SheetClose>
                   <Button
                     variant="destructive"
                     onClick={handleLogout}
-                    className="text-zinc-100"
+                    className="text-white"
                   >
                     Log out
                   </Button>

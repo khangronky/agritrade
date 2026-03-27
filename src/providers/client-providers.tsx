@@ -12,7 +12,7 @@ export default function ClientProviders({ children }: { children: ReactNode }) {
       <ThemeProvider
         attribute="class"
         themes={['system', 'light', 'dark']}
-        defaultTheme="dark"
+        defaultTheme="light"
         enableSystem
       >
         {children}

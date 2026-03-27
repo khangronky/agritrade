@@ -16,7 +16,7 @@ export function AuthNavbar() {
           <Button
             variant="ghost"
             size="sm"
-            className="gap-2 rounded-full border border-emerald-500/20 bg-zinc-950/75 text-zinc-300 shadow-sm backdrop-blur-sm transition-colors hover:border-emerald-400/30 hover:bg-zinc-900 hover:text-zinc-100"
+            className="gap-2 rounded-full border border-lime-200 bg-white/90 text-lime-700 shadow-sm backdrop-blur-sm transition-colors hover:border-lime-300 hover:bg-lime-50 hover:text-lime-950"
           >
             <ArrowLeft className="h-4 w-4" />
             {isLoginPage ? 'Home' : 'Back to Login'}
