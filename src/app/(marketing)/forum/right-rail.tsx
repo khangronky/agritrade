@@ -4,7 +4,7 @@ import { forumOverviewItems, forumRfq } from './mock-data';
 export function RightRail() {
   return (
     <aside className="space-y-4">
-      <section className="rounded border border-border p-3">
+      <section className="rounded-xl border border-lime-200 bg-white p-3 shadow-sm">
         <p className="font-medium text-sm">Me</p>
         <p className="mt-2 text-xs leading-relaxed">
           Sign in or join AgriTrade to personalize your feed. Interested in what
@@ -12,13 +12,13 @@ export function RightRail() {
         </p>
         <button
           type="button"
-          className="mt-2 font-semibold text-[#1d4ed8] text-xs hover:text-[#1e40af]"
+          className="mt-2 font-semibold text-lime-700 text-xs hover:text-primary"
         >
           Sign in
         </button>
       </section>
 
-      <section className="rounded border border-border p-3">
+      <section className="rounded-xl border border-lime-200 bg-white p-3 shadow-sm">
         <p className="font-medium text-sm">Market Overviews</p>
         <p className="mt-2 text-xs leading-relaxed">
           Discover market overviews with key data and insights on products you
@@ -30,20 +30,20 @@ export function RightRail() {
             <li key={item.name}>
               <button
                 type="button"
-                className="flex w-full items-center justify-between rounded-lg border border-transparent px-1 py-1 text-sm text-zinc-200 hover:border-emerald-500/20 hover:bg-zinc-900/75"
+                className="flex w-full items-center justify-between rounded-md border border-transparent px-1 py-1 text-sm text-lime-700 hover:border-lime-200 hover:bg-lime-50"
               >
                 <span className="flex items-center gap-2">
-                  <item.icon className="size-4 text-emerald-300" />
+                  <item.icon className="size-4 text-lime-700" />
                   {item.name}
                 </span>
-                <ChevronRight className="size-4 text-zinc-500" />
+                <ChevronRight className="size-4 text-muted-foreground" />
               </button>
             </li>
           ))}
         </ul>
       </section>
 
-      <section className="rounded border border-border p-3">
+      <section className="rounded-xl border border-lime-200 bg-white p-3 shadow-sm">
         <p className="font-medium text-muted-foreground text-sm">
           {forumRfq.title}
         </p>
@@ -51,11 +51,11 @@ export function RightRail() {
         <div className="mt-3 flex items-center justify-between">
           <button
             type="button"
-            className="font-semibold text-[#1d4ed8] text-xs hover:text-[#1e40af]"
+            className="font-semibold text-lime-700 text-xs hover:text-primary"
           >
             {forumRfq.actionLabel}
           </button>
-          <ClipboardList className="size-5 text-zinc-400" />
+          <ClipboardList className="size-5 text-muted-foreground" />
         </div>
       </section>
     </aside>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 const quickLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us' },
-  { label: 'Marketplace', href: '/marketplace' },
+  { label: 'Market', href: '/marketplace' },
 ];
 
 const supportLinks = [
@@ -17,7 +17,7 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border border-emerald-500/20 backdrop-blur-sm">
+    <footer className="relative border-lime-200 border-t bg-lime-50">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
         <div className="grid gap-8 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div>
@@ -30,14 +30,14 @@ export function SiteFooter() {
                 className="h-10 w-auto object-contain"
               />
             </Link>
-            <p className="mt-3 max-w-md text-sm text-zinc-400 leading-relaxed">
+            <p className="mt-3 max-w-md text-muted-foreground text-sm leading-relaxed">
               AgriTrade helps farmers access transparent pricing, faster
               matching, and more flexible selling pathways.
             </p>
           </div>
 
           <div>
-            <p className="font-semibold text-sm text-zinc-100 uppercase tracking-[0.18em]">
+            <p className="font-semibold text-lime-950 text-sm uppercase tracking-[0.18em]">
               Quick Links
             </p>
             <ul className="mt-3 space-y-2">
@@ -45,7 +45,7 @@ export function SiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-400 transition-colors hover:text-emerald-200"
+                    className="text-muted-foreground text-sm transition-colors hover:text-primary"
                   >
                     {link.label}
                   </Link>
@@ -55,7 +55,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <p className="font-semibold text-sm text-zinc-100 uppercase tracking-[0.18em]">
+            <p className="font-semibold text-lime-950 text-sm uppercase tracking-[0.18em]">
               Support
             </p>
             <ul className="mt-3 space-y-2">
@@ -63,7 +63,7 @@ export function SiteFooter() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-400 transition-colors hover:text-emerald-200"
+                    className="text-muted-foreground text-sm transition-colors hover:text-primary"
                   >
                     {link.label}
                   </Link>
@@ -73,7 +73,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-2 border-emerald-500/20 border-t pt-4 text-xs text-zinc-400 sm:flex-row sm:items-center sm:justify-between sm:text-sm">
+        <div className="mt-8 flex flex-col gap-2 border-lime-200 border-t pt-4 text-muted-foreground text-xs sm:flex-row sm:items-center sm:justify-between sm:text-sm">
           <p>(c) {currentYear} AgriTrade. All rights reserved.</p>
           <p>Built for transparent and practical agricultural trading.</p>
         </div>

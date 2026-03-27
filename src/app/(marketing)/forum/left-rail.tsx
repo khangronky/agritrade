@@ -6,10 +6,10 @@ export function LeftRail() {
 
   return (
     <aside className="space-y-4">
-      <section className="rounded-2xl border border-emerald-500/20 bg-zinc-950/88 p-3 shadow-sm">
-        <p className="font-medium text-emerald-200 text-xs">Featured network</p>
+      <section className="rounded-xl border border-lime-200 bg-white p-3 shadow-sm">
+        <p className="font-medium text-lime-700 text-xs">Featured network</p>
 
-        <article className="mt-2 overflow-hidden rounded-xl border border-emerald-500/20 bg-zinc-900/80">
+        <article className="mt-2 overflow-hidden rounded-lg border border-lime-200 bg-lime-50">
           <Image
             src={forumFeaturedCard.imageSrc}
             alt={forumFeaturedCard.imageAlt}
@@ -18,17 +18,17 @@ export function LeftRail() {
             className="h-44 w-full object-cover"
           />
           <div className="space-y-2 p-3">
-            <p className="font-medium text-sm text-zinc-100 leading-snug">
+            <p className="font-medium text-sm text-lime-950 leading-snug">
               {forumFeaturedCard.title}
             </p>
-            <p className="text-xs text-zinc-300 leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               {forumFeaturedCard.description}
             </p>
-            <div className="border-border border-t pt-2">
+            <div className="border-lime-200 border-t pt-2">
               <p className="text-muted-foreground text-xs">
                 {forumFeaturedCard.pavilionLabel}
               </p>
-              <p className="font-medium text-[#111827] text-sm">
+              <p className="font-medium text-lime-950 text-sm">
                 {forumFeaturedCard.pavilionValue}
               </p>
             </div>
@@ -36,12 +36,12 @@ export function LeftRail() {
         </article>
       </section>
 
-      <section className="rounded border border-borde p-3">
+      <section className="rounded-xl border border-lime-200 bg-white p-3 shadow-sm">
         <p className="font-medium text-muted-foreground text-xs">
           Recommended price data
         </p>
 
-        <div className="mt-3 rounded-xl border border-emerald-500/20 bg-zinc-900/70 p-3">
+        <div className="mt-3 rounded-lg border border-lime-200 bg-lime-50 p-3">
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="font-semibold text-primary text-sm">
@@ -54,8 +54,8 @@ export function LeftRail() {
             <span
               className={`rounded px-2 py-0.5 font-semibold text-xs ${
                 isPositiveChange
-                  ? 'bg-emerald-500/18 text-emerald-200'
-                  : 'bg-red-500/18 text-red-300'
+                  ? 'bg-lime-100 text-lime-700'
+                  : 'bg-rose-100 text-rose-700'
               }`}
             >
               {isPositiveChange ? '+' : ''}
@@ -64,7 +64,7 @@ export function LeftRail() {
           </div>
 
           <div className="mt-3">
-            <p className="text-[11px] text-zinc-400">YoY Change Rate</p>
+            <p className="text-[11px] text-muted-foreground">YoY Change Rate</p>
             <svg
               viewBox="0 0 240 56"
               className="mt-1 h-14 w-full"
@@ -95,7 +95,7 @@ export function LeftRail() {
               <p className="font-semibold text-foreground text-lg">
                 {forumPriceInsight.latestWholesalePrice.toFixed(2)}
               </p>
-              <p className="text-[11px] text-zinc-400">
+              <p className="text-[11px] text-muted-foreground">
                 {forumPriceInsight.currency}/{forumPriceInsight.unit}
               </p>
             </div>
@@ -106,7 +106,7 @@ export function LeftRail() {
               <p className="font-semibold text-foreground text-lg">
                 {forumPriceInsight.previousWholesalePrice.toFixed(2)}
               </p>
-              <p className="text-[11px] text-zinc-400">
+              <p className="text-[11px] text-muted-foreground">
                 {forumPriceInsight.currency}/{forumPriceInsight.unit}
               </p>
             </div>
@@ -115,7 +115,7 @@ export function LeftRail() {
 
         <button
           type="button"
-          className="mt-3 w-full rounded-lg border border-emerald-500/20 bg-zinc-900/85 px-3 py-2 font-medium text-xs text-zinc-200 hover:border-emerald-400/40 hover:text-emerald-200"
+          className="mt-3 w-full rounded-md border border-lime-200 bg-lime-50 px-3 py-2 font-medium text-xs text-lime-700 hover:border-lime-300 hover:text-primary"
         >
           View all prices
         </button>

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function MarketplacePage() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="min-h-[calc(100vh-4rem)] overflow-hidden pt-16">
       <MarketplaceClient />
     </div>
   );
