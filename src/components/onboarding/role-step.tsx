@@ -36,16 +36,16 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 value={field.value}
                 className="grid gap-4 md:grid-cols-2"
               >
-                <label className="cursor-pointer rounded-3xl border border-emerald-200 bg-white p-5 transition-colors hover:border-emerald-300 has-[button[data-state=checked]]:border-emerald-500 has-[button[data-state=checked]]:bg-emerald-50/70">
+                <label className="cursor-pointer rounded-3xl border border-emerald-500/20 bg-emerald-500/5 p-5 transition-colors hover:border-emerald-400/40 has-[button[data-state=checked]]:border-emerald-400 has-[button[data-state=checked]]:bg-emerald-500/12">
                   <div className="flex items-start gap-4">
                     <RadioGroupItem value="farmer" className="mt-1" />
                     <div className="space-y-2">
-                      <div className="flex size-11 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                      <div className="flex size-11 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300">
                         <Wheat className="size-5" />
                       </div>
                       <div>
-                        <p className="font-medium text-slate-950">Farmer</p>
-                        <p className="text-slate-600 text-sm">
+                        <p className="font-medium text-slate-50">Farmer</p>
+                        <p className="text-slate-300 text-sm">
                           Share your current harvest context and prepare crop
                           availability listings.
                         </p>
@@ -54,14 +54,14 @@ export function RoleStep({ form }: OnboardingStepProps) {
                   </div>
                 </label>
 
-                <label className="cursor-pointer rounded-3xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-300 has-[button[data-state=checked]]:border-slate-950 has-[button[data-state=checked]]:bg-slate-950 has-[button[data-state=checked]]:text-white">
+                <label className="cursor-pointer rounded-3xl border border-slate-800 bg-slate-950/55 p-5 transition-colors hover:border-slate-700 has-[button[data-state=checked]]:border-amber-400/70 has-[button[data-state=checked]]:bg-amber-500/12 has-[button[data-state=checked]]:text-white">
                   <div className="flex items-start gap-4">
                     <RadioGroupItem
                       value="trader"
                       className="mt-1 border-current text-current"
                     />
                     <div className="space-y-2">
-                      <div className="flex size-11 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+                      <div className="flex size-11 items-center justify-center rounded-full bg-amber-500/15 text-amber-300">
                         <Store className="size-5" />
                       </div>
                       <div>
@@ -81,7 +81,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
         )}
       />
 
-      <Separator className="bg-emerald-100" />
+      <Separator className="bg-emerald-500/15" />
 
       {selectedRole === 'farmer' ? (
         <div className="grid gap-4 md:grid-cols-2">
@@ -94,7 +94,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Textarea
                     placeholder="Rice, cassava, robusta coffee..."
-                    className="min-h-24 border-emerald-200 bg-white"
+                    className="min-h-24 border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                     {...field}
                   />
                 </FormControl>
@@ -111,7 +111,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Input
                     placeholder="12000"
-                    className="border-emerald-200 bg-white"
+                    className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                     {...field}
                   />
                 </FormControl>
@@ -128,7 +128,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Input
                     placeholder="3.8 tons per harvest"
-                    className="border-emerald-200 bg-white"
+                    className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                     {...field}
                   />
                 </FormControl>
@@ -137,7 +137,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
             )}
           />
           <div className="md:col-span-2">
-            <p className="mb-3 font-medium text-slate-950 text-sm">
+            <p className="mb-3 font-medium text-slate-100 text-sm">
               Harvested time (optional)
             </p>
             <div className="grid gap-4 md:grid-cols-3">
@@ -150,7 +150,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                     <FormControl>
                       <Input
                         placeholder="Day"
-                        className="border-emerald-200 bg-white"
+                        className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                         {...field}
                       />
                     </FormControl>
@@ -167,7 +167,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                     <FormControl>
                       <Input
                         placeholder="Month"
-                        className="border-emerald-200 bg-white"
+                        className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                         {...field}
                       />
                     </FormControl>
@@ -184,7 +184,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                     <FormControl>
                       <Input
                         placeholder="Year"
-                        className="border-emerald-200 bg-white"
+                        className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                         {...field}
                       />
                     </FormControl>
@@ -206,7 +206,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Input
                     placeholder="AgriTrade Export Co."
-                    className="border-slate-200 bg-white"
+                    className="border-slate-700 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                     {...field}
                   />
                 </FormControl>
@@ -223,7 +223,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Input
                     placeholder="25 tons per month"
-                    className="border-slate-200 bg-white"
+                    className="border-slate-700 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                     {...field}
                   />
                 </FormControl>
@@ -240,7 +240,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Textarea
                     placeholder="Rice, pepper, durian..."
-                    className="min-h-24 border-slate-200 bg-white"
+                    className="min-h-24 border-slate-700 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                     {...field}
                   />
                 </FormControl>
@@ -257,7 +257,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Textarea
                     placeholder="Japan, EU, UAE..."
-                    className="min-h-24 border-slate-200 bg-white"
+                    className="min-h-24 border-slate-700 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                     {...field}
                   />
                 </FormControl>

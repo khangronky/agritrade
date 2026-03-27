@@ -19,8 +19,8 @@ export function OnboardingActions({
   onFinish,
 }: OnboardingActionsProps) {
   return (
-    <div className="mt-auto flex flex-col gap-3 border-emerald-100 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
-      <p className="text-slate-500 text-sm">
+    <div className="mt-auto flex flex-col gap-3 border-emerald-950/40 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <p className="text-slate-400 text-sm">
         {step === 1
           ? 'You can update these fields later from your account settings.'
           : 'Role-specific details are validated in the dialog and the completion state is saved immediately.'}
@@ -31,7 +31,7 @@ export function OnboardingActions({
           <Button
             type="button"
             variant="outline"
-            className="border-slate-200 bg-white"
+            className="border-slate-700 bg-slate-950/50 text-slate-100 hover:bg-slate-900"
             onClick={onBack}
             disabled={isSavingStep || isCompleting}
           >
@@ -43,7 +43,7 @@ export function OnboardingActions({
             type="button"
             onClick={onContinue}
             disabled={isSavingStep}
-            className="bg-emerald-600 text-white hover:bg-emerald-700"
+            className="bg-emerald-500 text-slate-950 hover:bg-emerald-400"
           >
             {isSavingStep ? (
               <>
@@ -59,7 +59,7 @@ export function OnboardingActions({
             type="button"
             onClick={onFinish}
             disabled={isCompleting}
-            className="bg-slate-950 text-white hover:bg-slate-800"
+            className="bg-amber-500 text-slate-950 hover:bg-amber-400"
           >
             {isCompleting ? (
               <>

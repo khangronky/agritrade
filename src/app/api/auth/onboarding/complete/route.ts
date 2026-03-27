@@ -24,9 +24,12 @@ export async function POST(request: Request) {
 
     const { full_name, role } = parsed.data;
 
-    const { error: profileError } = await supabase.from('user_profile').insert({
-      full_name: full_name,
-    });
+    const { error: profileError } = await supabase
+      .from('user_profile')
+      .update({
+        full_name: full_name,
+      })
+      .eq('user_id', authUser.id);
 
     if (profileError) {
       return NextResponse.json(
