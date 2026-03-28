@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { profileUpdateSchema } from '@/lib/schema/auth';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET() {
@@ -14,7 +15,7 @@ export async function GET() {
 
     const { data: user, error } = await supabase
       .from('users')
-      .select('*')
+      .select('*, user_profile(full_name)')
       .eq('id', authUser.id)
       .single();
 
@@ -22,7 +23,10 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json(user);
+    return NextResponse.json({
+      ...user,
+      full_name: user.user_profile?.full_name,
+    });
   } catch (error) {
     console.error('Get current user error:', error);
     return NextResponse.json(
@@ -43,20 +47,86 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const updates = await request.json();
+    const parsed = profileUpdateSchema.safeParse(await request.json());
 
-    const { data: user, error } = await supabase
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.issues[0]?.message ?? 'Invalid request payload' },
+        { status: 400 }
+      );
+    }
+
+    const { full_name, username } = parsed.data;
+
+    if (username) {
+      const { data: existingUser, error: existingUserError } = await supabase
+        .from('users')
+        .select('id')
+        .eq('username', username)
+        .neq('id', authUser.id)
+        .maybeSingle();
+
+      if (existingUserError) {
+        return NextResponse.json(
+          { error: existingUserError.message },
+          { status: 500 }
+        );
+      }
+
+      if (existingUser) {
+        return NextResponse.json(
+          { error: 'Username is already taken' },
+          { status: 409 }
+        );
+      }
+    }
+
+    const { error: profileError } = await supabase
+      .from('user_profile')
+      .update({
+        full_name: full_name,
+      })
+      .eq('user_id', authUser.id);
+
+    if (profileError) {
+      return NextResponse.json(
+        { error: profileError.message },
+        { status: 500 }
+      );
+    }
+
+    const { error } = await supabase
       .from('users')
-      .update(updates)
+      .update({ username })
       .eq('id', authUser.id)
-      .select('*')
+      .select('id')
       .single();
 
     if (error) {
+      if (error.code === '23505') {
+        return NextResponse.json(
+          { error: 'Username is already taken' },
+          { status: 409 }
+        );
+      }
+
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json(user);
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('*, user_profile(full_name)')
+      .eq('id', authUser.id)
+      .single();
+
+    if (userError) {
+      return NextResponse.json({ error: userError.message }, { status: 500 });
+    }
+
+    return NextResponse.json({
+      ...user,
+      full_name: user.user_profile?.full_name,
+    });
   } catch (error) {
     console.error('Update user error:', error);
     return NextResponse.json(

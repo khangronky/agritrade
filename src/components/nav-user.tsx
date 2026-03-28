@@ -1,8 +1,8 @@
 'use client';
 
-import { ChevronsUpDown, LogOut, Settings } from 'lucide-react';
+import { ChevronsUpDown, LogOut, Settings, User } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,15 +13,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useSidebar } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useCurrentUser } from '@/lib/api/auth';
 import { createClient } from '@/lib/supabase/client';
 import { useSettingsDialogStore } from '@/stores/settings-dialog.store';
-import { getDisplayNameFromEmail } from '@/utils/email-helper';
 
-export function NavUser({ sidebarOpen }: { sidebarOpen: boolean }) {
+export function NavUser() {
   const isMobile = useIsMobile();
+  const { state } = useSidebar();
+  const sidebarOpen = isMobile || state === 'expanded';
 
   const router = useRouter();
   const supabase = createClient();
@@ -46,7 +48,7 @@ export function NavUser({ sidebarOpen }: { sidebarOpen: boolean }) {
       <DropdownMenuTrigger asChild>
         <Button
           size="lg"
-          className="h-fit border-t bg-background py-2.5 text-accent-foreground hover:bg-accent"
+          className="h-fit border-t bg-card py-2.5 text-accent-foreground hover:bg-accent"
         >
           <Avatar className="h-8 w-8 rounded-lg">
             <AvatarFallback className="rounded-lg bg-sidebar-primary! text-sidebar-primary-foreground">
@@ -62,7 +64,7 @@ export function NavUser({ sidebarOpen }: { sidebarOpen: boolean }) {
             <>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
-                  {user.full_name || getDisplayNameFromEmail(user.email)}
+                  {user.full_name || user.username}
                 </span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
@@ -91,14 +93,20 @@ export function NavUser({ sidebarOpen }: { sidebarOpen: boolean }) {
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-medium">
-                {user.full_name || getDisplayNameFromEmail(user.email)}
+                {user.full_name || user.username}
               </span>
               <span className="truncate text-xs">{user.email}</span>
             </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => openSettingsDialog()}>
+        <DropdownMenuItem>
+          <Link href="/profile" className="flex items-center gap-2">
+            <User />
+            Profile
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => openSettingsDialog('user')}>
           <Settings />
           Settings
         </DropdownMenuItem>

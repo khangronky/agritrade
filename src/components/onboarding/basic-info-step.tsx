@@ -20,15 +20,15 @@ import type { OnboardingStepProps } from './types';
 export function BasicInfoStep({ form, onboarding }: OnboardingStepProps) {
   return (
     <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-      <Card className="border-emerald-200 bg-white/85 shadow-none">
+      <Card className="border-emerald-500/20 bg-emerald-500/5 text-slate-100 shadow-none backdrop-blur">
         <CardHeader>
-          <div className="flex size-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+          <div className="flex size-12 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300">
             <UserRound className="size-5" />
           </div>
-          <CardTitle className="text-slate-950 text-xl">
+          <CardTitle className="text-slate-50 text-xl">
             Tell us who is joining
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-slate-300">
             This name is used across the dashboard and profile menu.
           </CardDescription>
         </CardHeader>
@@ -42,7 +42,7 @@ export function BasicInfoStep({ form, onboarding }: OnboardingStepProps) {
                 <FormControl>
                   <Input
                     placeholder="Nguyen Van A"
-                    className="border-emerald-200 bg-white"
+                    className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
                     {...field}
                   />
                 </FormControl>
@@ -57,7 +57,7 @@ export function BasicInfoStep({ form, onboarding }: OnboardingStepProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200 bg-slate-950 text-white shadow-none">
+      <Card className="border-slate-800 bg-slate-950/70 text-white shadow-none backdrop-blur">
         <CardHeader>
           <div className="flex size-12 items-center justify-center rounded-full bg-white/10 text-lime-200">
             <Sprout className="size-5" />

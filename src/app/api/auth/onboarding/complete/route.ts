@@ -24,23 +24,44 @@ export async function POST(request: Request) {
 
     const { full_name, role } = parsed.data;
 
-    const { data: user, error } = await supabase
+    const { error: profileError } = await supabase
+      .from('user_profile')
+      .update({
+        full_name: full_name,
+      })
+      .eq('user_id', authUser.id);
+
+    if (profileError) {
+      return NextResponse.json(
+        { error: profileError.message },
+        { status: 500 }
+      );
+    }
+
+    const { error } = await supabase
       .from('users')
       .update({
-        full_name,
         role,
         onboarding_status: 'completed',
         onboarding_step: 3,
         onboarding_completed_at: new Date().toISOString(),
       })
       .eq('id', authUser.id)
-      .select(
-        'id, email, full_name, role, onboarding_status, onboarding_step, onboarding_completed_at'
-      )
+      .select('id')
       .single();
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('*, user_profile(full_name)')
+      .eq('id', authUser.id)
+      .single();
+
+    if (userError) {
+      return NextResponse.json({ error: userError.message }, { status: 500 });
     }
 
     return NextResponse.json({

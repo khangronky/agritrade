@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { OnboardingDialog } from '@/components/onboarding/dialog';
 import Sidebar from '@/components/Sidebar';
 import { SettingsDialog } from '@/components/settings-dialog';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import type { OnboardingStatus } from '@/lib/api/auth';
 import { createClient } from '@/lib/supabase/server';
 
@@ -21,9 +22,7 @@ export default async function DashboardLayout({
 
   const { data: onboardingUser, error: onboardingError } = await supabase
     .from('users')
-    .select(
-      'id, email, full_name, role, onboarding_status, onboarding_step, onboarding_completed_at'
-    )
+    .select('*, user_profile(full_name)')
     .eq('id', user.id)
     .single();
 
@@ -31,38 +30,51 @@ export default async function DashboardLayout({
     throw new Error(onboardingError?.message ?? 'Failed to load onboarding');
   }
 
-  return (
-    <div className="flex min-h-screen bg-background">
-      {/* Sidebar */}
-      <Sidebar />
+  const initialOnboardingData: OnboardingStatus = {
+    id: onboardingUser.id,
+    email: onboardingUser.email,
+    full_name: onboardingUser.user_profile?.full_name ?? null,
+    username: onboardingUser.username,
+    role: onboardingUser.role as OnboardingStatus['role'],
+    onboarding_status:
+      onboardingUser.onboarding_status as OnboardingStatus['onboarding_status'],
+    onboarding_step: onboardingUser.onboarding_step,
+    onboarding_completed_at: onboardingUser.onboarding_completed_at,
+  };
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-auto">
-        {/* Top Bar */}
-        <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-          <div className="px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div
-                className="text-muted-foreground text-sm"
-                suppressHydrationWarning
-              >
-                {new Date().toLocaleDateString('en-US', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full bg-background">
+        <Sidebar />
+
+        <main className="flex-1 overflow-auto">
+          <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+            <div className="px-6 py-4">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <SidebarTrigger className="md:hidden" />
+                  <div
+                    className="text-muted-foreground text-sm"
+                    suppressHydrationWarning
+                  >
+                    {new Date().toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* Page Content */}
-        <div className="p-6">{children}</div>
-      </main>
+          <div className="p-6">{children}</div>
+        </main>
 
-      <SettingsDialog />
-      <OnboardingDialog initialData={onboardingUser as OnboardingStatus} />
-    </div>
+        <SettingsDialog />
+        <OnboardingDialog initialData={initialOnboardingData} />
+      </div>
+    </SidebarProvider>
   );
 }

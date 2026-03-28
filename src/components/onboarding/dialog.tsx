@@ -143,9 +143,9 @@ export function OnboardingDialog({
   return (
     <Dialog open={isOpen} onOpenChange={() => undefined}>
       <DialogContent
-        className="flex h-[calc(100dvh-2rem)] max-h-[calc(100dvh-2rem)] flex-col overflow-hidden border-emerald-200 bg-[linear-gradient(180deg,rgba(252,255,249,0.98),rgba(244,250,242,0.98))] p-0 shadow-[0_30px_80px_rgba(16,24,40,0.18)] sm:max-w-4xl"
-        onEscapeKeyDown={(event) => event.preventDefault()}
-        onInteractOutside={(event) => event.preventDefault()}
+        className="flex h-[calc(100dvh-2rem)] max-h-[calc(100dvh-2rem)] flex-col overflow-hidden border-emerald-950/60 bg-[linear-gradient(180deg,rgba(8,19,17,0.98),rgba(11,27,24,0.98))] p-0 shadow-[0_30px_80px_rgba(3,8,14,0.55)] sm:max-w-4xl"
+        onEscapeKeyDown={(event: KeyboardEvent) => event.preventDefault()}
+        onInteractOutside={(event: Event) => event.preventDefault()}
         showCloseButton={false}
       >
         <DialogHeader className="sr-only">
@@ -162,14 +162,14 @@ export function OnboardingDialog({
             showCompletionStep={showCompletionStep}
           />
 
-          <div className="flex min-h-0 flex-col overflow-hidden bg-transparent">
+          <div className="flex min-h-0 flex-col overflow-hidden bg-[radial-gradient(circle_at_top,rgba(52,211,153,0.08),transparent_32%),linear-gradient(180deg,rgba(10,22,20,0.96),rgba(7,16,15,0.98))]">
             <OnboardingHeader
               onboarding={onboarding}
               step={step}
               showCompletionStep={showCompletionStep}
             />
 
-            <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6 lg:px-8">
+            <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6 text-slate-100 lg:px-8">
               {showCompletionStep ? (
                 <div className="flex h-full flex-col justify-between gap-6">
                   <CompletionStep form={form} />
@@ -178,7 +178,7 @@ export function OnboardingDialog({
                     <button
                       type="button"
                       onClick={handleFinish}
-                      className="inline-flex h-10 items-center justify-center rounded-md bg-emerald-600 px-6 font-medium text-sm text-white transition-colors hover:bg-emerald-700"
+                      className="inline-flex h-10 items-center justify-center rounded-md bg-emerald-500 px-6 font-medium text-slate-950 text-sm transition-colors hover:bg-emerald-400"
                     >
                       Continue to dashboard
                     </button>
