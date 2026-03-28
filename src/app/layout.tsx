@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'sonner';
+import { FloatingChatbot } from '@/components/floating-chatbot';
 import Providers from '@/providers/providers';
 
 const font = Montserrat({ subsets: ['latin', 'vietnamese'], display: 'block' });
@@ -63,6 +64,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Providers>{children}</Providers>
+        <FloatingChatbot />
         <Toaster richColors position="top-center" />
       </body>
     </html>
