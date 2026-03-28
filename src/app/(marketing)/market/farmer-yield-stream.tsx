@@ -10,11 +10,7 @@ import {
   initialFarmerFeed,
 } from '../farmer-yield-feed-data';
 
-type FarmerYieldStreamProps = {
-  countryFilter: string;
-};
-
-export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
+export function FarmerYieldStream() {
   const [feed, setFeed] = useState(initialFarmerFeed);
 
   useEffect(() => {
@@ -32,13 +28,8 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
     return () => clearInterval(intervalId);
   }, []);
 
-  const visibleFeed =
-    countryFilter === 'all'
-      ? feed
-      : feed.filter((item) => item.country === countryFilter);
-
   return (
-    <>
+    <div className="space-y-3">
       <div className="flex items-center justify-between px-1 text-muted-foreground text-xs sm:text-sm">
         <p>Auto-generated stream from ASEAN market listings</p>
         <p className="inline-flex items-center gap-2 font-medium text-lime-700">
@@ -47,8 +38,8 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
         </p>
       </div>
 
-      {visibleFeed.length > 0 ? (
-        visibleFeed.map((item) => (
+      {feed.length > 0 ? (
+        feed.map((item) => (
           <Card
             key={item.id}
             className="rounded-xl border-lime-200 bg-white py-0 text-lime-950 shadow-sm"
@@ -78,6 +69,6 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
           </CardContent>
         </Card>
       )}
-    </>
+    </div>
   );
 }
