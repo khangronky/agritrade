@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { createClient } from '@/lib/supabase/server';
+import { getInitials } from '@/utils/name-helper';
 
 function formatDate(value: string | null) {
   if (!value) {
@@ -38,21 +39,6 @@ function formatDate(value: string | null) {
     day: 'numeric',
     year: 'numeric',
   }).format(parsedDate);
-}
-
-function getInitials(name: string | null, fallback: string | null) {
-  const source = name?.trim() || fallback?.trim();
-
-  if (!source) {
-    return 'AT';
-  }
-
-  return source
-    .split(/\s+/)
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
 }
 
 function ProfileDetail({
@@ -120,7 +106,7 @@ export default async function UserProfilePage({
                   <AvatarImage src={user.avatar_url} alt={displayName} />
                 ) : null}
                 <AvatarFallback className="bg-secondary font-semibold text-2xl text-secondary-foreground">
-                  {getInitials(user.full_name, user.username ?? user.email)}
+                  {getInitials(user.full_name || user.username)}
                 </AvatarFallback>
               </Avatar>
 

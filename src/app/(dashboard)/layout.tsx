@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
+import DashboardSidebar from '@/components/dashboard-sidebar';
 import { OnboardingDialog } from '@/components/onboarding/dialog';
-import Sidebar from '@/components/Sidebar';
 import { SettingsDialog } from '@/components/settings-dialog';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import type { OnboardingStatus } from '@/lib/api/auth';
@@ -45,7 +45,7 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
-        <Sidebar />
+        <DashboardSidebar />
 
         <main className="flex-1 overflow-auto">
           <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">

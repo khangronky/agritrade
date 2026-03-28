@@ -1,6 +1,12 @@
 'use client';
 
-import { ChevronsUpDown, LogOut, Settings, User } from 'lucide-react';
+import {
+  ChevronsUpDown,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  User,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -19,8 +25,9 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useCurrentUser } from '@/lib/api/auth';
 import { createClient } from '@/lib/supabase/client';
 import { useSettingsDialogStore } from '@/stores/settings-dialog.store';
+import { getInitials } from '@/utils/name-helper';
 
-export function NavUser() {
+export function SidebarUser() {
   const isMobile = useIsMobile();
   const { state } = useSidebar();
   const sidebarOpen = isMobile || state === 'expanded';
@@ -52,12 +59,7 @@ export function NavUser() {
         >
           <Avatar className="h-8 w-8 rounded-lg">
             <AvatarFallback className="rounded-lg bg-sidebar-primary! text-sidebar-primary-foreground">
-              {user.email
-                .split(' ')
-                .map((n) => n[0])
-                .join('')
-                .toUpperCase()
-                .slice(0, 2)}
+              {getInitials(user.full_name || user.username)}
             </AvatarFallback>
           </Avatar>
           {sidebarOpen && (
@@ -83,12 +85,7 @@ export function NavUser() {
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
               <AvatarFallback className="rounded-lg">
-                {user.email
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')
-                  .toUpperCase()
-                  .slice(0, 2)}
+                {getInitials(user.full_name || user.username)}
               </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
@@ -100,8 +97,14 @@ export function NavUser() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/profile" className="flex items-center gap-2">
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard">
+            <LayoutDashboard className="size-4" />
+            Dashboard
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/profile">
             <User />
             Profile
           </Link>
@@ -110,6 +113,7 @@ export function NavUser() {
           <Settings />
           Settings
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut />
           Log out

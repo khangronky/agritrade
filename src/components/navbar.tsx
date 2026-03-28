@@ -1,12 +1,6 @@
 ﻿'use client';
 
-import {
-  ChevronDown,
-  LayoutDashboard,
-  LogOut,
-  Menu,
-  Settings,
-} from 'lucide-react';
+import { LayoutDashboard, LogOut, Menu, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -36,6 +30,7 @@ import {
 } from '@/components/ui/sheet';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
+import { getInitials } from '@/utils/name-helper';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -46,20 +41,11 @@ const navItems = [
 
 type NavbarProps = {
   user: {
-    email: string | null;
+    email: string;
+    username: string;
     fullName: string | null;
   } | null;
 };
-
-function getInitials(name: string) {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-}
 
 export function Navbar({ user }: NavbarProps) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -68,7 +54,7 @@ export function Navbar({ user }: NavbarProps) {
 
   const supabase = createClient();
   const isLoggedIn = Boolean(user?.email);
-  const displayName = user?.fullName || user?.email || 'User';
+  const displayName = user?.fullName || user?.username || 'User';
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -121,12 +107,19 @@ export function Navbar({ user }: NavbarProps) {
                 {getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
-            <ChevronDown className="size-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
-          <DropdownMenuLabel className="truncate">
-            {displayName}
+          <DropdownMenuLabel className="p-0 font-normal">
+            <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarFallback>{getInitials(displayName)}</AvatarFallback>
+              </Avatar>
+              <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-medium">{displayName}</span>
+                <span className="truncate text-xs">{user?.email}</span>
+              </div>
+            </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
@@ -135,9 +128,11 @@ export function Navbar({ user }: NavbarProps) {
               Dashboard
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings className="size-4" />
-            Settings
+          <DropdownMenuItem asChild>
+            <Link href="/profile">
+              <User />
+              Profile
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout}>
@@ -263,6 +258,11 @@ export function Navbar({ user }: NavbarProps) {
                   <SheetClose asChild>
                     <Button asChild variant="default" className="text-white">
                       <Link href="/dashboard">Dashboard</Link>
+                    </Button>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Button asChild variant="default" className="text-white">
+                      <Link href="/profile">Profile</Link>
                     </Button>
                   </SheetClose>
                   <Button

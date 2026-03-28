@@ -23,7 +23,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { NavUser } from './nav-user';
+import { SidebarUser } from './sidebar-user';
 
 const navigation = [
   {
@@ -63,7 +63,7 @@ const navigation = [
   },
 ];
 
-export default function Sidebar() {
+export default function DashboardSidebar() {
   const pathname = usePathname();
   const { isMobile, state } = useSidebar();
   const sidebarOpen = isMobile || state === 'expanded';
@@ -115,7 +115,7 @@ export default function Sidebar() {
       </SidebarContent>
 
       <SidebarFooter className="p-0">
-        <NavUser />
+        <SidebarUser />
       </SidebarFooter>
     </SidebarShell>
   );
