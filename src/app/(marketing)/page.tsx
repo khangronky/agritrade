@@ -113,6 +113,12 @@ export default function MarketingPage() {
               accessible, we help all participants within ASEAN-China make
               better decisions.
             </p>
+            <Link
+              href="/about-us"
+              className="mt-6 inline-flex items-center rounded-none border border-lime-300 bg-lime-100 px-5 py-2.5 font-semibold text-base text-lime-700 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-lime-400 hover:bg-lime-200 hover:shadow-md"
+            >
+              Learn more -&gt;
+            </Link>
           </div>
         </div>
       </section>
@@ -229,9 +235,9 @@ export default function MarketingPage() {
             <div className="mt-8 flex justify-center">
               <Link
                 href="/register"
-                className="inline-flex items-center rounded-full border border-lime-300 bg-lime-100 px-5 py-2.5 font-semibold text-base text-lime-700"
+                className="inline-flex items-center rounded-none border border-lime-300 bg-lime-100 px-5 py-2.5 font-semibold text-base text-lime-700 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-lime-400 hover:bg-lime-200 hover:shadow-md"
               >
-                Start using AgriTrade today -&gt;
+                Start now -&gt;
               </Link>
             </div>
           </div>
