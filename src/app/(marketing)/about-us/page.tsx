@@ -9,19 +9,19 @@ export const metadata: Metadata = {
 
 const directionCards = [
   {
-    title: 'Development Division',
+    title: 'Predictive Market Analytics',
     description:
-      'Comprehensive planning and end-to-end project execution for high-value real estate assets.',
+      'Our AI models forecast demand and price fluctuations, allowing farmers to align their harvests with real-time market needs.',
   },
   {
-    title: 'Construction Division',
+    title: 'Transparency & Risk Mitigation',
     description:
-      'Reliable construction management from technical design to on-site delivery and quality control.',
+      'By analyzing macroeconomic trends and trade policies, we provide a "early warning system" for potential disruptions in the trade corridor.',
   },
   {
-    title: 'Property Management',
+    title: 'Data-Driven Connectivity',
     description:
-      'Sustainable property operation with investor-focused maintenance and tenant service standards.',
+      'We turn fragmented trade documents and agricultural data into a unified digital language, connecting smallholders directly to international buyers.',
   },
 ];
 
@@ -43,8 +43,8 @@ export default function AboutUsPage() {
 
             <div className="mt-5 grid grid-cols-2 gap-2 sm:max-w-[220px]">
               <ReferenceCropImage
-                src="/about-us/slide-1.jpg"
-                alt="Villa exterior detail"
+                src="/about-us/1.jpg"
+                alt="Hand picking fresh tea leaves"
                 position="center"
                 scale={1}
                 className="aspect-square border border-lime-200"
@@ -52,8 +52,8 @@ export default function AboutUsPage() {
                 sizes="120px"
               />
               <ReferenceCropImage
-                src="/about-us/slide-2.jpg"
-                alt="Tropical landscape detail"
+                src="/about-us/3.jpg"
+                alt="Tea workers in terraced fields"
                 position="center"
                 scale={1}
                 className="aspect-square border border-lime-200"
@@ -66,8 +66,8 @@ export default function AboutUsPage() {
           </div>
 
           <ReferenceCropImage
-            src="/about-us/slide-3.jpg"
-            alt="Main architecture visual"
+            src="/about-us/aboutus.jpg"
+            alt="Workers drying tea leaves in woven trays"
             position="center"
             scale={1}
             className="aspect-[16/10] border border-lime-200"
@@ -146,13 +146,6 @@ export default function AboutUsPage() {
       </section>
 
       <section className="motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-3 border-lime-200 border-t px-4 py-8 motion-safe:animate-in motion-safe:delay-150 motion-safe:duration-700 sm:px-6 lg:px-8">
-        <p className="font-semibold text-[11px] text-primary uppercase tracking-[0.22em]">
-          * Services
-        </p>
-        <p className="mt-3 max-w-[460px] text-muted-foreground text-sm leading-snug">
-          Comprehensive solutions of real estate development and investment
-        </p>
-
         <h2 className="mt-4 font-semibold text-5xl text-primary leading-none sm:text-7xl">
           Development
         </h2>
