@@ -1,7 +1,7 @@
 ﻿'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -30,6 +30,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
+import { DEV_MODE } from '@/constants/common';
 import {
   useRegisterMutation,
   useResendOtpMutation,
@@ -75,6 +76,9 @@ export function RegisterForm() {
         setOtpSent(true);
         setCooldown(60);
         toast.success('Verification code sent to your email');
+        if (DEV_MODE) {
+          window.open('http://localhost:8004', '_blank');
+        }
       } else {
         toast.success('Registration successful!');
         router.push('/login');
@@ -164,6 +168,14 @@ export function RegisterForm() {
               </InputOTPGroup>
             </InputOTP>
           </div>
+          {DEV_MODE && otpSent && (
+            <Link href="http://localhost:8004" target="_blank">
+              <Button variant="outline" className="mb-4 w-full">
+                <Mail size={18} className="mr-1" />
+                Open Inbucket
+              </Button>
+            </Link>
+          )}
           <Button
             className="w-full bg-brand-lime font-semibold text-lime-950 transition-colors hover:bg-brand-lime/90"
             onClick={handleVerifyOtp}
