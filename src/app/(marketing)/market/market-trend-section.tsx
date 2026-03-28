@@ -9,7 +9,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-
 import { Card, CardContent } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import {
@@ -17,6 +16,7 @@ import {
   NativeSelectOption,
 } from '@/components/ui/native-select';
 import { cn } from '@/lib/utils';
+import { clamp } from '@/utils/percentage-helper';
 import type {
   AiForecastSummary,
   CommodityOption,
@@ -575,10 +575,6 @@ function getPriceRange(points: MarketTrendPoint[]) {
   }
 
   return { min, max };
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, value));
 }
 
 function averageActivity(points: MarketTrendPoint[]) {
