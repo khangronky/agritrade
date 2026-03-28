@@ -227,7 +227,10 @@ export default function MarketingPage() {
                 preload="auto"
                 className="h-full w-full object-cover"
               >
-                <source src="/about-us/home-how-it-works.mp4" type="video/mp4" />
+                <source
+                  src="/about-us/home-how-it-works.mp4"
+                  type="video/mp4"
+                />
                 Your browser does not support the video tag.
               </video>
             </div>
