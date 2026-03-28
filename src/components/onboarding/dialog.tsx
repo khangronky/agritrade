@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -29,7 +30,6 @@ import { CompletionStep } from './completion-step';
 import { getStepFromStatus, TOTAL_STEPS } from './constants';
 import { OnboardingHeader } from './header';
 import { RoleStep } from './role-step';
-import { OnboardingSidebar } from './sidebar';
 
 export function OnboardingDialog({
   initialData,
@@ -143,7 +143,7 @@ export function OnboardingDialog({
   return (
     <Dialog open={isOpen} onOpenChange={() => undefined}>
       <DialogContent
-        className="flex h-[calc(100dvh-2rem)] max-h-[calc(100dvh-2rem)] flex-col overflow-hidden border-emerald-950/60 bg-[linear-gradient(180deg,rgba(8,19,17,0.98),rgba(11,27,24,0.98))] p-0 shadow-[0_30px_80px_rgba(3,8,14,0.55)] sm:max-w-4xl"
+        className="flex h-[calc(100dvh-2rem)] max-h-[calc(100dvh-2rem)] flex-col overflow-hidden border-border bg-background p-0 shadow-xl sm:max-w-4xl"
         onEscapeKeyDown={(event: KeyboardEvent) => event.preventDefault()}
         onInteractOutside={(event: Event) => event.preventDefault()}
         showCloseButton={false}
@@ -155,58 +155,47 @@ export function OnboardingDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid min-h-0 flex-1 lg:grid-cols-[280px_1fr]">
-          <OnboardingSidebar
+        <div className="flex h-full min-h-0 flex-col overflow-hidden bg-background">
+          <OnboardingHeader
+            onboardingEmail={onboarding.email}
             progressValue={progressValue}
             step={step}
             showCompletionStep={showCompletionStep}
           />
 
-          <div className="flex min-h-0 flex-col overflow-hidden bg-[radial-gradient(circle_at_top,rgba(52,211,153,0.08),transparent_32%),linear-gradient(180deg,rgba(10,22,20,0.96),rgba(7,16,15,0.98))]">
-            <OnboardingHeader
-              onboarding={onboarding}
-              step={step}
-              showCompletionStep={showCompletionStep}
-            />
+          <div className="min-h-0 basis-[70%] overflow-y-auto px-6 py-6 text-foreground lg:px-8">
+            {showCompletionStep ? (
+              <div className="flex h-full flex-col justify-between gap-6">
+                <CompletionStep form={form} />
 
-            <div className="min-h-0 flex-1 overflow-y-auto px-6 py-6 text-slate-100 lg:px-8">
-              {showCompletionStep ? (
-                <div className="flex h-full flex-col justify-between gap-6">
-                  <CompletionStep form={form} />
-
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      onClick={handleFinish}
-                      className="inline-flex h-10 items-center justify-center rounded-md bg-emerald-500 px-6 font-medium text-slate-950 text-sm transition-colors hover:bg-emerald-400"
-                    >
-                      Continue to dashboard
-                    </button>
-                  </div>
+                <div className="flex justify-end pb-6">
+                  <Button type="button" onClick={handleFinish}>
+                    Continue to dashboard
+                  </Button>
                 </div>
-              ) : (
-                <Form {...form}>
-                  <form className="flex h-full flex-col gap-6">
-                    {step === 1 && (
-                      <BasicInfoStep form={form} onboarding={onboarding} />
-                    )}
+              </div>
+            ) : (
+              <Form {...form}>
+                <form className="flex h-full flex-col justify-between gap-6">
+                  {step === 1 && (
+                    <BasicInfoStep form={form} onboarding={onboarding} />
+                  )}
 
-                    {step === 2 && (
-                      <RoleStep form={form} onboarding={onboarding} />
-                    )}
+                  {step === 2 && (
+                    <RoleStep form={form} onboarding={onboarding} />
+                  )}
 
-                    <OnboardingActions
-                      step={step}
-                      isSavingStep={isSavingStep}
-                      isCompleting={isCompleting}
-                      onBack={() => setStep(1)}
-                      onContinue={handleStepOne}
-                      onFinish={handleStepTwo}
-                    />
-                  </form>
-                </Form>
-              )}
-            </div>
+                  <OnboardingActions
+                    step={step}
+                    isSavingStep={isSavingStep}
+                    isCompleting={isCompleting}
+                    onBack={() => setStep(1)}
+                    onContinue={handleStepOne}
+                    onFinish={handleStepTwo}
+                  />
+                </form>
+              </Form>
+            )}
           </div>
         </div>
       </DialogContent>
