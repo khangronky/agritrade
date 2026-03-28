@@ -189,7 +189,7 @@ function ComplianceRing({
             'drop-shadow-[0_0_10px_rgba(148,163,184,0.12)] transition-all duration-500 ease-out'
           )}
           style={{
-            transform: `rotate(180deg)`,
+            transform: `rotate(-90deg)`,
             transformOrigin: `${center}px ${center}px`,
           }}
         />
