@@ -90,7 +90,6 @@ export default function MarketClient() {
           activeCommodityValue={activeCommodityValue}
           activeListingForTrend={activeListingForTrend}
           trendTimelineData={trendTimelineData?.points ?? []}
-          aiForecast={trendTimelineData?.aiForecast ?? null}
           onCurrencyChange={setTrendCurrency}
           onCommodityChange={setSelectedCommodity}
         />
@@ -108,10 +107,7 @@ export default function MarketClient() {
       </div>
 
       <div className="border-lime-200 border-t">
-        <ExchangeAndYieldSection
-          selectedCountry="all"
-          exchangeCards={exchangeCards}
-        />
+        <ExchangeAndYieldSection exchangeCards={exchangeCards} />
       </div>
 
       <div className="border-lime-200 border-t">

@@ -8,6 +8,7 @@ import {
   buildMarketTrendData,
   listings,
 } from '@/app/(marketing)/market/data';
+import { FarmerYieldStream } from '@/app/(marketing)/market/farmer-yield-stream';
 import LivePriceBoard from '@/app/(marketing)/market/live-price-board';
 import type {
   CommodityOption,
@@ -84,18 +85,31 @@ export default function DashboardClient() {
           selectedCommodity={activeCommodityValue}
           selectedCurrency={trendCurrency}
           trendTimelineData={trendData?.points ?? []}
+          aiForecast={trendData?.aiForecast ?? null}
           onCommodityChange={setSelectedCommodity}
           onCurrencyChange={setTrendCurrency}
         />
 
-        <div className="min-w-0 overflow-hidden rounded-xl border bg-card shadow-sm">
-          <LivePriceBoard
-            livePriceRows={livePriceRows}
-            selectedCurrency={boardCurrency}
-            aseanCurrencies={aseanCurrencies}
-            activeCurrency={activeBoardCurrency}
-            onCurrencyChange={setBoardCurrency}
-          />
+        <div className="min-w-0 space-y-6">
+          <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
+            <LivePriceBoard
+              livePriceRows={livePriceRows}
+              selectedCurrency={boardCurrency}
+              aseanCurrencies={aseanCurrencies}
+              activeCurrency={activeBoardCurrency}
+              onCurrencyChange={setBoardCurrency}
+            />
+          </div>
+
+          <div className="rounded-xl border bg-card p-5 shadow-sm sm:p-6">
+            <h2 className="font-semibold text-foreground text-xl sm:text-2xl">
+              Farmer yield stream
+            </h2>
+
+            <div className="mt-6">
+              <FarmerYieldStream />
+            </div>
+          </div>
         </div>
       </section>
     </div>
