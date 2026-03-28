@@ -82,9 +82,9 @@ function ProfileDetail({
 export default async function UserProfilePage({
   params,
 }: {
-  params: Promise<{ userId: string }>;
+  params: Promise<{ username: string }>;
 }) {
-  const { userId } = await params;
+  const { username } = await params;
 
   const supabase = await createClient();
   const {
@@ -94,13 +94,13 @@ export default async function UserProfilePage({
   const { data: user } = await supabase
     .from('user_full_view')
     .select('*')
-    .eq('user_id', userId)
+    .eq('username', username)
     .single();
 
   if (!user?.user_id || !user.email || !user.username) return notFound();
 
   const isOwner = authUser?.id === user.user_id;
-  const displayName = user.full_name ?? user.username ?? 'AgriTrade member';
+  const displayName = user.full_name ?? user.username;
   const joinedDate = formatDate(user.created_at);
   const birthDate = formatDate(user.dob);
 
@@ -126,8 +126,10 @@ export default async function UserProfilePage({
 
               <div className="flex flex-col gap-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  {user.role ? <Badge>{user.role}</Badge> : null}
-                  <Badge variant="secondary">Member since {joinedDate}</Badge>
+                  {user.role && <Badge>{user.role}</Badge>}
+                  <span className="text-muted-foreground text-sm">
+                    Member since {joinedDate}
+                  </span>
                 </div>
                 <div className="flex flex-col gap-2">
                   <h1 className="font-semibold text-3xl text-foreground tracking-tight">
@@ -140,7 +142,8 @@ export default async function UserProfilePage({
                 </div>
                 <div className="flex flex-wrap gap-4 text-muted-foreground text-sm">
                   <span className="inline-flex items-center gap-2">
-                    <AtSign className="size-4" />@{user.username}
+                    <AtSign className="size-4" />
+                    {user.username}
                   </span>
                   <span className="inline-flex items-center gap-2">
                     <Mail className="size-4" />
@@ -254,10 +257,6 @@ export default async function UserProfilePage({
         <Card className="border-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.92),rgba(243,247,242,0.98))] shadow-sm ring-1 ring-border/70">
           <CardHeader>
             <CardTitle>Quick facts</CardTitle>
-            <CardDescription>
-              Details surfaced from the current `users` and `user_profile`
-              fields.
-            </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="rounded-2xl border bg-background/85 p-4">

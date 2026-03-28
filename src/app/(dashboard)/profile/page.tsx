@@ -10,5 +10,13 @@ export default async function ProfilePage() {
 
   if (!user) return notFound();
 
-  redirect(`/profile/${user.id}`);
+  const { data: profileUser } = await supabase
+    .from('users')
+    .select('username')
+    .eq('id', user.id)
+    .single();
+
+  if (!profileUser?.username) return notFound();
+
+  redirect(`/profile/${profileUser.username}`);
 }
