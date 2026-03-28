@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  ClipboardList,
-  FolderKanban,
-  Handshake,
-  LayoutDashboard,
-  MessagesSquare,
-  Package2,
-  Store,
-} from 'lucide-react';
+import { LayoutDashboard, MessagesSquare, Package2, Store } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -32,11 +24,6 @@ const navigation = [
     icon: LayoutDashboard,
   },
   {
-    href: '/product-folio',
-    name: 'Product Folio',
-    icon: FolderKanban,
-  },
-  {
     href: '/marketplace',
     name: 'Marketplace',
     icon: Store,
@@ -45,16 +32,6 @@ const navigation = [
     href: '/products',
     name: 'Products',
     icon: Package2,
-  },
-  {
-    href: '/deals',
-    name: 'Deals',
-    icon: Handshake,
-  },
-  {
-    href: '/orders',
-    name: 'Orders',
-    icon: ClipboardList,
   },
   {
     href: '/chats',
