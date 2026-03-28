@@ -6,7 +6,6 @@ const quickLinks = [
   { label: 'About Us', href: '/about-us' },
   { label: 'Market', href: '/market' },
 ];
-
 const supportLinks = [
   { label: 'Farmer Support', href: '/' },
   { label: 'Contact Team', href: '/' },

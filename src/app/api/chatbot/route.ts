@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { buildMockKnowledgeContext } from '@/lib/chatbot/mock-rag';
 
 type ChatRole = 'user' | 'assistant';
 
@@ -20,6 +21,7 @@ type GeminiResponse = {
 const GEMINI_MODEL = process.env.GEMINI_MODEL ?? 'gemini-2.5-flash';
 const MAX_MESSAGES = 12;
 const MAX_MESSAGE_LENGTH = 1_000;
+const MAX_OUTPUT_TOKENS = 900;
 
 function normalizeMessages(payload: unknown): IncomingMessage[] {
   if (!Array.isArray(payload)) {
@@ -78,6 +80,7 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const messages = normalizeMessages(body?.messages);
+    const latestUserMessage = messages[messages.length - 1]?.content ?? '';
 
     if (
       messages.length === 0 ||
@@ -89,6 +92,36 @@ export async function POST(request: Request) {
       );
     }
 
+    const knowledgeContext = buildMockKnowledgeContext(latestUserMessage, 6);
+
+    const contextInstruction = knowledgeContext
+      ? `You are AgriTrade Assistant. Use the context below as the primary data source when relevant.
+
+Response rules:
+- Reply in the same language as the user's latest message.
+- Give a detailed answer with 4-6 bullet points when the question asks for insights or recommendations.
+- Include concrete values from the provided context (commodity name, country/region, volume, trend, or price) whenever available.
+- End with one short "Data note" sentence describing limits of available mock data.
+- Do not end mid-sentence.
+
+Context:
+${knowledgeContext}`
+      : `You are AgriTrade Assistant.
+
+Response rules:
+- Reply in the same language as the user's latest message.
+- Give a detailed answer with 3-5 bullet points.
+- If real-time data is missing, clearly state it and still provide practical next steps.
+- Do not end mid-sentence.`;
+
+    const contextualMessages = [
+      {
+        role: 'user' as const,
+        content: contextInstruction,
+      },
+      ...messages,
+    ];
+
     const providerResponse = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
       {
@@ -97,13 +130,13 @@ export async function POST(request: Request) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          contents: messages.map((message) => ({
+          contents: contextualMessages.map((message) => ({
             role: message.role === 'assistant' ? 'model' : 'user',
             parts: [{ text: message.content }],
           })),
           generationConfig: {
             temperature: 0.4,
-            maxOutputTokens: 400,
+            maxOutputTokens: MAX_OUTPUT_TOKENS,
           },
         }),
       }

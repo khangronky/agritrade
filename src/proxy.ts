@@ -3,6 +3,11 @@ import { AUTH_PATHS, PUBLIC_PATHS } from './constants/common';
 import { updateSession } from './lib/supabase/proxy';
 
 export async function proxy(request: NextRequest) {
+  // Keep chatbot API public and bypass session refresh/auth logic.
+  if (request.nextUrl.pathname.startsWith('/api/chatbot')) {
+    return NextResponse.next();
+  }
+
   const { res, user } = await updateSession(request);
 
   // If the auth middleware returned a redirect response, return it
