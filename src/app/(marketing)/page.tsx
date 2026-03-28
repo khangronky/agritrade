@@ -214,11 +214,14 @@ export default function MarketingPage() {
             <div className="relative mt-8 aspect-video overflow-hidden border border-lime-200 bg-white shadow-lg">
               <video
                 controls
-                preload="metadata"
-                poster="/about-us/slide-8.jpg"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
                 className="h-full w-full object-cover"
               >
-                <source src="/about-us/how-it-works.mp4" type="video/mp4" />
+                <source src="/about-us/home-how-it-works.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>

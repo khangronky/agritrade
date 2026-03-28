@@ -43,8 +43,8 @@ export default function AboutUsPage() {
 
             <div className="mt-5 grid grid-cols-2 gap-2 sm:max-w-[220px]">
               <ReferenceCropImage
-                src="/about-us/slide-1.jpg"
-                alt="Villa exterior detail"
+                src="/about-us/1.jpg"
+                alt="Hand picking fresh tea leaves"
                 position="center"
                 scale={1}
                 className="aspect-square border border-lime-200"
@@ -52,8 +52,8 @@ export default function AboutUsPage() {
                 sizes="120px"
               />
               <ReferenceCropImage
-                src="/about-us/slide-2.jpg"
-                alt="Tropical landscape detail"
+                src="/about-us/3.jpg"
+                alt="Tea workers in terraced fields"
                 position="center"
                 scale={1}
                 className="aspect-square border border-lime-200"
@@ -66,8 +66,8 @@ export default function AboutUsPage() {
           </div>
 
           <ReferenceCropImage
-            src="/about-us/slide-3.jpg"
-            alt="Main architecture visual"
+            src="/about-us/aboutus.jpg"
+            alt="Workers drying tea leaves in woven trays"
             position="center"
             scale={1}
             className="aspect-[16/10] border border-lime-200"
