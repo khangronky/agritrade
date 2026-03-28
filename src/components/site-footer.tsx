@@ -4,7 +4,7 @@ import Link from 'next/link';
 const quickLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us' },
-  { label: 'Market', href: '/marketplace' },
+  { label: 'Market', href: '/market' },
 ];
 
 const supportLinks = [

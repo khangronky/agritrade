@@ -239,7 +239,7 @@ export function MarketTrendSection({
             <h2 className="font-semibold text-2xl sm:text-3xl">
               Market Trend Analysis & Forecasting
             </h2>
-            <p className="max-w-3xl text-sm text-muted-foreground leading-relaxed sm:text-base">
+            <p className="max-w-3xl text-muted-foreground text-sm leading-relaxed sm:text-base">
               Quant-style market panel with algorithmic AI forecasting,
               volatility analysis, and professional market indicators.
             </p>
@@ -249,7 +249,7 @@ export function MarketTrendSection({
             <NativeSelect
               value={activeCommodityValue}
               onChange={(event) => onCommodityChange(event.target.value)}
-              className="h-10 min-w-56 rounded-md border-lime-200 bg-lime-50 text-xs text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/30"
+              className="h-10 min-w-56 rounded-md border-lime-200 bg-lime-50 text-muted-foreground text-xs focus-visible:border-ring focus-visible:ring-ring/30"
             >
               <NativeSelectOption value="auto">
                 Auto (top commodity)
@@ -265,7 +265,7 @@ export function MarketTrendSection({
               onChange={(event) =>
                 onCurrencyChange(event.target.value as CurrencyCode)
               }
-              className="h-10 min-w-28 rounded-md border-lime-200 bg-lime-50 text-xs text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/30"
+              className="h-10 min-w-28 rounded-md border-lime-200 bg-lime-50 text-muted-foreground text-xs focus-visible:border-ring focus-visible:ring-ring/30"
             >
               {aseanCurrencies.map((currency) => (
                 <NativeSelectOption key={currency.code} value={currency.code}>
@@ -303,7 +303,7 @@ export function MarketTrendSection({
                       {formatPercentValue(percentChange)})
                     </p>
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground sm:text-sm">
+                  <p className="mt-2 text-muted-foreground text-xs sm:text-sm">
                     Last update: {formatPointDate(latestPoint?.date)} |
                     Currency: {activeCurrency.code}
                   </p>
@@ -312,7 +312,7 @@ export function MarketTrendSection({
                 {aiForecast ? (
                   <div className="mt-4 rounded-lg border border-lime-200 bg-lime-50 px-3 py-3 sm:px-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <p className="font-semibold text-sm text-lime-950 sm:text-base">
+                      <p className="font-semibold text-lime-950 text-sm sm:text-base">
                         AI forecast ({aiForecast.horizonPeriods} periods):{' '}
                         {formatPriceValue(
                           aiForecast.projectedPrice,
@@ -325,7 +325,7 @@ export function MarketTrendSection({
                         {aiForecast.regime}
                       </span>
                     </div>
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <p className="mt-1 text-muted-foreground text-xs">
                       Model: {aiForecast.modelName} | Interval:{' '}
                       {formatPriceValue(aiForecast.intervalLow, activeCurrency)}{' '}
                       -{' '}
@@ -360,7 +360,7 @@ export function MarketTrendSection({
                 <div className="mt-4 rounded-lg border border-lime-200 bg-lime-50 p-3 sm:p-4">
                   <ChartContainer
                     config={marketTrendChartConfig}
-                    className="h-[360px] w-full"
+                    className="h-90 w-full"
                   >
                     <ComposedChart
                       data={selectedSeries}
@@ -489,7 +489,7 @@ export function MarketTrendSection({
                               key={metric.label}
                               className="flex items-center justify-between gap-4 border-lime-200 border-b pb-2 last:border-none last:pb-0"
                             >
-                              <p className="font-medium text-sm text-muted-foreground">
+                              <p className="font-medium text-muted-foreground text-sm">
                                 {metric.label}
                               </p>
                               <p
@@ -679,7 +679,7 @@ function MarketTrendTooltip({
   }
 
   return (
-    <div className="min-w-[12rem] rounded-lg border border-lime-200 bg-white px-3 py-2 text-xs shadow-xl">
+    <div className="min-w-48 rounded-lg border border-lime-200 bg-white px-3 py-2 text-xs shadow-xl">
       <p className="text-muted-foreground">{formatPointDate(point.date)}</p>
       <div className="mt-1 flex items-center justify-between gap-3">
         <span className="text-muted-foreground">Price</span>

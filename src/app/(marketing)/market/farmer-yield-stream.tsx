@@ -40,7 +40,7 @@ export function FarmerYieldStream({ countryFilter }: FarmerYieldStreamProps) {
   return (
     <>
       <div className="flex items-center justify-between px-1 text-muted-foreground text-xs sm:text-sm">
-        <p>Auto-generated stream from ASEAN marketplace listings</p>
+        <p>Auto-generated stream from ASEAN market listings</p>
         <p className="inline-flex items-center gap-2 font-medium text-lime-700">
           <span className="inline-block size-2 rounded-full bg-primary shadow-[0_0_8px_rgba(116,189,18,0.35)]" />
           Auto updates every 5s

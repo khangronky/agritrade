@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
-export function MarketplaceCtaSection() {
+export function MarketCtaSection() {
   return (
     <section className="relative px-4 py-8 sm:px-6 lg:px-8">
       <Card className="mx-auto max-w-7xl rounded-xl border-lime-200 bg-white py-0 text-lime-950 shadow-sm">

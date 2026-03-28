@@ -19,8 +19,8 @@ export function DemandSignalsSection({
                 Commodity demand signals
               </h2>
               <p className="mt-2 max-w-3xl text-muted-foreground text-sm leading-relaxed sm:text-base">
-                Buyer interest is inferred from current marketplace data: 24h
-                price move, listing status, and available volume.
+                Buyer interest is inferred from current market data: 24h price
+                move, listing status, and available volume.
               </p>
             </div>
             <Badge

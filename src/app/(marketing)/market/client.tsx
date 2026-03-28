@@ -1,13 +1,12 @@
 ﻿'use client';
 
 import { ArrowLeftRight, HandCoins, Zap } from 'lucide-react';
-import type { Metadata } from 'next';
 import { useMemo, useState } from 'react';
 import { DemandSignalsSection } from './demand-signals-section';
 import { ExchangeAndYieldSection } from './exchange-and-yield-section';
+import { MarketCtaSection } from './market-cta-section';
+import { MarketHeroSection } from './market-hero-section';
 import { MarketTrendSection } from './market-trend-section';
-import { MarketplaceCtaSection } from './marketplace-cta-section';
-import { MarketplaceHeroSection } from './marketplace-hero-section';
 import { TradingBoardSection } from './trading-board-section';
 import type {
   AiForecastSummary,
@@ -709,24 +708,17 @@ const exchangeCards: ExchangeCard[] = [
   },
 ];
 
-export const metadata: Metadata = {
-  title: 'Marketplace',
-  description:
-    'Explore live market trends, discover demand signals, and trade with confidence on AgriTradeâ€™s transparent agriculture marketplace.',
-};
-
-export default function MarketplaceClient() {
+export default function MarketClient() {
   const [trendCurrency, setTrendCurrency] = useState<CurrencyCode>('VND');
-  const [marketplaceCurrency, setMarketplaceCurrency] =
-    useState<CurrencyCode>('VND');
+  const [marketCurrency, setMarketCurrency] = useState<CurrencyCode>('VND');
   const [selectedCommodity, setSelectedCommodity] = useState('auto');
 
   const activeTrendCurrency =
     aseanCurrencies.find((currency) => currency.code === trendCurrency) ??
     aseanCurrencies[0];
 
-  const activeMarketplaceCurrency =
-    aseanCurrencies.find((currency) => currency.code === marketplaceCurrency) ??
+  const activeMarketCurrency =
+    aseanCurrencies.find((currency) => currency.code === marketCurrency) ??
     aseanCurrencies[0];
 
   const livePriceRows = useMemo<PriceRow[]>(
@@ -784,12 +776,12 @@ export default function MarketplaceClient() {
 
   return (
     <>
-      <MarketplaceHeroSection
+      <MarketHeroSection
         livePriceRows={livePriceRows}
-        selectedCurrency={marketplaceCurrency}
+        selectedCurrency={marketCurrency}
         aseanCurrencies={aseanCurrencies}
-        activeCurrency={activeMarketplaceCurrency}
-        onCurrencyChange={setMarketplaceCurrency}
+        activeCurrency={activeMarketCurrency}
+        onCurrencyChange={setMarketCurrency}
       />
 
       <div className="border-lime-200 border-t">
@@ -826,7 +818,7 @@ export default function MarketplaceClient() {
       </div>
 
       <div className="border-lime-200 border-t">
-        <MarketplaceCtaSection />
+        <MarketCtaSection />
       </div>
     </>
   );

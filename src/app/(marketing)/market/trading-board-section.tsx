@@ -37,7 +37,7 @@ export function TradingBoardSection({
             ) : (
               <Card className="gap-0 rounded-xl border-lime-200 bg-lime-50 py-0 text-lime-950 shadow-sm sm:col-span-2 xl:col-span-4">
                 <CardContent className="px-5 py-8 text-center text-muted-foreground">
-                  No marketplace listings available right now.
+                  No market listings available right now.
                 </CardContent>
               </Card>
             )}

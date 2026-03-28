@@ -34,7 +34,7 @@ const slides: ExploreSlide[] = [
       'Demand predictions',
     ],
     ctaLabel: 'View Price Dashboard →',
-    ctaHref: '/marketplace',
+    ctaHref: '/market',
     imagePosition: 'object-center',
   },
   {
@@ -111,8 +111,8 @@ export function ExplorePlatformSlideshow() {
           {slides.map((slide) => (
             <CarouselItem key={slide.title} className="pl-0">
               <div className="relative overflow-hidden rounded-2xl bg-lime-50 shadow-[0_12px_20px_rgba(121,177,28,0.16)]">
-                <div className="grid min-h-[390px] md:min-h-[330px] md:grid-cols-[1.05fr_0.95fr]">
-                  <div className="relative min-h-[200px] md:min-h-full">
+                <div className="grid min-h-97.5 md:min-h-82.5 md:grid-cols-[1.05fr_0.95fr]">
+                  <div className="relative min-h-50 md:min-h-full">
                     <Image
                       src={slide.src}
                       alt={slide.alt}
