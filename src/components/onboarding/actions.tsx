@@ -19,8 +19,8 @@ export function OnboardingActions({
   onFinish,
 }: OnboardingActionsProps) {
   return (
-    <div className="mt-auto flex flex-col gap-3 border-emerald-950/40 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
-      <p className="text-slate-400 text-sm">
+    <div className="flex flex-col gap-3 border-border border-t py-6 sm:flex-row sm:items-center sm:justify-between">
+      <p className="text-muted-foreground text-sm">
         {step === 1
           ? 'You can update these fields later from your account settings.'
           : 'Role-specific details are validated in the dialog and the completion state is saved immediately.'}
@@ -31,7 +31,6 @@ export function OnboardingActions({
           <Button
             type="button"
             variant="outline"
-            className="border-slate-700 bg-slate-950/50 text-slate-100 hover:bg-slate-900"
             onClick={onBack}
             disabled={isSavingStep || isCompleting}
           >
@@ -39,15 +38,10 @@ export function OnboardingActions({
           </Button>
         )}
         {step === 1 ? (
-          <Button
-            type="button"
-            onClick={onContinue}
-            disabled={isSavingStep}
-            className="bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-          >
+          <Button type="button" onClick={onContinue} disabled={isSavingStep}>
             {isSavingStep ? (
               <>
-                <Loader2 className="mr-2 size-4 animate-spin" />
+                <Loader2 className="animate-spin" data-icon="inline-start" />
                 Saving...
               </>
             ) : (
@@ -55,15 +49,10 @@ export function OnboardingActions({
             )}
           </Button>
         ) : (
-          <Button
-            type="button"
-            onClick={onFinish}
-            disabled={isCompleting}
-            className="bg-amber-500 text-slate-950 hover:bg-amber-400"
-          >
+          <Button type="button" onClick={onFinish} disabled={isCompleting}>
             {isCompleting ? (
               <>
-                <Loader2 className="mr-2 size-4 animate-spin" />
+                <Loader2 className="animate-spin" data-icon="inline-start" />
                 Finishing...
               </>
             ) : (

@@ -1,18 +1,9 @@
-﻿'use client';
-
 import { ArrowLeftRight, HandCoins, Zap } from 'lucide-react';
-import type { Metadata } from 'next';
-import { useMemo, useState } from 'react';
-import { DemandSignalsSection } from './demand-signals-section';
-import { ExchangeAndYieldSection } from './exchange-and-yield-section';
-import { MarketTrendSection } from './market-trend-section';
-import { MarketplaceCtaSection } from './marketplace-cta-section';
-import { MarketplaceHeroSection } from './marketplace-hero-section';
-import { TradingBoardSection } from './trading-board-section';
+import { clamp } from '@/utils/percentage-helper';
+
 import type {
   AiForecastSummary,
   CommodityOption,
-  CurrencyCode,
   CurrencyOption,
   DemandLevel,
   DemandSignal,
@@ -22,7 +13,7 @@ import type {
   PriceRow,
 } from './types';
 
-const aseanCurrencies: CurrencyOption[] = [
+export const aseanCurrencies: CurrencyOption[] = [
   {
     code: 'VND',
     country: 'Vietnam',
@@ -95,7 +86,7 @@ const aseanCurrencies: CurrencyOption[] = [
   },
 ];
 
-const listings: ListingCard[] = [
+export const listings: ListingCard[] = [
   {
     name: 'ST25 Rice',
     category: 'Grain',
@@ -186,12 +177,29 @@ const listings: ListingCard[] = [
   },
 ];
 
+export const exchangeCards: ExchangeCard[] = [
+  {
+    icon: ArrowLeftRight,
+    title: 'Instant Exchange',
+    description:
+      'Swap matching lots across regions to optimize load and delivery routes.',
+  },
+  {
+    icon: HandCoins,
+    title: 'Pre-Order Contracts',
+    description:
+      'Lock quantity and delivery windows early to reduce inventory risk.',
+  },
+  {
+    icon: Zap,
+    title: 'Fast Transactions',
+    description:
+      'Confirm within minutes and track lot movement with clear milestones.',
+  },
+];
+
 function hashSeed(input: string) {
   return input.split('').reduce((seed, char) => seed + char.charCodeAt(0), 0);
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, value));
 }
 
 function pseudoNoise(seed: number, index: number) {
@@ -323,7 +331,7 @@ type TrendModelOutput = {
   aiForecast: AiForecastSummary | null;
 };
 
-function buildMarketTrendData(
+export function buildMarketTrendData(
   listing: ListingCard,
   currency: CurrencyOption
 ): TrendModelOutput {
@@ -632,7 +640,7 @@ function buildMarketTrendData(
   };
 }
 
-function parseTrendPercent(trend: string) {
+export function parseTrendPercent(trend: string) {
   const parsed = Number.parseFloat(trend.replace('%', ''));
   return Number.isFinite(parsed) ? parsed : 0;
 }
@@ -642,7 +650,7 @@ function parseVolumeTons(volume: string) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function buildDemandSignal(listing: ListingCard): DemandSignal {
+export function buildDemandSignal(listing: ListingCard): DemandSignal {
   const trendPercent = parseTrendPercent(listing.trend);
   const volumeTons = parseVolumeTons(listing.volume);
 
@@ -688,146 +696,22 @@ function buildDemandSignal(listing: ListingCard): DemandSignal {
   };
 }
 
-const exchangeCards: ExchangeCard[] = [
-  {
-    icon: ArrowLeftRight,
-    title: 'Instant Exchange',
-    description:
-      'Swap matching lots across regions to optimize load and delivery routes.',
-  },
-  {
-    icon: HandCoins,
-    title: 'Pre-Order Contracts',
-    description:
-      'Lock quantity and delivery windows early to reduce inventory risk.',
-  },
-  {
-    icon: Zap,
-    title: 'Fast Transactions',
-    description:
-      'Confirm within minutes and track lot movement with clear milestones.',
-  },
-];
+export function buildLivePriceRows(
+  items: ListingCard[] = listings
+): PriceRow[] {
+  return items.slice(0, 4).map((listing) => ({
+    name: listing.name,
+    priceVnd: listing.pricePerKgVnd,
+    change: listing.trend,
+    positive: listing.positive,
+  }));
+}
 
-export const metadata: Metadata = {
-  title: 'Marketplace',
-  description:
-    'Explore live market trends, discover demand signals, and trade with confidence on AgriTradeâ€™s transparent agriculture marketplace.',
-};
-
-export default function MarketplaceClient() {
-  const [trendCurrency, setTrendCurrency] = useState<CurrencyCode>('VND');
-  const [marketplaceCurrency, setMarketplaceCurrency] =
-    useState<CurrencyCode>('VND');
-  const [selectedCommodity, setSelectedCommodity] = useState('auto');
-
-  const activeTrendCurrency =
-    aseanCurrencies.find((currency) => currency.code === trendCurrency) ??
-    aseanCurrencies[0];
-
-  const activeMarketplaceCurrency =
-    aseanCurrencies.find((currency) => currency.code === marketplaceCurrency) ??
-    aseanCurrencies[0];
-
-  const livePriceRows = useMemo<PriceRow[]>(
-    () =>
-      listings.slice(0, 4).map((listing) => ({
-        name: listing.name,
-        priceVnd: listing.pricePerKgVnd,
-        change: listing.trend,
-        positive: listing.positive,
-      })),
-    []
-  );
-
-  const demandSignals = useMemo(() => listings.map(buildDemandSignal), []);
-
-  const commodityOptions = useMemo<CommodityOption[]>(
-    () =>
-      listings.map((listing) => ({
-        value: `${listing.name}-${listing.country}`,
-        label: `${listing.name} (${listing.country})`,
-      })),
-    []
-  );
-
-  const activeCommodityValue = commodityOptions.some(
-    (option) => option.value === selectedCommodity
-  )
-    ? selectedCommodity
-    : 'auto';
-
-  const activeListingForTrend = useMemo(() => {
-    if (listings.length === 0) {
-      return null;
-    }
-
-    if (activeCommodityValue === 'auto') {
-      return listings[0];
-    }
-
-    return (
-      listings.find(
-        (listing) =>
-          `${listing.name}-${listing.country}` === activeCommodityValue
-      ) ?? listings[0]
-    );
-  }, [activeCommodityValue]);
-
-  const trendTimelineData = useMemo(
-    () =>
-      activeListingForTrend
-        ? buildMarketTrendData(activeListingForTrend, activeTrendCurrency)
-        : null,
-    [activeListingForTrend, activeTrendCurrency]
-  );
-
-  return (
-    <>
-      <MarketplaceHeroSection
-        livePriceRows={livePriceRows}
-        selectedCurrency={marketplaceCurrency}
-        aseanCurrencies={aseanCurrencies}
-        activeCurrency={activeMarketplaceCurrency}
-        onCurrencyChange={setMarketplaceCurrency}
-      />
-
-      <div className="border-lime-200 border-t">
-        <MarketTrendSection
-          selectedCurrency={trendCurrency}
-          activeCurrency={activeTrendCurrency}
-          aseanCurrencies={aseanCurrencies}
-          commodityOptions={commodityOptions}
-          activeCommodityValue={activeCommodityValue}
-          activeListingForTrend={activeListingForTrend}
-          trendTimelineData={trendTimelineData?.points ?? []}
-          aiForecast={trendTimelineData?.aiForecast ?? null}
-          onCurrencyChange={setTrendCurrency}
-          onCommodityChange={setSelectedCommodity}
-        />
-      </div>
-
-      <div className="border-lime-200 border-t">
-        <TradingBoardSection
-          listings={listings}
-          activeCurrency={aseanCurrencies[0]}
-        />
-      </div>
-
-      <div className="border-lime-200 border-t">
-        <DemandSignalsSection demandSignals={demandSignals} />
-      </div>
-
-      <div className="border-lime-200 border-t">
-        <ExchangeAndYieldSection
-          selectedCountry="all"
-          exchangeCards={exchangeCards}
-        />
-      </div>
-
-      <div className="border-lime-200 border-t">
-        <MarketplaceCtaSection />
-      </div>
-    </>
-  );
+export function buildCommodityOptions(
+  items: ListingCard[] = listings
+): CommodityOption[] {
+  return items.map((listing) => ({
+    value: `${listing.name}-${listing.country}`,
+    label: `${listing.name} (${listing.country})`,
+  }));
 }

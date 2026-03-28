@@ -138,7 +138,7 @@ export default function MarketingPage() {
           </h2>
 
           <div className="mt-8 grid gap-4 lg:grid-cols-[1fr_1fr] lg:gap-0">
-            <div className="relative h-60 overflow-hidden border border-lime-200 bg-white sm:h-72 lg:h-[290px]">
+            <div className="relative h-60 overflow-hidden border border-lime-200 bg-white sm:h-72 lg:h-72.5">
               <Image
                 src="/business-model-insights.jpg"
                 alt="Aerial farmland with market and analytics overlays"
@@ -173,7 +173,7 @@ export default function MarketingPage() {
               </p>
             </article>
 
-            <div className="relative h-60 overflow-hidden border border-lime-200 bg-white sm:h-72 lg:h-[290px]">
+            <div className="relative h-60 overflow-hidden border border-lime-200 bg-white sm:h-72 lg:h-72.5">
               <Image
                 src="/business-model-sharing.jpg"
                 alt="Farm machinery and field statistics overlays"

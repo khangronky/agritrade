@@ -73,14 +73,15 @@ export default function Sidebar() {
       <SidebarHeader className="gap-0 border-b px-2 py-4">
         <div className="flex items-center justify-between gap-6">
           {sidebarOpen && (
-            <div className="flex-1">
+            <div className="flex flex-1 items-center">
               <Link href="/">
                 <Image
                   src="/branding.png"
                   alt="Logo"
-                  width={96}
-                  height={96}
-                  className="h-full w-full object-contain"
+                  width={1000}
+                  height={100}
+                  className="h-10 w-auto object-contain"
+                  priority
                 />
               </Link>
             </div>

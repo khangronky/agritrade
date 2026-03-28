@@ -40,7 +40,7 @@ import { cn } from '@/lib/utils';
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us' },
-  { label: 'Market', href: '/marketplace' },
+  { label: 'Market', href: '/market' },
   { label: 'Forum', href: '/forum' },
 ];
 

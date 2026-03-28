@@ -112,7 +112,7 @@ export default function LivePriceBoard({
 }: LivePriceBoardProps) {
   return (
     <Card className="gap-0 rounded-none border-lime-200 bg-white py-0 text-lime-950 shadow-none">
-      <CardHeader className="border-lime-200 border-b px-5 pt-5 pb-4 sm:px-6">
+      <CardHeader className="px-5 pt-5 pb-4 sm:px-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle className="text-xl sm:text-2xl">
             Live price board
@@ -152,19 +152,19 @@ export default function LivePriceBoard({
                 className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 rounded-md border border-lime-200 bg-lime-50 px-3 py-2.5"
               >
                 <div className="min-w-0">
-                  <p className="font-semibold tracking-[0.08em] text-lime-950">
+                  <p className="font-semibold text-lime-950 tracking-[0.08em]">
                     {code}
                   </p>
-                  <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                  <p className="mt-0.5 truncate text-muted-foreground text-xs">
                     {row.name}
                   </p>
                 </div>
 
                 <div className="text-right">
-                  <p className="font-semibold text-base tabular-nums text-lime-700">
+                  <p className="font-semibold text-base text-lime-700 tabular-nums">
                     {formatPriceByCurrency(row.priceVnd, activeCurrency)}
                   </p>
-                  <p className="mt-0.5 text-xs tabular-nums text-muted-foreground">
+                  <p className="mt-0.5 text-muted-foreground text-xs tabular-nums">
                     Vol {formatVolume(volume)}
                   </p>
                 </div>
@@ -182,7 +182,7 @@ export default function LivePriceBoard({
                       activeCurrency
                     )}
                   </p>
-                  <p className="mt-0.5 text-xs font-medium leading-tight">
+                  <p className="mt-0.5 font-medium text-xs leading-tight">
                     {formatPercent(changePercent)}
                   </p>
                 </div>

@@ -58,7 +58,7 @@ export function HomeLiveUpdatesPanel({
           News
         </h3>
         <Link
-          href="/marketplace"
+          href="/market"
           className={cn(
             isLight
               ? 'text-muted-foreground transition-colors hover:text-primary'
@@ -105,7 +105,7 @@ export function HomeLiveUpdatesPanel({
                 {item.farmer} {item.update}
               </p>
               {isLight ? (
-                <p className="mt-2 font-semibold text-lime-700 text-[10px] uppercase tracking-[0.08em]">
+                <p className="mt-2 font-semibold text-[10px] text-lime-700 uppercase tracking-[0.08em]">
                   {item.time}
                 </p>
               ) : null}

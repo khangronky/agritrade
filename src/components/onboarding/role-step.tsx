@@ -17,12 +17,12 @@ export function RoleStep({ form }: OnboardingStepProps) {
   const selectedRole = form.watch('role');
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6">
       <FormField
         control={form.control}
         name="role"
         render={({ field }) => (
-          <FormItem className="space-y-4">
+          <FormItem className="flex flex-col gap-4">
             <div>
               <FormLabel>Choose your role</FormLabel>
               <FormDescription>
@@ -36,16 +36,18 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 value={field.value}
                 className="grid gap-4 md:grid-cols-2"
               >
-                <label className="cursor-pointer rounded-3xl border border-emerald-500/20 bg-emerald-500/5 p-5 transition-colors hover:border-emerald-400/40 has-[button[data-state=checked]]:border-emerald-400 has-[button[data-state=checked]]:bg-emerald-500/12">
+                <label className="cursor-pointer rounded-3xl border border-emerald-200 bg-emerald-50/75 p-5 transition-colors hover:border-emerald-400 has-[button[data-state=checked]]:border-emerald-500 has-[button[data-state=checked]]:bg-emerald-100 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:has-[button[data-state=checked]]:border-emerald-400 dark:has-[button[data-state=checked]]:bg-emerald-500/20 dark:hover:border-emerald-400">
                   <div className="flex items-start gap-4">
                     <RadioGroupItem value="farmer" className="mt-1" />
-                    <div className="space-y-2">
-                      <div className="flex size-11 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex size-11 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
                         <Wheat className="size-5" />
                       </div>
                       <div>
-                        <p className="font-medium text-slate-50">Farmer</p>
-                        <p className="text-slate-300 text-sm">
+                        <p className="font-medium text-emerald-950 dark:text-emerald-50">
+                          Farmer
+                        </p>
+                        <p className="text-emerald-800/80 text-sm dark:text-emerald-100/80">
                           Share your current harvest context and prepare crop
                           availability listings.
                         </p>
@@ -54,19 +56,18 @@ export function RoleStep({ form }: OnboardingStepProps) {
                   </div>
                 </label>
 
-                <label className="cursor-pointer rounded-3xl border border-slate-800 bg-slate-950/55 p-5 transition-colors hover:border-slate-700 has-[button[data-state=checked]]:border-amber-400/70 has-[button[data-state=checked]]:bg-amber-500/12 has-[button[data-state=checked]]:text-white">
+                <label className="cursor-pointer rounded-3xl border border-amber-200 bg-amber-50/75 p-5 transition-colors hover:border-amber-400 has-[button[data-state=checked]]:border-amber-500 has-[button[data-state=checked]]:bg-amber-100 dark:border-amber-500/30 dark:bg-amber-500/10 dark:has-[button[data-state=checked]]:border-amber-400 dark:has-[button[data-state=checked]]:bg-amber-500/20 dark:hover:border-amber-400">
                   <div className="flex items-start gap-4">
-                    <RadioGroupItem
-                      value="trader"
-                      className="mt-1 border-current text-current"
-                    />
-                    <div className="space-y-2">
-                      <div className="flex size-11 items-center justify-center rounded-full bg-amber-500/15 text-amber-300">
+                    <RadioGroupItem value="trader" className="mt-1" />
+                    <div className="flex flex-col gap-2">
+                      <div className="flex size-11 items-center justify-center rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300">
                         <Store className="size-5" />
                       </div>
                       <div>
-                        <p className="font-medium">Trader</p>
-                        <p className="text-inherit/75 text-sm">
+                        <p className="font-medium text-amber-950 dark:text-amber-50">
+                          Trader
+                        </p>
+                        <p className="text-amber-800/80 text-sm dark:text-amber-100/80">
                           Capture your buying profile and the markets your team
                           serves.
                         </p>
@@ -81,7 +82,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
         )}
       />
 
-      <Separator className="bg-emerald-500/15" />
+      <Separator className="bg-border" />
 
       {selectedRole === 'farmer' ? (
         <div className="grid gap-4 md:grid-cols-2">
@@ -94,7 +95,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Textarea
                     placeholder="Rice, cassava, robusta coffee..."
-                    className="min-h-24 border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
+                    className="min-h-24"
                     {...field}
                   />
                 </FormControl>
@@ -109,11 +110,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
               <FormItem>
                 <FormLabel>Area (m2)</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="12000"
-                    className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
-                    {...field}
-                  />
+                  <Input placeholder="12000" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -126,18 +123,14 @@ export function RoleStep({ form }: OnboardingStepProps) {
               <FormItem>
                 <FormLabel>Estimated productivity</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="3.8 tons per harvest"
-                    className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
-                    {...field}
-                  />
+                  <Input placeholder="3.8 tons per harvest" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <div className="md:col-span-2">
-            <p className="mb-3 font-medium text-slate-100 text-sm">
+            <p className="mb-3 font-medium text-foreground text-sm">
               Harvested time (optional)
             </p>
             <div className="grid gap-4 md:grid-cols-3">
@@ -148,11 +141,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                   <FormItem>
                     <FormLabel>Day</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Day"
-                        className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
-                        {...field}
-                      />
+                      <Input placeholder="Day" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -165,11 +154,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                   <FormItem>
                     <FormLabel>Month</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Month"
-                        className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
-                        {...field}
-                      />
+                      <Input placeholder="Month" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -182,11 +167,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                   <FormItem>
                     <FormLabel>Year</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Year"
-                        className="border-emerald-500/25 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
-                        {...field}
-                      />
+                      <Input placeholder="Year" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -204,11 +185,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
               <FormItem>
                 <FormLabel>Belonged company</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="AgriTrade Export Co."
-                    className="border-slate-700 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
-                    {...field}
-                  />
+                  <Input placeholder="AgriTrade Export Co." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -221,11 +198,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
               <FormItem>
                 <FormLabel>Weights</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="25 tons per month"
-                    className="border-slate-700 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
-                    {...field}
-                  />
+                  <Input placeholder="25 tons per month" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -240,7 +213,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Textarea
                     placeholder="Rice, pepper, durian..."
-                    className="min-h-24 border-slate-700 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
+                    className="min-h-24"
                     {...field}
                   />
                 </FormControl>
@@ -257,7 +230,7 @@ export function RoleStep({ form }: OnboardingStepProps) {
                 <FormControl>
                   <Textarea
                     placeholder="Japan, EU, UAE..."
-                    className="min-h-24 border-slate-700 bg-slate-950/40 text-slate-50 placeholder:text-slate-500"
+                    className="min-h-24"
                     {...field}
                   />
                 </FormControl>

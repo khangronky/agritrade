@@ -1,7 +1,7 @@
 import LivePriceBoard from './live-price-board';
 import type { CurrencyCode, CurrencyOption, PriceRow } from './types';
 
-type MarketplaceHeroSectionProps = {
+type MarketHeroSectionProps = {
   livePriceRows: PriceRow[];
   selectedCurrency: CurrencyCode;
   aseanCurrencies: CurrencyOption[];
@@ -9,23 +9,23 @@ type MarketplaceHeroSectionProps = {
   onCurrencyChange: (value: CurrencyCode) => void;
 };
 
-export function MarketplaceHeroSection({
+export function MarketHeroSection({
   livePriceRows,
   selectedCurrency,
   aseanCurrencies,
   activeCurrency,
   onCurrencyChange,
-}: MarketplaceHeroSectionProps) {
+}: MarketHeroSectionProps) {
   return (
     <section className="relative px-4 py-7 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-305">
         <div className="space-y-8">
           <div>
-            <p className="font-semibold text-primary text-[11px] uppercase tracking-[0.22em]">
-              * Marketplace
+            <p className="font-semibold text-[11px] text-primary uppercase tracking-[0.22em]">
+              * Market
             </p>
             <h1 className="max-w-3xl font-semibold text-3xl leading-tight sm:text-4xl lg:text-5xl">
-              AI-powered agriculture marketplace: track prices, forecast trends,
+              AI-powered agriculture market: track prices, forecast trends,
               trade smarter.
             </h1>
 

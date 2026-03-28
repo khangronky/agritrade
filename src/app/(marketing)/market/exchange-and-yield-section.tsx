@@ -4,12 +4,10 @@ import { FarmerYieldStream } from './farmer-yield-stream';
 import type { ExchangeCard } from './types';
 
 type ExchangeAndYieldSectionProps = {
-  selectedCountry: string;
   exchangeCards: ExchangeCard[];
 };
 
 export function ExchangeAndYieldSection({
-  selectedCountry,
   exchangeCards,
 }: ExchangeAndYieldSectionProps) {
   return (
@@ -41,8 +39,8 @@ export function ExchangeAndYieldSection({
           </p>
         </div>
 
-        <div className="mt-6 space-y-3">
-          <FarmerYieldStream countryFilter={selectedCountry} />
+        <div className="mt-6">
+          <FarmerYieldStream />
         </div>
       </div>
     </section>
