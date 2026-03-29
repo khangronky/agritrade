@@ -27,6 +27,7 @@ export default async function MarketingLayout({
                 email: userData.email || '',
                 fullName: userData.full_name || '',
                 username: userData.username || '',
+                avatarUrl: userData.avatar_url || null,
               }
             : null
         }

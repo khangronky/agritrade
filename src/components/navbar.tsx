@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -44,6 +44,7 @@ type NavbarProps = {
     email: string;
     username: string;
     fullName: string | null;
+    avatarUrl: string | null;
   } | null;
 };
 
@@ -53,7 +54,7 @@ export function Navbar({ user }: NavbarProps) {
   const router = useRouter();
 
   const supabase = createClient();
-  const isLoggedIn = Boolean(user?.email);
+  const isLoggedIn = Boolean(user);
   const displayName = user?.fullName || user?.username || 'User';
 
   const handleLogout = async () => {
@@ -103,6 +104,9 @@ export function Navbar({ user }: NavbarProps) {
             className="h-10 gap-2 px-2 text-lime-700 hover:bg-lime-100 hover:text-lime-950"
           >
             <Avatar className="h-8 w-8">
+              {user?.avatarUrl ? (
+                <AvatarImage src={user.avatarUrl} alt={displayName} />
+              ) : null}
               <AvatarFallback className="border border-lime-200 bg-lime-100 text-lime-700">
                 {getInitials(displayName)}
               </AvatarFallback>
@@ -113,6 +117,9 @@ export function Navbar({ user }: NavbarProps) {
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
               <Avatar className="h-8 w-8 rounded-lg">
+                {user?.avatarUrl ? (
+                  <AvatarImage src={user.avatarUrl} alt={displayName} />
+                ) : null}
                 <AvatarFallback>{getInitials(displayName)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">

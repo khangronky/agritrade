@@ -15,7 +15,7 @@ export async function GET() {
 
     const { data: user, error } = await supabase
       .from('users')
-      .select('*, user_profile(full_name)')
+      .select('*, user_profile(full_name, avatar_url)')
       .eq('id', authUser.id)
       .single();
 
@@ -26,6 +26,7 @@ export async function GET() {
     return NextResponse.json({
       ...user,
       full_name: user.user_profile?.full_name,
+      avatar_url: user.user_profile?.avatar_url ?? null,
     });
   } catch (error) {
     console.error('Get current user error:', error);
@@ -115,7 +116,7 @@ export async function PATCH(request: Request) {
 
     const { data: user, error: userError } = await supabase
       .from('users')
-      .select('*, user_profile(full_name)')
+      .select('*, user_profile(full_name, avatar_url)')
       .eq('id', authUser.id)
       .single();
 
@@ -126,6 +127,7 @@ export async function PATCH(request: Request) {
     return NextResponse.json({
       ...user,
       full_name: user.user_profile?.full_name,
+      avatar_url: user.user_profile?.avatar_url ?? null,
     });
   } catch (error) {
     console.error('Update user error:', error);
