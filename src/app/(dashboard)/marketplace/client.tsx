@@ -1,9 +1,14 @@
 'use client';
 
-import { FilterIcon, SearchIcon, SlidersHorizontalIcon } from 'lucide-react';
+import {
+  FilterIcon,
+  PlusIcon,
+  SearchIcon,
+  SlidersHorizontalIcon,
+} from 'lucide-react';
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -191,8 +196,8 @@ export default function MarketplaceClient() {
         ))}
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[280px_minmax(0,1fr)]">
-        <Card className="hidden xl:flex">
+      <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+        <Card className="hidden h-fit lg:flex">
           <CardHeader>
             <CardTitle className="text-base">Filters</CardTitle>
             <CardDescription>
@@ -223,7 +228,12 @@ export default function MarketplaceClient() {
                 view.
               </p>
             </div>
-            <Badge variant="outline">Compact buyer view</Badge>
+            <Button asChild>
+              <Link href="/products" className="flex items-center">
+                <PlusIcon data-icon="inline-start" />
+                Publish crops
+              </Link>
+            </Button>
           </div>
 
           {filteredListings.length > 0 ? (
