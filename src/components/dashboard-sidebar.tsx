@@ -15,6 +15,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
 import { SidebarUser } from './sidebar-user';
 
 const navigation = [
@@ -47,8 +48,13 @@ export default function DashboardSidebar() {
 
   return (
     <SidebarShell collapsible="icon" className="border-r">
-      <SidebarHeader className="gap-0 border-b px-2 py-4">
-        <div className="flex items-center justify-between gap-6">
+      <SidebarHeader className="gap-0 border-b p-2">
+        <div
+          className={cn(
+            'flex items-center gap-6',
+            sidebarOpen ? 'justify-between' : 'justify-center'
+          )}
+        >
           {sidebarOpen && (
             <div className="flex flex-1 items-center">
               <Link href="/">
@@ -57,13 +63,13 @@ export default function DashboardSidebar() {
                   alt="Logo"
                   width={1000}
                   height={100}
-                  className="h-10 w-auto object-contain"
+                  className="h-7 w-auto object-contain"
                   priority
                 />
               </Link>
             </div>
           )}
-          <SidebarTrigger className={!sidebarOpen ? 'mx-auto' : ''} />
+          <SidebarTrigger />
         </div>
       </SidebarHeader>
 

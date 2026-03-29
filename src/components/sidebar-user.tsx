@@ -2,6 +2,7 @@
 
 import {
   ChevronsUpDown,
+  Home,
   LayoutDashboard,
   LogOut,
   Settings,
@@ -101,6 +102,12 @@ export function SidebarUser() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/">
+            <Home className="size-4" />
+            Home
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/dashboard">
             <LayoutDashboard className="size-4" />
