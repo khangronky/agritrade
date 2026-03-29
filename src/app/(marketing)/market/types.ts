@@ -83,6 +83,12 @@ export type AiForecastSummary = {
   rsi: number;
   emaShort: number;
   emaLong: number;
+  reasons: string[];
+  recommendation: {
+    where: string;
+    when: string;
+    target: string;
+  };
 };
 
 export type ExchangeCard = {
