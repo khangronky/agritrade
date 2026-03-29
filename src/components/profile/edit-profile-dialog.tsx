@@ -21,6 +21,10 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from '@/components/ui/native-select';
 import { Textarea } from '@/components/ui/textarea';
 import { FetchError } from '@/lib/api';
 import {
@@ -41,6 +45,7 @@ interface EditProfileDialogProps {
     bio: string | null;
     phone_number: string | null;
     address: string | null;
+    country: string | null;
     dob: string | null;
   };
 }
@@ -51,15 +56,23 @@ interface UploadAvatarResult {
   publicUrl: string;
 }
 
+interface CountryOption {
+  code: string;
+  name: string;
+}
+
 export function EditProfileDialog({ profile }: EditProfileDialogProps) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [open, setOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isCountriesLoading, setIsCountriesLoading] = useState(false);
+  const [countryOptions, setCountryOptions] = useState<CountryOption[]>([]);
   const [fullName, setFullName] = useState(profile.full_name ?? '');
   const [bio, setBio] = useState(profile.bio ?? '');
   const [phoneNumber, setPhoneNumber] = useState(profile.phone_number ?? '');
   const [address, setAddress] = useState(profile.address ?? '');
+  const [country, setCountry] = useState(profile.country ?? '');
   const [dob, setDob] = useState(profile.dob ?? '');
   const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url ?? null);
   const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
@@ -74,6 +87,7 @@ export function EditProfileDialog({ profile }: EditProfileDialogProps) {
       setBio(profile.bio ?? '');
       setPhoneNumber(profile.phone_number ?? '');
       setAddress(profile.address ?? '');
+      setCountry(profile.country ?? '');
       setDob(profile.dob ?? '');
       setAvatarUrl(profile.avatar_url ?? null);
       setAvatarPreviewUrl(null);
@@ -89,6 +103,52 @@ export function EditProfileDialog({ profile }: EditProfileDialogProps) {
       }
     };
   }, [avatarPreviewUrl]);
+
+  useEffect(() => {
+    if (!open || countryOptions.length > 0) {
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const loadCountries = async () => {
+      setIsCountriesLoading(true);
+
+      try {
+        const response = await fetch('/api/countries', {
+          credentials: 'include',
+          signal: controller.signal,
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new FetchError(
+            typeof data?.error === 'string'
+              ? data.error
+              : 'Failed to load countries',
+            response.status,
+            data
+          );
+        }
+
+        setCountryOptions(Array.isArray(data?.countries) ? data.countries : []);
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') {
+          return;
+        }
+
+        toast.error(
+          error instanceof Error ? error.message : 'Failed to load countries'
+        );
+      } finally {
+        setIsCountriesLoading(false);
+      }
+    };
+
+    void loadCountries();
+
+    return () => controller.abort();
+  }, [countryOptions.length, open]);
 
   const displayedAvatarUrl =
     avatarPreviewUrl ?? (removeAvatar ? null : avatarUrl);
@@ -190,6 +250,7 @@ export function EditProfileDialog({ profile }: EditProfileDialogProps) {
           bio,
           phone_number: phoneNumber,
           address,
+          country: country || null,
           dob,
           avatar_url: removeAvatar
             ? null
@@ -369,6 +430,30 @@ export function EditProfileDialog({ profile }: EditProfileDialogProps) {
                   onChange={(event) => setAddress(event.target.value)}
                   placeholder="City, province, or trading hub"
                 />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="country">Country</FieldLabel>
+                <NativeSelect
+                  id="country"
+                  value={country}
+                  onChange={(event) => setCountry(event.target.value)}
+                  disabled={isCountriesLoading}
+                >
+                  <NativeSelectOption value="">
+                    {isCountriesLoading
+                      ? 'Loading countries...'
+                      : 'No country selected'}
+                  </NativeSelectOption>
+                  {countryOptions.map((option) => (
+                    <NativeSelectOption key={option.code} value={option.name}>
+                      {option.name}
+                    </NativeSelectOption>
+                  ))}
+                </NativeSelect>
+                <FieldDescription>
+                  Choose your market country or leave it blank to clear it.
+                </FieldDescription>
               </Field>
             </FieldGroup>
           </div>

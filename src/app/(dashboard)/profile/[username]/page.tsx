@@ -1,6 +1,7 @@
 import {
   AtSign,
   CalendarRange,
+  Globe,
   Mail,
   MapPin,
   Phone,
@@ -150,6 +151,7 @@ export default async function UserProfilePage({
                   bio: user.bio,
                   phone_number: user.phone_number,
                   address: user.address,
+                  country: user.country,
                   dob: user.dob,
                 }}
               />
@@ -177,6 +179,11 @@ export default async function UserProfilePage({
           <CardContent className="flex flex-col gap-6">
             <div className="grid gap-4 md:grid-cols-2">
               <ProfileDetail
+                icon={CalendarRange}
+                label="Date of birth"
+                value={birthDate}
+              />
+              <ProfileDetail
                 icon={Phone}
                 label="Phone"
                 value={user.phone_number ?? 'Not provided'}
@@ -187,9 +194,9 @@ export default async function UserProfilePage({
                 value={user.address ?? 'Not provided'}
               />
               <ProfileDetail
-                icon={CalendarRange}
-                label="Date of birth"
-                value={birthDate}
+                icon={Globe}
+                label="Country"
+                value={user.country ?? 'Not provided'}
               />
               <ProfileDetail
                 icon={ShieldCheck}
@@ -259,11 +266,11 @@ export default async function UserProfilePage({
             </div>
             <div className="rounded-2xl border bg-background/85 p-4">
               <p className="text-muted-foreground text-xs uppercase tracking-[0.24em]">
-                Address visibility
+                Country
               </p>
               <p className="mt-2 text-foreground text-sm leading-6">
-                {user.address ??
-                  'No address published yet. Add one from the edit dialog to help other members understand your base of operations.'}
+                {user.country ??
+                  'No country published yet. Add one from the edit dialog to make your profile easier to discover.'}
               </p>
             </div>
           </CardContent>
