@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getCountryOptions } from '@/lib/countries';
 
-export const revalidate = 60 * 60 * 24;
+export const revalidate = 86400; // Revalidate every 24 hours
 
 export async function GET() {
   try {
