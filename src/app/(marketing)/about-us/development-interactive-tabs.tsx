@@ -14,9 +14,9 @@ type DevelopmentItem = {
 const developmentItems: DevelopmentItem[] = [
   {
     id: 'construction',
-    label: '* Construction',
+    label: '* Smallholder Farmers & Cooperatives',
     description:
-      'Full-cycle construction execution with on-site supervision, structural quality assurance, and timeline control for premium assets.',
+      'The heartbeat of our mission. We provide the tools they need to shift from "guesswork" to "data-work," ensuring fair pricing and reduced post-harvest losses.',
     images: [
       {
         src: '/about-us/slide-5.jpg',
@@ -30,9 +30,9 @@ const developmentItems: DevelopmentItem[] = [
   },
   {
     id: 'land-selection',
-    label: '* Land Selection',
+    label: '* Traders and distributors',
     description:
-      'Strategic site assessment based on zoning feasibility, long-term value growth, and infrastructure connectivity.',
+      'Effortless discovery of standardized produce with significantly lower search costs.',
     images: [
       {
         src: '/about-us/slide-1.jpg',
@@ -46,9 +46,9 @@ const developmentItems: DevelopmentItem[] = [
   },
   {
     id: 'architectural-design',
-    label: '* Architectural Design',
+    label: '* Processors & Exporters',
     description:
-      'Integrated architectural concepts balancing spatial efficiency, identity, and construction practicality for high-end developments.',
+      'Direct access to source data and traceability support to meet international standards.',
     images: [
       {
         src: '/about-us/slide-3.jpg',
@@ -62,9 +62,9 @@ const developmentItems: DevelopmentItem[] = [
   },
   {
     id: 'investment-projects',
-    label: '* Investment Projects',
+    label: '* Regulators & NGOs',
     description:
-      'Investor-oriented project structuring with risk-balanced planning, portfolio positioning, and long-term management readiness.',
+      'Standardized macro-data to evaluate market health and deploy timely support initiatives.',
     images: [
       {
         src: '/about-us/slide-7.jpg',

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { resolveCountryName } from '@/lib/countries';
 import {
   AVATAR_BUCKET,
   extractStorageObjectFromPublicUrl,
@@ -31,6 +32,7 @@ const profileDetailsUpdateSchema = z
     bio: nullableTrimmedString(500),
     phone_number: nullableTrimmedString(30),
     address: nullableTrimmedString(200),
+    country: nullableTrimmedString(100),
     dob: z.preprocess(
       (value) => {
         if (typeof value !== 'string') {
@@ -94,6 +96,16 @@ export async function PATCH(request: Request) {
 
     const payload = parsed.data;
     const removeAvatar = payload.remove_avatar ?? false;
+    const resolvedCountry = payload.country
+      ? await resolveCountryName(payload.country)
+      : null;
+
+    if (payload.country && !resolvedCountry) {
+      return NextResponse.json(
+        { error: 'Country must match a valid Rest Countries entry' },
+        { status: 400 }
+      );
+    }
 
     if (
       payload.avatar_upload &&
@@ -136,6 +148,7 @@ export async function PATCH(request: Request) {
         bio: payload.bio,
         phone_number: payload.phone_number,
         address: payload.address,
+        country: resolvedCountry,
         dob: payload.dob,
         avatar_url: nextAvatarUrl,
       })

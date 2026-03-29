@@ -10,6 +10,7 @@ import {
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getInitials } from '@/utils/name-helper';
 import type { ForumPost } from './types';
 
 type CenterFeedProps = {
@@ -21,7 +22,7 @@ export function CenterFeed({ posts }: CenterFeedProps) {
     <section className="space-y-4">
       <div className="rounded-xl border border-lime-200 bg-white p-3 shadow-sm">
         <div className="flex items-center justify-between">
-          <p className="flex items-center gap-1 font-medium text-xs text-lime-700">
+          <p className="flex items-center gap-1 font-medium text-lime-700 text-xs">
             Community feed <CircleHelp className="size-3" />
           </p>
           <Button
@@ -76,17 +77,11 @@ export function CenterFeed({ posts }: CenterFeedProps) {
 }
 
 function ForumPostCard({ post }: { post: ForumPost }) {
-  const initials = post.companyName
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join('')
-    .toUpperCase();
+  const initials = getInitials(post.companyName);
 
   return (
     <article className="rounded-xl border border-lime-200 bg-white shadow-sm">
-      <div className="border-lime-200 border-b px-3 py-2 text-xs text-muted-foreground">
+      <div className="border-lime-200 border-b px-3 py-2 text-muted-foreground text-xs">
         Update | {post.companyName} profile verified on Mar 24, 2026
       </div>
 
@@ -97,13 +92,13 @@ function ForumPostCard({ post }: { post: ForumPost }) {
               {initials}
             </div>
             <div>
-              <p className="flex items-center gap-1 font-semibold text-sm text-lime-950 leading-none">
+              <p className="flex items-center gap-1 font-semibold text-lime-950 text-sm leading-none">
                 {post.companyName}
                 {post.isVerified ? (
                   <CheckCircle2 className="size-4 text-primary" />
                 ) : null}
               </p>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-muted-foreground text-xs">
                 {post.author} - {post.postedAt}
               </p>
             </div>

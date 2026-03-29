@@ -12,14 +12,22 @@ export default async function MarketingLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
+  const { data: userData } = await supabase
+    .from('user_full_view')
+    .select('*')
+    .eq('user_id', user?.id || '')
+    .single();
+
   return (
     <div className="relative min-h-screen">
       <Navbar
         user={
-          user
+          userData
             ? {
-                email: user.email ?? null,
-                fullName: user.user_metadata?.full_name ?? null,
+                email: userData.email || '',
+                fullName: userData.full_name || '',
+                username: userData.username || '',
+                avatarUrl: userData.avatar_url || null,
               }
             : null
         }

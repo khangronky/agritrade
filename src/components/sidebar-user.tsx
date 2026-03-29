@@ -1,9 +1,16 @@
 'use client';
 
-import { ChevronsUpDown, LogOut, Settings, User } from 'lucide-react';
+import {
+  ChevronsUpDown,
+  Home,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  User,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -19,8 +26,9 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useCurrentUser } from '@/lib/api/auth';
 import { createClient } from '@/lib/supabase/client';
 import { useSettingsDialogStore } from '@/stores/settings-dialog.store';
+import { getInitials } from '@/utils/name-helper';
 
-export function NavUser() {
+export function SidebarUser() {
   const isMobile = useIsMobile();
   const { state } = useSidebar();
   const sidebarOpen = isMobile || state === 'expanded';
@@ -43,6 +51,8 @@ export function NavUser() {
     return <Skeleton className="h-12" />;
   }
 
+  const displayName = user.full_name || user.username;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -51,21 +61,17 @@ export function NavUser() {
           className="h-fit border-t bg-card py-2.5 text-accent-foreground hover:bg-accent"
         >
           <Avatar className="h-8 w-8 rounded-lg">
+            {user.avatar_url ? (
+              <AvatarImage src={user.avatar_url} alt={displayName} />
+            ) : null}
             <AvatarFallback className="rounded-lg bg-sidebar-primary! text-sidebar-primary-foreground">
-              {user.email
-                .split(' ')
-                .map((n) => n[0])
-                .join('')
-                .toUpperCase()
-                .slice(0, 2)}
+              {getInitials(displayName)}
             </AvatarFallback>
           </Avatar>
           {sidebarOpen && (
             <>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">
-                  {user.full_name || user.username}
-                </span>
+                <span className="truncate font-medium">{displayName}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -82,26 +88,34 @@ export function NavUser() {
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
+              {user.avatar_url ? (
+                <AvatarImage src={user.avatar_url} alt={displayName} />
+              ) : null}
               <AvatarFallback className="rounded-lg">
-                {user.email
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')
-                  .toUpperCase()
-                  .slice(0, 2)}
+                {getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium">
-                {user.full_name || user.username}
-              </span>
+              <span className="truncate font-medium">{displayName}</span>
               <span className="truncate text-xs">{user.email}</span>
             </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/profile" className="flex items-center gap-2">
+        <DropdownMenuItem asChild>
+          <Link href="/">
+            <Home className="size-4" />
+            Home
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard">
+            <LayoutDashboard className="size-4" />
+            Dashboard
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/profile">
             <User />
             Profile
           </Link>
@@ -110,6 +124,7 @@ export function NavUser() {
           <Settings />
           Settings
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut />
           Log out

@@ -300,6 +300,44 @@ export default function DashboardTrendCard({
                   {activeCurrency.code}
                 </p>
                 <ConfidenceMeter confidence={aiForecast.confidence} />
+
+                <div className="mt-4 grid gap-3 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+                  <div className="rounded-lg border bg-background/80 p-3">
+                    <p className="font-semibold text-[11px] text-muted-foreground uppercase tracking-[0.16em]">
+                      Forecast reasons
+                    </p>
+                    <div className="mt-3 space-y-2">
+                      {aiForecast.reasons.map((reason) => (
+                        <div
+                          key={reason}
+                          className="rounded-md border border-border/60 bg-muted/20 px-3 py-2"
+                        >
+                          <p className="text-sm leading-relaxed">{reason}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-lg border bg-background/80 p-3">
+                    <p className="font-semibold text-[11px] text-muted-foreground uppercase tracking-[0.16em]">
+                      Recommendation
+                    </p>
+                    <div className="mt-3 space-y-3">
+                      <ForecastRecommendationItem
+                        label="Where to sell"
+                        value={aiForecast.recommendation.where}
+                      />
+                      <ForecastRecommendationItem
+                        label="When to sell"
+                        value={aiForecast.recommendation.when}
+                      />
+                      <ForecastRecommendationItem
+                        label="Target to sell"
+                        value={aiForecast.recommendation.target}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             ) : null}
 
@@ -497,6 +535,23 @@ function ConfidenceMeter({ confidence }: { confidence: number }) {
           style={{ width: `${clamp(confidence, 0, 100)}%` }}
         />
       </div>
+    </div>
+  );
+}
+
+function ForecastRecommendationItem({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-md border border-border/60 bg-muted/20 px-3 py-2">
+      <p className="text-muted-foreground text-xs uppercase tracking-[0.12em]">
+        {label}
+      </p>
+      <p className="mt-1 text-sm leading-relaxed">{value}</p>
     </div>
   );
 }

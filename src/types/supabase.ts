@@ -14,6 +14,7 @@ export type Database = {
           address: string | null;
           avatar_url: string | null;
           bio: string | null;
+          country: string | null;
           created_at: string;
           dob: string | null;
           full_name: string | null;
@@ -24,6 +25,7 @@ export type Database = {
           address?: string | null;
           avatar_url?: string | null;
           bio?: string | null;
+          country?: string | null;
           created_at?: string;
           dob?: string | null;
           full_name?: string | null;
@@ -34,6 +36,7 @@ export type Database = {
           address?: string | null;
           avatar_url?: string | null;
           bio?: string | null;
+          country?: string | null;
           created_at?: string;
           dob?: string | null;
           full_name?: string | null;
@@ -97,6 +100,7 @@ export type Database = {
           address: string | null;
           avatar_url: string | null;
           bio: string | null;
+          country: string | null;
           created_at: string | null;
           dob: string | null;
           email: string | null;
