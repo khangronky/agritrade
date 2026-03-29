@@ -47,29 +47,27 @@ export default async function DashboardLayout({
       <div className="flex min-h-screen w-full bg-background">
         <DashboardSidebar />
 
-        <main className="flex-1 overflow-auto">
-          <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+        <main className="relative flex-1 overflow-auto">
+          <header className="fixed top-0 z-10 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
             <div className="px-6 py-4">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <SidebarTrigger className="md:hidden" />
-                  <div
-                    className="text-muted-foreground text-sm"
-                    suppressHydrationWarning
-                  >
-                    {new Date().toLocaleDateString('en-US', {
-                      weekday: 'long',
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </div>
+              <div className="flex items-center gap-4">
+                <SidebarTrigger className="md:hidden" />
+                <div
+                  className="text-muted-foreground text-sm"
+                  suppressHydrationWarning
+                >
+                  {new Date().toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
                 </div>
               </div>
             </div>
           </header>
 
-          <div className="p-6">{children}</div>
+          <div className="p-6 pt-16">{children}</div>
         </main>
 
         <SettingsDialog />
