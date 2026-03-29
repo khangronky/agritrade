@@ -10,6 +10,7 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { parseTrendPercent } from '@/app/(marketing)/market/data';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -26,6 +27,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import { clamp } from '@/utils/percentage-helper';
 import type { CropMetric } from './data';
@@ -33,38 +42,7 @@ import type { CropMetric } from './data';
 export default function CropMetricCard({ metric }: { metric: CropMetric }) {
   const priceTrendPositive = parseTrendPercent(metric.priceTrend) >= 0;
   const complianceTone = getComplianceTone(metric.complianceRate);
-  const metricRows = [
-    {
-      label: 'Health',
-      value: `${metric.healthScore}/100`,
-      tone: 'positive' as const,
-    },
-    {
-      label: 'NDVI / Vigor',
-      value: metric.ndvi.toFixed(2),
-      tone: 'positive' as const,
-    },
-    {
-      label: 'Estimated yield',
-      value: metric.estimatedYield,
-      tone: 'default' as const,
-    },
-    {
-      label: 'Moisture',
-      value: metric.moisture,
-      tone: 'default' as const,
-    },
-    {
-      label: 'Harvest window',
-      value: metric.harvestWindow,
-      tone: 'default' as const,
-    },
-    {
-      label: 'Price momentum',
-      value: metric.priceTrend,
-      tone: priceTrendPositive ? ('positive' as const) : ('negative' as const),
-    },
-  ];
+  const metricRows = metric.comparisons;
 
   return (
     <Card className="gap-0 overflow-hidden">
@@ -103,7 +81,7 @@ export default function CropMetricCard({ metric }: { metric: CropMetric }) {
               View metrics
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-xl">
+          <DialogContent className="sm:max-w-3xl">
             <DialogHeader>
               <DialogTitle>{metric.listing.name}</DialogTitle>
               <DialogDescription>
@@ -112,17 +90,42 @@ export default function CropMetricCard({ metric }: { metric: CropMetric }) {
             </DialogHeader>
 
             <div className="flex flex-col gap-5">
-              <div className="flex flex-col rounded-lg border px-4 py-1">
-                {metricRows.map((metric, index) => (
-                  <MetricRow
-                    key={metric.label}
-                    icon={getMetricIcon(metric.label, priceTrendPositive)}
-                    label={metric.label}
-                    value={metric.value}
-                    tone={metric.tone}
-                    withSeparator={index < metricRows.length - 1}
-                  />
-                ))}
+              <div className="overflow-hidden rounded-lg border">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="hover:bg-transparent">
+                      <TableHead className="w-[40%]">Metric</TableHead>
+                      <TableHead className="text-right">
+                        <Badge
+                          variant="secondary"
+                          className="rounded-full px-3 py-1"
+                        >
+                          Current
+                        </Badge>
+                      </TableHead>
+                      <TableHead className="text-right">
+                        <Badge
+                          variant="outline"
+                          className="rounded-full px-3 py-1"
+                        >
+                          Compliance Standards
+                        </Badge>
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {metricRows.map((metric) => (
+                      <MetricRow
+                        key={metric.label}
+                        icon={getMetricIcon(metric.label, priceTrendPositive)}
+                        label={metric.label}
+                        currentValue={metric.currentValue}
+                        standardValue={metric.standardValue}
+                        met={metric.met}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             </div>
           </DialogContent>
@@ -214,36 +217,33 @@ function ComplianceRing({
 function MetricRow({
   icon: Icon,
   label,
-  value,
-  tone = 'default',
-  withSeparator,
+  currentValue,
+  standardValue,
+  met,
 }: {
   icon: typeof Leaf;
   label: string;
-  value: string;
-  tone?: 'default' | 'positive' | 'negative';
-  withSeparator: boolean;
+  currentValue: string;
+  standardValue: string;
+  met: boolean;
 }) {
+  const valueToneClassName = met ? 'text-emerald-600' : 'text-destructive';
+
   return (
-    <div
-      className={cn('flex flex-col gap-3 py-3', withSeparator && 'border-b')}
-    >
-      <div className="flex items-center justify-between gap-4">
+    <TableRow>
+      <TableCell>
         <div className="flex min-w-0 items-center gap-2 text-muted-foreground text-sm">
           <Icon className="size-3.5 shrink-0" />
           <span>{label}</span>
         </div>
-        <p
-          className={cn(
-            'text-right font-semibold text-sm sm:text-base',
-            tone === 'positive' && 'text-primary',
-            tone === 'negative' && 'text-destructive'
-          )}
-        >
-          {value}
-        </p>
-      </div>
-    </div>
+      </TableCell>
+      <TableCell className={cn('text-right font-semibold', valueToneClassName)}>
+        {currentValue}
+      </TableCell>
+      <TableCell className={cn('text-right font-semibold', valueToneClassName)}>
+        {standardValue}
+      </TableCell>
+    </TableRow>
   );
 }
 
