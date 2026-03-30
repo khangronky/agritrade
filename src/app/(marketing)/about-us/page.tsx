@@ -4,24 +4,25 @@ import { ReferenceCropImage } from './reference-crop-image';
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Learn about our development company profile and services.',
+  description:
+    'Learn how AgriTrade helps farmers and traders with live market data, demand insights, and export guidance.',
 };
 
 const directionCards = [
   {
-    title: 'Development Division',
+    title: 'Market Intelligence',
     description:
-      'Comprehensive planning and end-to-end project execution for high-value real estate assets.',
+      'Live prices, demand signals, and trend forecasts to support planting and selling decisions.',
   },
   {
-    title: 'Construction Division',
+    title: 'Trade Connectivity',
     description:
-      'Reliable construction management from technical design to on-site delivery and quality control.',
+      'Connect farmers, traders, and buyers in one transparent network for faster transactions.',
   },
   {
-    title: 'Property Management',
+    title: 'Export Readiness',
     description:
-      'Sustainable property operation with investor-focused maintenance and tenant service standards.',
+      'Country-specific standards and compliance guidance for cross-border agricultural trade.',
   },
 ];
 
@@ -38,13 +39,13 @@ export default function AboutUsPage() {
               About us
             </h1>
             <p className="mt-2 text-muted-foreground text-xs sm:text-sm">
-              Development company in bali
+              AI-powered agriculture market platform for ASEAN
             </p>
 
             <div className="mt-5 grid grid-cols-2 gap-2 sm:max-w-[220px]">
               <ReferenceCropImage
                 src="/about-us/slide-1.jpg"
-                alt="Villa exterior detail"
+                alt="Farmer field activity during crop season"
                 position="center"
                 scale={1}
                 className="aspect-square border border-lime-200"
@@ -53,7 +54,7 @@ export default function AboutUsPage() {
               />
               <ReferenceCropImage
                 src="/about-us/slide-2.jpg"
-                alt="Tropical landscape detail"
+                alt="Data-led planning for agricultural operations"
                 position="center"
                 scale={1}
                 className="aspect-square border border-lime-200"
@@ -61,13 +62,13 @@ export default function AboutUsPage() {
               />
             </div>
             <p className="mt-2 max-w-[220px] text-right text-[10px] text-muted-foreground leading-tight">
-              Architectural and interior design
+              Market intelligence for every crop cycle
             </p>
           </div>
 
           <ReferenceCropImage
             src="/about-us/slide-3.jpg"
-            alt="Main architecture visual"
+            alt="Agricultural marketplace dashboard and field operations"
             position="center"
             scale={1}
             className="aspect-[16/10] border border-lime-200"
@@ -84,29 +85,25 @@ export default function AboutUsPage() {
 
         <div className="relative mt-5 grid gap-5 md:grid-cols-[0.95fr_1.05fr]">
           <p className="max-w-[260px] text-[11px] text-muted-foreground leading-relaxed">
-            Comprehensive solutions for real estate development and investment.
-            Architectural projects and construction support with high quality
-            environments.
+            Data infrastructure for transparent agricultural trade, from price
+            discovery to demand visibility.
           </p>
 
           <div className="mx-auto max-w-[760px] space-y-4 text-center">
             <p className="mx-auto max-w-[720px] font-semibold text-base text-lime-950 leading-snug sm:text-lg">
-              In an era of rapid economic shifts, the backbone of ASEAN—our
-              farmers—remains disconnected from the digital pulse of global
-              trade. Relying on intuition rather than data creates systemic
-              fragility. By embedding AI and predictive analytics into the heart
-              of regional commerce, we are turning historical challenges into a
-              competitive advantage for every smallholder and agri-business in
-              the region.
+              AgriTrade closes the information gap between farms and markets.
+              We combine live transaction signals, historical trends, and AI
+              forecasts so farmers and traders can plan crops, negotiate fairly,
+              and reduce risk across ASEAN trade routes.
             </p>
             <p className="font-semibold text-base text-primary leading-snug sm:text-lg">
-              “Actionable Intelligence”
+              "Actionable Market Intelligence"
             </p>
           </div>
 
           <ReferenceCropImage
-            src="/about-us/slide-4.jpg"
-            alt="Signature pool villa visual"
+            src="/about-us/carbon-credits-seedling.jpg"
+            alt="Farm supply chain and market distribution"
             position="center"
             scale={1}
             className="aspect-[3/4] w-full max-w-[220px] border border-lime-200 md:col-span-2"
@@ -147,10 +144,11 @@ export default function AboutUsPage() {
 
       <section className="motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-3 border-lime-200 border-t px-4 py-8 motion-safe:animate-in motion-safe:delay-150 motion-safe:duration-700 sm:px-6 lg:px-8">
         <p className="font-semibold text-[11px] text-primary uppercase tracking-[0.22em]">
-          * Services
+          * Vision & Mission
         </p>
         <p className="mt-3 max-w-[460px] text-muted-foreground text-sm leading-snug">
-          Comprehensive solutions of real estate development and investment
+          Help every farmer and trader decide what to plant, when to sell, and
+          where to trade with confidence.
         </p>
 
         <h2 className="mt-4 font-semibold text-5xl text-primary leading-none sm:text-7xl">
