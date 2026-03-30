@@ -91,7 +91,7 @@ export function HomeLiveUpdatesPanel({
               key={item.id}
               className={cn(
                 isLight
-                  ? 'rounded-none border border-lime-200 bg-white px-3 py-2.5 text-lime-950 transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-lime-50'
+                  ? 'rounded-none border border-lime-200 bg-white px-3 py-2.5 text-lime-950 transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-sm'
                   : 'text-base text-zinc-300 leading-snug sm:text-lg'
               )}
             >

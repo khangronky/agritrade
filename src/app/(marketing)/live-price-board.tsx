@@ -335,7 +335,7 @@ export function LivePriceBoard({
             key={item.code}
             className={cn(
               isLight
-                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-none border border-lime-200 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-lime-50'
+                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-none border border-lime-200 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-sm'
                 : 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-xl border border-zinc-700/70 bg-zinc-950/76',
               compact ? 'gap-1.5 px-2.5 py-2' : 'gap-2 px-3 py-2.5'
             )}
