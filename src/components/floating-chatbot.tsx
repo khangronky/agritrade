@@ -2,6 +2,7 @@
 
 import { Headset, SendHorizonal, Sparkles, X } from 'lucide-react';
 import { type FormEvent, useEffect, useRef, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
 
 type ChatMessage = {
@@ -15,6 +16,8 @@ const quickPrompts = [
   'How can I price coffee beans better?',
   'Give me 3 export-readiness tips for farmers.',
 ];
+const assistantGreeting =
+  'Hi, I am AgriTrade Assistant. Ask me anything about market demand, pricing, and trade decisions.';
 
 function createMessage(
   role: ChatMessage['role'],
@@ -28,17 +31,46 @@ function createMessage(
 }
 
 export function FloatingChatbot() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([
-    createMessage(
-      'assistant',
-      'Hi, I am AgriTrade Assistant. Ask me anything about market demand, pricing, and trade decisions.'
-    ),
+    createMessage('assistant', assistantGreeting),
   ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    let isMounted = true;
+
+    void supabase.auth
+      .getUser()
+      .then(({ data }) => {
+        if (!isMounted) {
+          return;
+        }
+
+        setIsAuthenticated(Boolean(data.user));
+      })
+      .catch(() => {
+        if (isMounted) {
+          setIsAuthenticated(false);
+        }
+      });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(Boolean(session?.user));
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
@@ -108,6 +140,10 @@ export function FloatingChatbot() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     await sendMessage(input.trim());
+  }
+
+  if (!isAuthenticated) {
+    return null;
   }
 
   return (

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { buildMockKnowledgeContext } from '@/lib/chatbot/mock-rag';
+import { createClient } from '@/lib/supabase/server';
 
 type ChatRole = 'user' | 'assistant';
 
@@ -70,6 +71,18 @@ function extractText(response: GeminiResponse): string | null {
 
 export async function POST(request: Request) {
   try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const apiKey = process.env.GOOGLE_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
