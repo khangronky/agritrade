@@ -54,7 +54,7 @@ export function HomepageSignupCta() {
             }
           }}
           placeholder="Email/Phone number"
-          className="h-11 flex-1 rounded-none border border-lime-200 bg-white px-4 text-lime-950 text-sm placeholder:text-muted-foreground transition-colors duration-300 focus:border-ring focus:outline-hidden"
+          className="h-11 flex-1 rounded-none border border-lime-200 bg-white px-4 text-lime-950 text-sm transition-colors duration-300 placeholder:text-muted-foreground focus:border-ring focus:outline-hidden"
         />
         <button
           type="submit"

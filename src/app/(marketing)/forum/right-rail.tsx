@@ -30,7 +30,7 @@ export function RightRail() {
             <li key={item.name}>
               <button
                 type="button"
-                className="flex w-full items-center justify-between rounded-md border border-transparent px-1 py-1 text-sm text-lime-700 hover:border-lime-200 hover:bg-lime-50"
+                className="flex w-full items-center justify-between rounded-md border border-transparent px-1 py-1 text-lime-700 text-sm hover:border-lime-200 hover:bg-lime-50"
               >
                 <span className="flex items-center gap-2">
                   <item.icon className="size-4 text-lime-700" />

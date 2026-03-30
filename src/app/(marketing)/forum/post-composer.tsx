@@ -104,7 +104,7 @@ export function ForumPostComposer() {
       <button
         type="button"
         onClick={() => setIsComposerOpen((current) => !current)}
-        className="flex w-full items-center gap-2 rounded-lg border border-lime-200 bg-lime-50 px-3 py-2 text-left text-sm text-muted-foreground hover:border-lime-300"
+        className="flex w-full items-center gap-2 rounded-lg border border-lime-200 bg-lime-50 px-3 py-2 text-left text-muted-foreground text-sm hover:border-lime-300"
       >
         <PenSquare className="size-4" />
         {isComposerOpen ? 'Close composer' : 'Share an update'}
@@ -117,7 +117,7 @@ export function ForumPostComposer() {
         >
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="space-y-1">
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 Company Name *
               </span>
               <input
@@ -125,7 +125,7 @@ export function ForumPostComposer() {
                 onChange={(event) =>
                   updateField('companyName', event.target.value)
                 }
-                className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-sm text-lime-950 outline-none focus:border-primary"
+                className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-lime-950 text-sm outline-none focus:border-primary"
                 placeholder="Example: Mekong Green Cooperative"
                 maxLength={120}
                 required
@@ -133,11 +133,11 @@ export function ForumPostComposer() {
             </label>
 
             <label className="space-y-1">
-              <span className="text-xs text-muted-foreground">Author *</span>
+              <span className="text-muted-foreground text-xs">Author *</span>
               <input
                 value={form.author}
                 onChange={(event) => updateField('author', event.target.value)}
-                className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-sm text-lime-950 outline-none focus:border-primary"
+                className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-lime-950 text-sm outline-none focus:border-primary"
                 placeholder="Example: Nguyen Van A"
                 maxLength={120}
                 required
@@ -146,11 +146,11 @@ export function ForumPostComposer() {
           </div>
 
           <label className="block space-y-1">
-            <span className="text-xs text-muted-foreground">Headline *</span>
+            <span className="text-muted-foreground text-xs">Headline *</span>
             <input
               value={form.headline}
               onChange={(event) => updateField('headline', event.target.value)}
-              className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-sm text-lime-950 outline-none focus:border-primary"
+              className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-lime-950 text-sm outline-none focus:border-primary"
               placeholder="What are you selling?"
               maxLength={180}
               required
@@ -158,13 +158,13 @@ export function ForumPostComposer() {
           </label>
 
           <label className="block space-y-1">
-            <span className="text-xs text-muted-foreground">
+            <span className="text-muted-foreground text-xs">
               Post Content *
             </span>
             <textarea
               value={form.body}
               onChange={(event) => updateField('body', event.target.value)}
-              className="min-h-24 w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-sm text-lime-950 outline-none focus:border-primary"
+              className="min-h-24 w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-lime-950 text-sm outline-none focus:border-primary"
               placeholder="Quantity, quality, delivery terms, contact details..."
               maxLength={1200}
               required
@@ -173,19 +173,19 @@ export function ForumPostComposer() {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="space-y-1">
-              <span className="text-xs text-muted-foreground">Image URL</span>
+              <span className="text-muted-foreground text-xs">Image URL</span>
               <input
                 value={form.imageSrc}
                 onChange={(event) =>
                   updateField('imageSrc', event.target.value)
                 }
-                className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-sm text-lime-950 outline-none focus:border-primary"
+                className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-lime-950 text-sm outline-none focus:border-primary"
                 placeholder="/farm.jpg or https://..."
               />
             </label>
 
             <label className="space-y-1">
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 Image Caption
               </span>
               <input
@@ -193,7 +193,7 @@ export function ForumPostComposer() {
                 onChange={(event) =>
                   updateField('imageCaption', event.target.value)
                 }
-                className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-sm text-lime-950 outline-none focus:border-primary"
+                className="w-full rounded-md border border-lime-200 bg-white px-3 py-2 text-lime-950 text-sm outline-none focus:border-primary"
                 placeholder="Optional caption"
                 maxLength={120}
               />
@@ -204,14 +204,14 @@ export function ForumPostComposer() {
             <button
               type="button"
               onClick={() => setIsComposerOpen(false)}
-              className="rounded-md border border-lime-200 px-3 py-2 text-xs text-muted-foreground hover:bg-lime-100"
+              className="rounded-md border border-lime-200 px-3 py-2 text-muted-foreground text-xs hover:bg-lime-100"
               disabled={isSubmitting}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 font-semibold text-xs text-lime-950 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 font-semibold text-lime-950 text-xs hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
