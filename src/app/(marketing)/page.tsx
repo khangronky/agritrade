@@ -92,9 +92,10 @@ export default function MarketingPage() {
         <div className="mx-auto grid max-w-305 gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="relative aspect-video overflow-hidden border border-lime-200 bg-white shadow-md">
             <Image
-              src="/about-us/home-about-ai-analytics.jpg"
+              src="/about-us/vision-mission-8.jpg"
               alt="Aerial farmland with market and analytics overlays"
               fill
+              quality={100}
               className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 58vw"
             />
