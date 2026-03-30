@@ -36,7 +36,7 @@ export default function MarketingPage() {
                 farmers and traders trust our data
               </p>
 
-              <div className="mt-7 inline-flex rounded-none border border-lime-300 bg-lime-100 px-6 py-2.5 font-semibold text-lime-700 text-xs uppercase tracking-[0.1em] sm:text-sm">
+              <div className="mt-7 inline-flex rounded-none border border-lime-300 bg-lime-100 px-7 py-3 font-semibold text-lime-700 text-sm uppercase tracking-[0.1em] sm:text-base">
                 Before plant, grow, and sell
               </div>
 
@@ -92,8 +92,8 @@ export default function MarketingPage() {
         <div className="mx-auto grid max-w-305 gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="relative aspect-video overflow-hidden border border-lime-200 bg-white shadow-md">
             <Image
-              src="/about-us/slide-3.jpg"
-              alt="Vietnamese tea farmers harvesting in highland fields"
+              src="/about-us/home-about-ai-analytics.jpg"
+              alt="Aerial farmland with market and analytics overlays"
               fill
               className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 58vw"
@@ -211,24 +211,12 @@ export default function MarketingPage() {
               </p>
             </div>
 
-            <div className="relative mt-8 aspect-video overflow-hidden border border-lime-200 bg-white shadow-lg">
-              <video
-                controls
-                preload="metadata"
-                poster="/about-us/slide-8.jpg"
-                className="h-full w-full object-cover"
-              >
-                <source src="/about-us/how-it-works.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-
             <div className="mt-8 flex justify-center">
               <Link
                 href="/register"
-                className="inline-flex items-center rounded-full border border-lime-300 bg-lime-100 px-5 py-2.5 font-semibold text-base text-lime-700"
+                className="inline-flex items-center rounded-full border border-lime-300 bg-lime-100 px-6 py-3 font-semibold text-lg text-lime-700 sm:text-xl"
               >
-                Start using AgriTrade today -&gt;
+                Start now -&gt;
               </Link>
             </div>
           </div>

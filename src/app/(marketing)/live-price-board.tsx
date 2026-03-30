@@ -280,7 +280,7 @@ export function LivePriceBoard({
     <div
       className={cn(
         isLight
-          ? 'rounded-none border border-lime-200 bg-lime-50 shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg'
+          ? 'rounded-none border border-lime-200 bg-white shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg'
           : 'rounded-[28px] border border-emerald-500/20 bg-zinc-950/88 shadow-[0_18px_42px_rgba(0,0,0,0.55)] backdrop-blur-xl',
         compact ? 'p-3.5 sm:p-4' : 'p-4 sm:p-5'
       )}
@@ -315,7 +315,7 @@ export function LivePriceBoard({
             }
             className={cn(
               isLight
-                ? 'rounded-none border border-lime-200 bg-lime-50 text-lime-700 outline-hidden transition-colors focus:border-ring'
+                ? 'rounded-none border border-lime-200 bg-white text-lime-700 outline-hidden transition-colors focus:border-ring'
                 : 'rounded-lg border border-emerald-500/20 bg-zinc-950/82 text-zinc-200 outline-hidden transition-colors focus:border-emerald-400/55',
               compact ? 'px-2 py-1 text-[11px]' : 'px-2.5 py-1.5 text-xs'
             )}
@@ -335,7 +335,7 @@ export function LivePriceBoard({
             key={item.code}
             className={cn(
               isLight
-                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-none border border-lime-200 bg-lime-50 transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-lime-50'
+                ? 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-none border border-lime-200 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-lime-50'
                 : 'grid grid-cols-[minmax(0,1fr)_auto_auto] items-center rounded-xl border border-zinc-700/70 bg-zinc-950/76',
               compact ? 'gap-1.5 px-2.5 py-2' : 'gap-2 px-3 py-2.5'
             )}

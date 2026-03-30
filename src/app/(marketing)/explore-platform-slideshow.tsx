@@ -47,7 +47,7 @@ const slides: ExploreSlide[] = [
       'Direct negotiation',
     ],
     ctaLabel: 'Explore Marketplace →',
-    ctaHref: '/marketplace',
+    ctaHref: '/market',
     imagePosition: 'object-center',
   },
   {

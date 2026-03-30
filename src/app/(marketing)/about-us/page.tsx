@@ -154,7 +154,7 @@ export default function AboutUsPage() {
         </p>
 
         <h2 className="mt-4 font-semibold text-5xl text-primary leading-none sm:text-7xl">
-          Development
+          Vision & Mission
         </h2>
 
         <DevelopmentInteractiveTabs />
