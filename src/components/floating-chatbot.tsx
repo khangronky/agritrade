@@ -4,6 +4,7 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, type UIMessage } from 'ai';
 import { Headset, SendHorizonal, Sparkles, X } from 'lucide-react';
 import { type FormEvent, useEffect, useRef, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
 
 const quickPrompts = [
@@ -11,6 +12,8 @@ const quickPrompts = [
   'How can I price coffee beans better?',
   'Give me 3 export-readiness tips for farmers.',
 ];
+const assistantGreeting =
+  'Hi, I am AgriTrade Assistant. Ask me anything about market demand, pricing, and trade decisions.';
 
 const initialAssistantMessage: UIMessage = {
   id: 'agritrade-assistant-intro',
@@ -18,7 +21,7 @@ const initialAssistantMessage: UIMessage = {
   parts: [
     {
       type: 'text',
-      text: 'Hi, I am AgriTrade Assistant. Ask me anything about market demand, pricing, and trade decisions.',
+      text: assistantGreeting,
     },
   ],
 };
@@ -36,6 +39,7 @@ function getMessageText(message: UIMessage): string {
 }
 
 export function FloatingChatbot() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -45,6 +49,28 @@ export function FloatingChatbot() {
   });
 
   const isSubmitting = status === 'submitted' || status === 'streaming';
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      setIsAuthenticated(Boolean(user));
+    };
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(Boolean(session?.user));
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
@@ -72,6 +98,10 @@ export function FloatingChatbot() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     await submitMessage(input.trim());
+  }
+
+  if (!isAuthenticated) {
+    return null;
   }
 
   return (

@@ -13,66 +13,66 @@ type DevelopmentItem = {
 
 const developmentItems: DevelopmentItem[] = [
   {
-    id: 'construction',
-    label: '* Smallholder Farmers & Cooperatives',
+    id: 'market-intelligence',
+    label: '* Market Intelligence',
     description:
-      'The heartbeat of our mission. We provide the tools they need to shift from "guesswork" to "data-work," ensuring fair pricing and reduced post-harvest losses.',
+      'Track live prices, demand swings, and regional trade signals before planting or selling.',
     images: [
       {
-        src: '/about-us/slide-5.jpg',
-        alt: 'Construction operations and urban development',
+        src: '/about-us/vision-mission-8.jpg',
+        alt: 'AI analytics overlay on large-scale farmland',
       },
       {
-        src: '/about-us/slide-6.jpg',
-        alt: 'Waterfront engineering and project logistics',
+        src: '/about-us/vision-mission-7.jpg',
+        alt: 'Farmer using tablet with connected crop network',
       },
     ],
   },
   {
-    id: 'land-selection',
-    label: '* Traders and distributors',
+    id: 'digital-trade-network',
+    label: '* Digital Trade Network',
     description:
-      'Effortless discovery of standardized produce with significantly lower search costs.',
+      'Connect farmers, traders, and buyers with transparent pricing and faster negotiation cycles.',
     images: [
       {
-        src: '/about-us/slide-1.jpg',
-        alt: 'Urban area used for site analysis',
+        src: '/about-us/vision-mission-1.jpg',
+        alt: 'Pest analytics used for quality risk control',
       },
       {
-        src: '/about-us/slide-2.jpg',
-        alt: 'Regional landscape for location planning',
+        src: '/about-us/vision-mission-6.jpg',
+        alt: 'Soil and pH diagnostics for data-driven farm management',
       },
     ],
   },
   {
-    id: 'architectural-design',
-    label: '* Processors & Exporters',
+    id: 'export-readiness',
+    label: '* Export Readiness',
     description:
-      'Direct access to source data and traceability support to meet international standards.',
+      'Get practical guidance on quality standards, compliance checkpoints, and destination-market requirements.',
     images: [
       {
-        src: '/about-us/slide-3.jpg',
-        alt: 'Architecture concept and facade composition',
+        src: '/about-us/vision-mission-7.jpg',
+        alt: 'Connected field operations with mobile analytics',
       },
       {
-        src: '/about-us/slide-4.jpg',
-        alt: 'Villa style design and visual atmosphere',
+        src: '/about-us/vision-mission-8.jpg',
+        alt: 'Large-scale crop monitoring with AI metrics overlay',
       },
     ],
   },
   {
-    id: 'investment-projects',
-    label: '* Regulators & NGOs',
+    id: 'farmer-growth',
+    label: '* Farmer Growth',
     description:
-      'Standardized macro-data to evaluate market health and deploy timely support initiatives.',
+      'Support smallholders with actionable recommendations to improve income stability and reduce market risk.',
     images: [
       {
-        src: '/about-us/slide-7.jpg',
-        alt: 'Investment project context and market landscape',
+        src: '/about-us/vision-mission-6.jpg',
+        alt: 'In-field diagnostics supporting farmer growth decisions',
       },
       {
-        src: '/about-us/slide-8.jpg',
-        alt: 'Property investment and asset growth perspective',
+        src: '/about-us/vision-mission-1.jpg',
+        alt: 'Farmer action guided by live pest trend analytics',
       },
     ],
   },
@@ -109,9 +109,10 @@ export function DevelopmentInteractiveTabs() {
               src={image.src}
               alt={image.alt}
               className="group aspect-square border border-lime-200 transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(126,177,45,0.2)]"
-              hoverScale={1.08}
+              hoverScale={1.02}
               imageClassName="group-hover:brightness-110 group-hover:saturate-105"
-              sizes="180px"
+              sizes="(max-width: 640px) 44vw, 260px"
+              quality={92}
             />
           ))}
         </div>
@@ -120,7 +121,7 @@ export function DevelopmentInteractiveTabs() {
       <div
         className="grid grid-cols-2 border border-lime-200 bg-white md:min-h-[320px] md:grid-cols-4"
         role="tablist"
-        aria-label="Development services"
+        aria-label="Vision and mission pillars"
       >
         {developmentItems.map((item, index) => {
           const isActive = item.id === activeId;

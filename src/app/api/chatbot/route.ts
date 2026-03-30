@@ -7,6 +7,7 @@ import {
 } from 'ai';
 import { NextResponse } from 'next/server';
 import { buildMockKnowledgeContext } from '@/lib/chatbot/mock-rag';
+import { createClient } from '@/lib/supabase/server';
 
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const MAX_MESSAGES = 12;
@@ -57,7 +58,7 @@ function getStreamErrorMessage(error: unknown): string {
     normalizedMessage.includes('quota') ||
     normalizedMessage.includes('rate limit')
   ) {
-    return 'Gemini API key da het quota/khong co quota cho model hien tai. Ban can bat billing hoac doi sang model co quota.';
+    return 'The chat service is currently experiencing high demand. Please try again later.';
   }
 
   return message;
@@ -65,7 +66,21 @@ function getStreamErrorMessage(error: unknown): string {
 
 export async function POST(request: Request) {
   try {
-    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+
+    if (!apiKey) {
       return NextResponse.json(
         { error: 'Missing GOOGLE_GENERATIVE_AI_API_KEY in environment' },
         { status: 500 }

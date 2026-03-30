@@ -12,6 +12,7 @@ type ReferenceCropImageProps = {
   scale?: number;
   hoverScale?: number;
   sizes?: string;
+  quality?: number;
 };
 
 export function ReferenceCropImage({
@@ -24,6 +25,7 @@ export function ReferenceCropImage({
   scale = 1,
   hoverScale = scale,
   sizes = '(max-width: 768px) 100vw, 50vw',
+  quality = 100,
 }: ReferenceCropImageProps) {
   const imageStyle = {
     objectPosition: position ?? 'center',
@@ -39,6 +41,7 @@ export function ReferenceCropImage({
         fill
         priority={priority}
         sizes={sizes}
+        quality={quality}
         className={cn(
           'scale-[var(--base-scale)] object-cover transition-[transform,filter,opacity] duration-700 ease-out will-change-transform group-hover:scale-[var(--hover-scale)]',
           imageClassName

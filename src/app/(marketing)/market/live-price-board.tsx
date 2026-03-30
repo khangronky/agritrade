@@ -149,7 +149,7 @@ export default function LivePriceBoard({
             return (
               <div
                 key={row.name}
-                className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 rounded-md border border-lime-200 bg-lime-50 px-3 py-2.5"
+                className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2 rounded-md border border-lime-200 bg-white px-3 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-sm"
               >
                 <div className="min-w-0">
                   <p className="font-semibold text-lime-950 tracking-[0.08em]">
@@ -190,7 +190,7 @@ export default function LivePriceBoard({
             );
           })
         ) : (
-          <div className="rounded-lg border border-lime-200 bg-lime-50 px-4 py-5 text-center text-muted-foreground text-sm">
+          <div className="rounded-lg border border-lime-200 bg-white px-4 py-5 text-center text-muted-foreground text-sm">
             No featured commodities available right now.
           </div>
         )}
