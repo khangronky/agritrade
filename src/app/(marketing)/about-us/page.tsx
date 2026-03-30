@@ -91,8 +91,8 @@ export default function AboutUsPage() {
 
           <div className="mx-auto max-w-[760px] space-y-4 text-center">
             <p className="mx-auto max-w-[720px] font-semibold text-base text-lime-950 leading-snug sm:text-lg">
-              AgriTrade closes the information gap between farms and markets.
-              We combine live transaction signals, historical trends, and AI
+              AgriTrade closes the information gap between farms and markets. We
+              combine live transaction signals, historical trends, and AI
               forecasts so farmers and traders can plan crops, negotiate fairly,
               and reduce risk across ASEAN trade routes.
             </p>
