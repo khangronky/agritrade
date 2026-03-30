@@ -21,7 +21,7 @@ const initialAssistantMessage: UIMessage = {
   parts: [
     {
       type: 'text',
-      text: 'Hi, I am AgriTrade Assistant. Ask me anything about market demand, pricing, and trade decisions.',
+      text: assistantGreeting,
     },
   ],
 };
@@ -52,22 +52,14 @@ export function FloatingChatbot() {
 
   useEffect(() => {
     const supabase = createClient();
-    let isMounted = true;
 
-    void supabase.auth
-      .getUser()
-      .then(({ data }) => {
-        if (!isMounted) {
-          return;
-        }
+    async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-        setIsAuthenticated(Boolean(data.user));
-      })
-      .catch(() => {
-        if (isMounted) {
-          setIsAuthenticated(false);
-        }
-      });
+      setIsAuthenticated(Boolean(user));
+    };
 
     const {
       data: { subscription },
@@ -76,7 +68,6 @@ export function FloatingChatbot() {
     });
 
     return () => {
-      isMounted = false;
       subscription.unsubscribe();
     };
   }, []);
