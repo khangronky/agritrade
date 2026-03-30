@@ -18,10 +18,10 @@ export function LeftRail() {
             className="h-44 w-full object-cover"
           />
           <div className="space-y-2 p-3">
-            <p className="font-medium text-sm text-lime-950 leading-snug">
+            <p className="font-medium text-lime-950 text-sm leading-snug">
               {forumFeaturedCard.title}
             </p>
-            <p className="text-xs text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground text-xs leading-relaxed">
               {forumFeaturedCard.description}
             </p>
             <div className="border-lime-200 border-t pt-2">
@@ -115,7 +115,7 @@ export function LeftRail() {
 
         <button
           type="button"
-          className="mt-3 w-full rounded-md border border-lime-200 bg-lime-50 px-3 py-2 font-medium text-xs text-lime-700 hover:border-lime-300 hover:text-primary"
+          className="mt-3 w-full rounded-md border border-lime-200 bg-lime-50 px-3 py-2 font-medium text-lime-700 text-xs hover:border-lime-300 hover:text-primary"
         >
           View all prices
         </button>

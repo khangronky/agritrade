@@ -97,7 +97,7 @@ export function DevelopmentInteractiveTabs() {
       >
         <p
           key={`desc-${activeItem.id}`}
-          className="max-w-[460px] text-muted-foreground text-sm leading-snug motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:duration-400"
+          className="motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 max-w-[460px] text-muted-foreground text-sm leading-snug motion-safe:animate-in motion-safe:duration-400"
         >
           {activeItem.description}
         </p>
@@ -143,7 +143,7 @@ export function DevelopmentInteractiveTabs() {
             >
               <span
                 className={cn(
-                  '-translate-y-0.5 absolute top-0 left-1/2 h-0 w-8 -translate-x-1/2 bg-primary transition-all duration-500 ease-out md:left-0 md:top-1/2 md:w-0 md:-translate-x-0 md:-translate-y-1/2',
+                  'absolute top-0 left-1/2 h-0 w-8 -translate-x-1/2 -translate-y-0.5 bg-primary transition-all duration-500 ease-out md:top-1/2 md:left-0 md:w-0 md:-translate-x-0 md:-translate-y-1/2',
                   isActive
                     ? 'h-1 md:h-10 md:w-1'
                     : 'group-hover:h-1 md:group-hover:h-8 md:group-hover:w-1'
@@ -153,7 +153,7 @@ export function DevelopmentInteractiveTabs() {
               <span className="relative z-10 flex h-full w-full items-center justify-center">
                 <span
                   className={cn(
-                    'absolute font-semibold text-lime-950 text-xs uppercase tracking-[0.2em] transition-all duration-500 ease-out md:text-sm md:[writing-mode:vertical-rl] md:rotate-180',
+                    'absolute font-semibold text-lime-950 text-xs uppercase tracking-[0.2em] transition-all duration-500 ease-out md:rotate-180 md:text-sm md:[writing-mode:vertical-rl]',
                     isActive
                       ? 'opacity-0 md:-translate-y-6 md:rotate-[150deg]'
                       : 'opacity-100'

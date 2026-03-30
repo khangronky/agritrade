@@ -578,6 +578,18 @@ export function buildMarketTrendData(
     currentPriceVnd !== 0
       ? ((projectedPriceVnd - currentPriceVnd) / currentPriceVnd) * 100
       : 0;
+  const forecastInsights = buildForecastInsights({
+    listing,
+    currency,
+    projectedPrice: convertPrice(projectedPriceVnd),
+    intervalLow: convertPrice(forecastLowerVnd.at(-1) ?? projectedPriceVnd),
+    intervalHigh: convertPrice(forecastUpperVnd.at(-1) ?? projectedPriceVnd),
+    averageActivityVolume: Math.round(mean(historicalVolumes.slice(-3))),
+    forecastActivityVolume: forecastVolumes.at(-1) ?? baseActivityVolume,
+    projectedReturnPct,
+    confidence,
+    regime,
+  });
 
   const points: MarketTrendPoint[] = [];
 
@@ -636,6 +648,8 @@ export function buildMarketTrendData(
       rsi,
       emaShort: convertPrice(emaShort),
       emaLong: convertPrice(emaLong),
+      reasons: forecastInsights.reasons,
+      recommendation: forecastInsights.recommendation,
     },
   };
 }
@@ -714,4 +728,130 @@ export function buildCommodityOptions(
     value: `${listing.name}-${listing.country}`,
     label: `${listing.name} (${listing.country})`,
   }));
+}
+
+type ForecastInsightInput = {
+  listing: ListingCard;
+  currency: CurrencyOption;
+  projectedPrice: number;
+  intervalLow: number;
+  intervalHigh: number;
+  averageActivityVolume: number;
+  forecastActivityVolume: number;
+  projectedReturnPct: number;
+  confidence: number;
+  regime: AiForecastSummary['regime'];
+};
+
+function buildForecastInsights({
+  listing,
+  currency,
+  projectedPrice,
+  intervalLow,
+  intervalHigh,
+  averageActivityVolume,
+  forecastActivityVolume,
+  projectedReturnPct,
+  confidence,
+  regime,
+}: ForecastInsightInput) {
+  const trendPercent = parseTrendPercent(listing.trend);
+  const activityMomentum =
+    averageActivityVolume > 0
+      ? ((forecastActivityVolume - averageActivityVolume) /
+          averageActivityVolume) *
+        100
+      : 0;
+  const categoryOccasionReason = getCategoryOccasionReason(listing);
+  const orderReason =
+    activityMomentum >= 8 || listing.status === 'Contract based'
+      ? `Buyer orders are building, with forecast activity running ${Math.round(Math.max(activityMomentum, 6))}% above the recent average.`
+      : listing.status === 'Available now'
+        ? 'Immediate availability is helping buyers place orders faster in the next trading windows.'
+        : 'Order flow is still selective, so sellers may need a sharper offer to unlock demand.';
+  const weatherReason = getWeatherReason(listing, regime, trendPercent);
+
+  const focusMarkets = getFocusMarkets(listing);
+  const target =
+    projectedReturnPct >= 0.8
+      ? `Aim for ${formatForecastPrice(projectedPrice, currency)} ${currency.code}, with a defendable range of ${formatForecastPrice(intervalLow, currency)}-${formatForecastPrice(intervalHigh, currency)} ${currency.code}.`
+      : `Keep target offers around ${formatForecastPrice(intervalLow, currency)}-${formatForecastPrice(projectedPrice, currency)} ${currency.code} to improve fill speed.`;
+  const when =
+    projectedReturnPct >= 1.5 && confidence >= 70
+      ? 'Hold for the next 2-3 forecast periods, then release inventory in staggered batches.'
+      : projectedReturnPct >= 0
+        ? 'Start selling now and phase inventory across the next 1-2 forecast periods.'
+        : 'Prioritize near-term selling before softer pricing pressure widens.';
+
+  return {
+    reasons: [categoryOccasionReason, orderReason, weatherReason],
+    recommendation: {
+      where: `Focus on ${focusMarkets.join(' and ')} demand channels.`,
+      when,
+      target,
+    },
+  };
+}
+
+function getCategoryOccasionReason(listing: ListingCard) {
+  if (listing.category === 'Grain') {
+    return 'Demand is firming as wholesalers prepare for festival and staple-restocking cycles in regional markets.';
+  }
+
+  if (listing.category === 'Fruit') {
+    return 'Fresh fruit demand is picking up from retail promotions, gifting occasions, and hospitality buyers.';
+  }
+
+  if (listing.category === 'Vegetable') {
+    return 'Short-cycle retail demand is rising as distributors refresh supermarket and wet-market orders more frequently.';
+  }
+
+  return 'Protein buyers are stepping up procurement as processors and exporters rebuild short-term supply coverage.';
+}
+
+function getWeatherReason(
+  listing: ListingCard,
+  regime: AiForecastSummary['regime'],
+  trendPercent: number
+) {
+  if (listing.category === 'Aquaculture') {
+    return regime === 'High-volatility regime'
+      ? 'Water-condition volatility is keeping supply planning tight, which can lift prices when buyers compete for consistent volume.'
+      : 'Stable pond conditions are supporting predictable harvest timing, giving sellers room to negotiate firmer prices.';
+  }
+
+  if (trendPercent >= 0) {
+    return regime === 'High-volatility regime'
+      ? 'Weather variability is tightening near-term supply, adding upward pressure to well-timed harvests.'
+      : 'Harvest timing and favorable field conditions are keeping quality stable while limiting oversupply.';
+  }
+
+  return 'Mixed weather and harvest timing are increasing supply uncertainty, so buyers are still price-sensitive.';
+}
+
+function getFocusMarkets(listing: ListingCard) {
+  const marketMap: Record<string, string[]> = {
+    Vietnam: ['Ho Chi Minh City', 'Can Tho'],
+    Philippines: ['Manila', 'Cebu'],
+    Malaysia: ['Kuala Lumpur', 'Penang'],
+    Cambodia: ['Phnom Penh', 'Ho Chi Minh City'],
+    Thailand: ['Bangkok', 'Chiang Mai'],
+    Indonesia: ['Jakarta', 'Bandung'],
+    Laos: ['Vientiane', 'Udon Thani'],
+    Myanmar: ['Yangon', 'Mandalay'],
+  };
+
+  return (
+    marketMap[listing.country] ?? [
+      listing.region,
+      `buyers near ${listing.country}`,
+    ]
+  );
+}
+
+function formatForecastPrice(value: number, currency: CurrencyOption) {
+  return new Intl.NumberFormat(currency.locale, {
+    maximumFractionDigits: currency.maxFractionDigits,
+    minimumFractionDigits: currency.maxFractionDigits === 0 ? 0 : 2,
+  }).format(value);
 }

@@ -1,3 +1,5 @@
+import { google } from '@ai-sdk/google';
+import { cosineSimilarity, embed, embedMany } from 'ai';
 import { initialFarmerFeed } from '@/app/(marketing)/farmer-yield-feed-data';
 import { listings } from '@/app/(marketing)/market/data';
 import { listForumPosts } from '@/lib/forum/posts-store';
@@ -8,65 +10,16 @@ type KnowledgeDocument = {
   kind: 'forum_post' | 'market_listing' | 'farmer_feed';
 };
 
-const STOP_WORDS = new Set([
-  'a',
-  'an',
-  'and',
-  'are',
-  'as',
-  'at',
-  'be',
-  'for',
-  'from',
-  'in',
-  'is',
-  'it',
-  'of',
-  'on',
-  'or',
-  'that',
-  'the',
-  'to',
-  'with',
-  'what',
-  'how',
-  'can',
-  'i',
-  'you',
-  'we',
-  'us',
-  've',
-  'toi',
-  'la',
-  'va',
-  'cho',
-  'voi',
-  'tu',
-  'ban',
-  'nay',
-  'do',
-  'nhung',
-  'trong',
-  'tren',
-  'duoc',
-  'khong',
-]);
+type EmbeddedKnowledgeCorpus = {
+  fingerprint: string;
+  documents: KnowledgeDocument[];
+  embeddings: number[][];
+};
 
-function normalizeText(value: string): string {
-  return value
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-}
+const GEMINI_EMBEDDING_MODEL = 'gemini-embedding-001';
 
-function tokenize(value: string): string[] {
-  return normalizeText(value)
-    .split(/[^a-z0-9]+/g)
-    .filter((token) => token.length > 1 && !STOP_WORDS.has(token));
-}
-
-function unique(tokens: string[]): string[] {
-  return [...new Set(tokens)];
+function createCorpusFingerprint(documents: KnowledgeDocument[]): string {
+  return documents.map((doc) => `${doc.id}:${doc.body}`).join('\n');
 }
 
 function buildKnowledgeDocuments(): KnowledgeDocument[] {
@@ -108,52 +61,93 @@ function buildKnowledgeDocuments(): KnowledgeDocument[] {
   return [...forumDocs, ...marketDocs, ...feedDocs];
 }
 
-function scoreDocument(queryTokens: string[], doc: KnowledgeDocument): number {
-  const docTokens = unique(tokenize(doc.body));
-  if (docTokens.length === 0 || queryTokens.length === 0) {
-    return 0;
+let cachedEmbeddedCorpus: EmbeddedKnowledgeCorpus | null = null;
+let embeddedCorpusPromise: Promise<EmbeddedKnowledgeCorpus> | null = null;
+let embeddedCorpusFingerprint: string | null = null;
+
+async function getEmbeddedKnowledgeCorpus(): Promise<EmbeddedKnowledgeCorpus> {
+  const documents = buildKnowledgeDocuments();
+  const fingerprint = createCorpusFingerprint(documents);
+
+  if (cachedEmbeddedCorpus?.fingerprint === fingerprint) {
+    return cachedEmbeddedCorpus;
   }
 
-  const matches = queryTokens.filter((token) =>
-    docTokens.includes(token)
-  ).length;
-  const keywordDensity = matches / queryTokens.length;
+  if (
+    embeddedCorpusPromise !== null &&
+    embeddedCorpusFingerprint === fingerprint
+  ) {
+    return embeddedCorpusPromise;
+  }
 
-  const queryText = queryTokens.join(' ');
-  const exactBoost = normalizeText(doc.body).includes(queryText) ? 0.4 : 0;
+  embeddedCorpusFingerprint = fingerprint;
+  embeddedCorpusPromise = (async () => {
+    const result = await embedMany({
+      model: google.embedding(GEMINI_EMBEDDING_MODEL),
+      values: documents.map((doc) => doc.body),
+      maxParallelCalls: 4,
+    });
 
-  const kindBoost =
-    doc.kind === 'market_listing'
-      ? 0.14
-      : doc.kind === 'forum_post'
-        ? 0.1
-        : 0.08;
+    const corpus = {
+      fingerprint,
+      documents,
+      embeddings: result.embeddings,
+    } satisfies EmbeddedKnowledgeCorpus;
 
-  return keywordDensity + exactBoost + kindBoost;
+    cachedEmbeddedCorpus = corpus;
+    return corpus;
+  })();
+
+  try {
+    return await embeddedCorpusPromise;
+  } catch (error) {
+    embeddedCorpusPromise = null;
+    embeddedCorpusFingerprint = null;
+    throw error;
+  }
 }
 
-export function buildMockKnowledgeContext(query: string, limit = 5): string {
-  const queryTokens = unique(tokenize(query));
-  const documents = buildKnowledgeDocuments();
+export async function buildMockKnowledgeContext(
+  query: string,
+  limit = 5
+): Promise<string> {
+  const trimmedQuery = query.trim();
 
-  if (queryTokens.length === 0 || documents.length === 0) {
+  if (!trimmedQuery) {
     return '';
   }
 
-  const ranked = documents
-    .map((doc) => ({
-      doc,
-      score: scoreDocument(queryTokens, doc),
-    }))
-    .filter((item) => item.score > 0)
-    .sort((left, right) => right.score - left.score)
-    .slice(0, limit);
-
-  if (ranked.length === 0) {
+  if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
     return '';
   }
 
-  return ranked
-    .map((item, index) => `[Context ${index + 1}] ${item.doc.body}`)
-    .join('\n');
+  try {
+    const [{ embedding: queryEmbedding }, corpus] = await Promise.all([
+      embed({
+        model: google.embedding(GEMINI_EMBEDDING_MODEL),
+        value: trimmedQuery,
+      }),
+      getEmbeddedKnowledgeCorpus(),
+    ]);
+
+    const ranked = corpus.documents
+      .map((doc, index) => ({
+        doc,
+        score: cosineSimilarity(queryEmbedding, corpus.embeddings[index] ?? []),
+      }))
+      .filter((item) => Number.isFinite(item.score) && item.score > 0)
+      .sort((left, right) => right.score - left.score)
+      .slice(0, limit);
+
+    if (ranked.length === 0) {
+      return '';
+    }
+
+    return ranked
+      .map((item, index) => `[Context ${index + 1}] ${item.doc.body}`)
+      .join('\n');
+  } catch (error) {
+    console.error('Embedding-based knowledge retrieval failed:', error);
+    return '';
+  }
 }

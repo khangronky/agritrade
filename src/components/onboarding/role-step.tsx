@@ -1,4 +1,17 @@
-import { Store, Wheat } from 'lucide-react';
+'use client';
+
+import { Plus, Store, Wheat, X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
 import {
   FormControl,
   FormDescription,
@@ -8,10 +21,224 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
 import type { OnboardingStepProps } from './types';
+
+const cropTypeOptions = [
+  'Rice',
+  'Cassava',
+  'Robusta coffee',
+  'Black pepper',
+  'Durian',
+  'Maize',
+  'Dragon fruit',
+];
+
+function parseCropTags(value: string | undefined) {
+  if (!value) {
+    return [];
+  }
+
+  return value
+    .split(',')
+    .map((crop) => crop.trim())
+    .filter(Boolean);
+}
+
+function normalizeCropTag(value: string) {
+  return value.trim().replace(/\s+/g, ' ');
+}
+
+function CropTagsField({
+  value,
+  invalid,
+  emptyLabel,
+  onChange,
+}: {
+  value: string | undefined;
+  invalid: boolean;
+  emptyLabel: string;
+  onChange: (value: string) => void;
+}) {
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [selectedCropTags, setSelectedCropTags] = useState<string[]>(() =>
+    parseCropTags(value)
+  );
+
+  useEffect(() => {
+    const nextCropTags = parseCropTags(value);
+
+    setSelectedCropTags((currentCropTags) => {
+      if (
+        currentCropTags.length === nextCropTags.length &&
+        currentCropTags.every((crop, index) => crop === nextCropTags[index])
+      ) {
+        return currentCropTags;
+      }
+
+      return nextCropTags;
+    });
+  }, [value]);
+
+  const availableCropOptions = useMemo(
+    () =>
+      cropTypeOptions.filter(
+        (cropType) =>
+          !selectedCropTags.some(
+            (selectedCrop) =>
+              selectedCrop.toLowerCase() === cropType.toLowerCase()
+          )
+      ),
+    [selectedCropTags]
+  );
+
+  const normalizedQuery = normalizeCropTag(query);
+  const matchingCropOption = availableCropOptions.find(
+    (cropType) => cropType.toLowerCase() === normalizedQuery.toLowerCase()
+  );
+  const canCreateCustomCrop =
+    normalizedQuery.length > 0 &&
+    !selectedCropTags.some(
+      (selectedCrop) =>
+        selectedCrop.toLowerCase() === normalizedQuery.toLowerCase()
+    ) &&
+    !matchingCropOption;
+
+  const updateCropTags = (nextCropTags: string[]) => {
+    setSelectedCropTags(nextCropTags);
+    onChange(nextCropTags.join(', '));
+  };
+
+  const addCropTag = (crop: string) => {
+    const normalizedCrop = normalizeCropTag(crop);
+
+    if (
+      !normalizedCrop ||
+      selectedCropTags.some(
+        (selectedCrop) =>
+          selectedCrop.toLowerCase() === normalizedCrop.toLowerCase()
+      )
+    ) {
+      return;
+    }
+
+    updateCropTags([...selectedCropTags, normalizedCrop]);
+    setQuery('');
+    setPickerOpen(false);
+  };
+
+  const removeCropTag = (cropToRemove: string) => {
+    updateCropTags(selectedCropTags.filter((crop) => crop !== cropToRemove));
+  };
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-wrap gap-2">
+        {selectedCropTags.length > 0 ? (
+          selectedCropTags.map((crop) => (
+            <Badge key={crop} variant="secondary" className="gap-1 pr-1">
+              <span>{crop}</span>
+              <button
+                type="button"
+                className="rounded-full p-0.5 transition-colors hover:bg-background/70"
+                onClick={() => removeCropTag(crop)}
+                aria-label={`Remove ${crop}`}
+              >
+                <X className="size-3" />
+              </button>
+            </Badge>
+          ))
+        ) : (
+          <p className="text-muted-foreground text-sm">{emptyLabel}</p>
+        )}
+      </div>
+
+      <Popover
+        open={pickerOpen}
+        onOpenChange={(open) => {
+          setPickerOpen(open);
+
+          if (!open) {
+            setQuery('');
+          }
+        }}
+      >
+        <PopoverTrigger asChild>
+          <Button
+            type="button"
+            variant="outline"
+            className={cn(
+              'w-full justify-center border-dashed! hover:bg-accent/10',
+              !selectedCropTags.length && 'text-muted-foreground'
+            )}
+            aria-invalid={invalid}
+          >
+            <Plus />
+            Add crop type
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-(--radix-popover-trigger-width) p-0"
+          align="start"
+        >
+          <Command>
+            <CommandInput
+              placeholder="Search or type a crop..."
+              value={query}
+              onValueChange={setQuery}
+              onKeyDown={(event) => {
+                if (event.key !== 'Enter') {
+                  return;
+                }
+
+                event.preventDefault();
+
+                if (matchingCropOption) {
+                  addCropTag(matchingCropOption);
+                  return;
+                }
+
+                if (canCreateCustomCrop) {
+                  addCropTag(normalizedQuery);
+                }
+              }}
+            />
+            <CommandList>
+              <CommandEmpty>No crop types available.</CommandEmpty>
+              <CommandGroup heading="Crop types">
+                {availableCropOptions.map((cropType) => (
+                  <CommandItem
+                    key={cropType}
+                    value={cropType}
+                    onSelect={() => addCropTag(cropType)}
+                  >
+                    {cropType}
+                  </CommandItem>
+                ))}
+                {canCreateCustomCrop ? (
+                  <CommandItem
+                    value={normalizedQuery}
+                    onSelect={() => addCropTag(normalizedQuery)}
+                  >
+                    Add "{normalizedQuery}"
+                  </CommandItem>
+                ) : null}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
 
 export function RoleStep({ form }: OnboardingStepProps) {
   const selectedRole = form.watch('role');
@@ -89,14 +316,21 @@ export function RoleStep({ form }: OnboardingStepProps) {
           <FormField
             control={form.control}
             name="farmer_crops"
-            render={({ field }) => (
+            render={({ fieldState }) => (
               <FormItem className="md:col-span-2">
                 <FormLabel>Currently harvested crops</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Rice, cassava, robusta coffee..."
-                    className="min-h-24"
-                    {...field}
+                  <CropTagsField
+                    value={form.watch('farmer_crops')}
+                    invalid={fieldState.invalid}
+                    emptyLabel="No crops selected yet."
+                    onChange={(value) => {
+                      form.setValue('farmer_crops', value, {
+                        shouldDirty: true,
+                        shouldTouch: true,
+                        shouldValidate: true,
+                      });
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -129,52 +363,6 @@ export function RoleStep({ form }: OnboardingStepProps) {
               </FormItem>
             )}
           />
-          <div className="md:col-span-2">
-            <p className="mb-3 font-medium text-foreground text-sm">
-              Harvested time (optional)
-            </p>
-            <div className="grid gap-4 md:grid-cols-3">
-              <FormField
-                control={form.control}
-                name="farmer_harvest_day"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Day</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Day" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="farmer_harvest_month"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Month</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Month" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="farmer_harvest_year"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Year</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Year" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
@@ -207,31 +395,15 @@ export function RoleStep({ form }: OnboardingStepProps) {
           <FormField
             control={form.control}
             name="trader_crop_types"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem className="md:col-span-2">
                 <FormLabel>Crop types to buy</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Rice, pepper, durian..."
-                    className="min-h-24"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="trader_export_markets"
-            render={({ field }) => (
-              <FormItem className="md:col-span-2">
-                <FormLabel>Exported markets</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Japan, EU, UAE..."
-                    className="min-h-24"
-                    {...field}
+                  <CropTagsField
+                    value={field.value}
+                    invalid={fieldState.invalid}
+                    emptyLabel="No crop types selected yet."
+                    onChange={field.onChange}
                   />
                 </FormControl>
                 <FormMessage />

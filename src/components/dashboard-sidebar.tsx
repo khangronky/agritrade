@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  ClipboardList,
-  FolderKanban,
-  Handshake,
-  LayoutDashboard,
-  MessagesSquare,
-  Package2,
-  Store,
-} from 'lucide-react';
+import { LayoutDashboard, MessagesSquare, Package2, Store } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,18 +15,14 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { NavUser } from './nav-user';
+import { cn } from '@/lib/utils';
+import { SidebarUser } from './sidebar-user';
 
 const navigation = [
   {
     href: '/dashboard',
     name: 'Dashboard',
     icon: LayoutDashboard,
-  },
-  {
-    href: '/product-folio',
-    name: 'Product Folio',
-    icon: FolderKanban,
   },
   {
     href: '/marketplace',
@@ -47,31 +35,26 @@ const navigation = [
     icon: Package2,
   },
   {
-    href: '/deals',
-    name: 'Deals',
-    icon: Handshake,
-  },
-  {
-    href: '/orders',
-    name: 'Orders',
-    icon: ClipboardList,
-  },
-  {
     href: '/chats',
     name: 'Chats',
     icon: MessagesSquare,
   },
 ];
 
-export default function Sidebar() {
+export default function DashboardSidebar() {
   const pathname = usePathname();
   const { isMobile, state } = useSidebar();
   const sidebarOpen = isMobile || state === 'expanded';
 
   return (
     <SidebarShell collapsible="icon" className="border-r">
-      <SidebarHeader className="gap-0 border-b px-2 py-4">
-        <div className="flex items-center justify-between gap-6">
+      <SidebarHeader className="gap-0 border-b p-2">
+        <div
+          className={cn(
+            'flex items-center gap-6',
+            sidebarOpen ? 'justify-between' : 'justify-center'
+          )}
+        >
           {sidebarOpen && (
             <div className="flex flex-1 items-center">
               <Link href="/">
@@ -80,13 +63,13 @@ export default function Sidebar() {
                   alt="Logo"
                   width={1000}
                   height={100}
-                  className="h-10 w-auto object-contain"
+                  className="h-7 w-auto object-contain"
                   priority
                 />
               </Link>
             </div>
           )}
-          <SidebarTrigger className={!sidebarOpen ? 'mx-auto' : ''} />
+          <SidebarTrigger />
         </div>
       </SidebarHeader>
 
@@ -115,7 +98,7 @@ export default function Sidebar() {
       </SidebarContent>
 
       <SidebarFooter className="p-0">
-        <NavUser />
+        <SidebarUser />
       </SidebarFooter>
     </SidebarShell>
   );

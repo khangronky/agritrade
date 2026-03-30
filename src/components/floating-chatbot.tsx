@@ -1,15 +1,11 @@
 'use client';
 
+import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport, type UIMessage } from 'ai';
 import { Headset, SendHorizonal, Sparkles, X } from 'lucide-react';
 import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
-
-type ChatMessage = {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-};
 
 const quickPrompts = [
   'What crop has strong demand this week?',
@@ -19,27 +15,40 @@ const quickPrompts = [
 const assistantGreeting =
   'Hi, I am AgriTrade Assistant. Ask me anything about market demand, pricing, and trade decisions.';
 
-function createMessage(
-  role: ChatMessage['role'],
-  content: string
-): ChatMessage {
-  return {
-    id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-    role,
-    content,
-  };
+const initialAssistantMessage: UIMessage = {
+  id: 'agritrade-assistant-intro',
+  role: 'assistant',
+  parts: [
+    {
+      type: 'text',
+      text: 'Hi, I am AgriTrade Assistant. Ask me anything about market demand, pricing, and trade decisions.',
+    },
+  ],
+};
+
+const chatbotTransport = new DefaultChatTransport<UIMessage>({
+  api: '/api/chatbot',
+});
+
+function getMessageText(message: UIMessage): string {
+  return message.parts
+    .filter((part) => part.type === 'text')
+    .map((part) => part.text)
+    .join('')
+    .trim();
 }
 
 export function FloatingChatbot() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    createMessage('assistant', assistantGreeting),
-  ]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { messages, sendMessage, status, error, clearError } = useChat({
+    transport: chatbotTransport,
+    messages: [initialAssistantMessage],
+  });
+
+  const isSubmitting = status === 'submitted' || status === 'streaming';
 
   useEffect(() => {
     const supabase = createClient();
@@ -85,61 +94,19 @@ export function FloatingChatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isSubmitting, isOpen]);
 
-  async function sendMessage(content: string) {
+  async function submitMessage(content: string) {
     if (!content || isSubmitting) {
       return;
     }
 
-    const nextUserMessage = createMessage('user', content);
-    const nextMessages = [...messages, nextUserMessage];
-
-    setMessages(nextMessages);
+    clearError();
     setInput('');
-    setErrorMessage(null);
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('/api/chatbot', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          messages: nextMessages.map((message) => ({
-            role: message.role,
-            content: message.content,
-          })),
-        }),
-      });
-
-      const payload = (await response.json()) as {
-        error?: string;
-        reply?: string;
-      };
-
-      if (!response.ok || typeof payload.reply !== 'string') {
-        throw new Error(payload.error ?? 'Chat service unavailable');
-      }
-
-      setMessages((prev) => [
-        ...prev,
-        createMessage('assistant', payload.reply as string),
-      ]);
-    } catch (error) {
-      console.error('Chatbot request failed:', error);
-      const errorText =
-        error instanceof Error
-          ? error.message
-          : 'Could not connect to the chatbot right now. Please try again.';
-      setErrorMessage(errorText);
-    } finally {
-      setIsSubmitting(false);
-    }
+    await sendMessage({ text: content });
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await sendMessage(input.trim());
+    await submitMessage(input.trim());
   }
 
   if (!isAuthenticated) {
@@ -156,7 +123,7 @@ export function FloatingChatbot() {
             : 'invisible translate-y-2 opacity-0'
         )}
       >
-        <div className="border-lime-200 border-b bg-gradient-to-r from-lime-100 via-lime-50 to-brand-yellow/40 px-4 py-3">
+        <div className="border-lime-200 border-b bg-linear-to-r from-lime-100 via-lime-50 to-brand-yellow/40 px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="inline-flex size-7 items-center justify-center rounded-lg bg-lime-200 text-lime-900">
@@ -181,19 +148,27 @@ export function FloatingChatbot() {
         </div>
 
         <div className="max-h-96 space-y-3 overflow-y-auto bg-background px-4 py-4">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={cn(
-                'w-fit max-w-[88%] rounded-2xl px-3 py-2 text-sm leading-relaxed',
-                message.role === 'assistant'
-                  ? 'border border-lime-200 bg-lime-50 text-lime-950'
-                  : 'ml-auto bg-primary text-primary-foreground'
-              )}
-            >
-              {message.content}
-            </div>
-          ))}
+          {messages.map((message) => {
+            const text = getMessageText(message);
+
+            if (!text) {
+              return null;
+            }
+
+            return (
+              <div
+                key={message.id}
+                className={cn(
+                  'w-fit max-w-[88%] rounded-2xl px-3 py-2 text-sm leading-relaxed',
+                  message.role === 'assistant'
+                    ? 'border border-lime-200 bg-lime-50 text-lime-950'
+                    : 'ml-auto bg-primary text-primary-foreground'
+                )}
+              >
+                {text}
+              </div>
+            );
+          })}
 
           {messages.length <= 1 && !isSubmitting ? (
             <div className="space-y-2 pt-1">
@@ -203,7 +178,7 @@ export function FloatingChatbot() {
                   <button
                     key={prompt}
                     type="button"
-                    onClick={() => void sendMessage(prompt)}
+                    onClick={() => void submitMessage(prompt)}
                     className="rounded-full border border-lime-300 bg-lime-100 px-2.5 py-1 text-lime-900 text-xs transition-colors hover:bg-lime-200"
                     disabled={isSubmitting}
                   >
@@ -221,9 +196,10 @@ export function FloatingChatbot() {
             </div>
           ) : null}
 
-          {errorMessage ? (
+          {error ? (
             <p className="text-destructive text-xs leading-relaxed">
-              {errorMessage}
+              {error.message ||
+                'Could not connect to the chatbot right now. Please try again.'}
             </p>
           ) : null}
 
