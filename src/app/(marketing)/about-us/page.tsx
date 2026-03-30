@@ -44,7 +44,7 @@ export default function AboutUsPage() {
 
             <div className="mt-5 grid grid-cols-2 gap-2 sm:max-w-[220px]">
               <ReferenceCropImage
-                src="/about-us/slide-1.jpg"
+                src="/about-us/about-us-hero-1.jpg"
                 alt="Farmer field activity during crop season"
                 position="center"
                 scale={1}
@@ -53,7 +53,7 @@ export default function AboutUsPage() {
                 sizes="120px"
               />
               <ReferenceCropImage
-                src="/about-us/slide-2.jpg"
+                src="/about-us/about-us-hero-2.jpg"
                 alt="Data-led planning for agricultural operations"
                 position="center"
                 scale={1}
@@ -67,7 +67,7 @@ export default function AboutUsPage() {
           </div>
 
           <ReferenceCropImage
-            src="/about-us/slide-3.jpg"
+            src="/about-us/about-us-hero-main.jpg"
             alt="Agricultural marketplace dashboard and field operations"
             position="center"
             scale={1}
