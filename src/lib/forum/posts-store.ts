@@ -15,7 +15,7 @@ const seedForumPosts: ForumPost[] = [
     body: 'Hang da say va tach tap chat, co CO/CQ theo yeu cau. Uu tien doi tac lay deu hang tuan tai kho Can Tho.',
     media: [
       {
-        src: '/about-us/slide-1.jpg',
+        src: '/forum/slide-1.jpg',
         alt: 'Mau gao ST25 da dong bao 50kg',
         caption: 'Kho gao ST25 san sang xuat hang',
       },
@@ -31,7 +31,7 @@ const seedForumPosts: ForumPost[] = [
     body: 'Xoai canh tac theo quy trinh VietGAP, co the dong thung 5kg hoac 10kg. Nhan dat coc de giu lich thu hoach.',
     media: [
       {
-        src: '/about-us/slide-3.jpg',
+        src: '/forum/slide-3.jpg',
         alt: 'Xoai cat chu tuyen chon truoc khi dong goi',
         caption: 'Xoai cat chu loai 1 cho thi truong ban le',
       },
@@ -47,7 +47,7 @@ const seedForumPosts: ForumPost[] = [
     body: 'Dua da phan loai size 0.9kg-1.2kg trai, phu hop kenh quan nuoc va sieu thi mini. Co xe lanh giao noi mien Nam.',
     media: [
       {
-        src: '/about-us/slide-7.jpg',
+        src: '/forum/slide-7.jpg',
         alt: 'Dua xiem xanh tap ket tai diem thu mua',
         caption: 'Lo dua xiem xanh giao trong 48 gio',
       },
@@ -63,7 +63,7 @@ const seedForumPosts: ForumPost[] = [
     body: 'Rau thu hoach sang som moi ngay, dong thung carton co tem truy xuat. Nhan don OEM cho chuoi cua hang thuc pham sach.',
     media: [
       {
-        src: '/about-us/slide-2.jpg',
+        src: '/forum/slide-2.jpg',
         alt: 'Rau la tuoi sau khi thu hoach',
         caption: 'Rau la giao hang ngay theo hop dong',
       },

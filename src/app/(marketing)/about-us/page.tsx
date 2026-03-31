@@ -67,7 +67,7 @@ export default function AboutUsPage() {
           </div>
 
           <ReferenceCropImage
-            src="/about-us/about-us-hero-main.jpg"
+            src="/about-us-hero-main.jpg"
             alt="Agricultural marketplace dashboard and field operations"
             position="center"
             scale={1}

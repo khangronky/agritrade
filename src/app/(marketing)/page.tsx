@@ -92,7 +92,7 @@ export default function MarketingPage() {
         <div className="mx-auto grid max-w-305 gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="relative aspect-video overflow-hidden border border-lime-200 bg-white shadow-md">
             <Image
-              src="/about-us/vision-mission-8.jpg"
+              src="/about-us-hero-main.jpg"
               alt="Aerial farmland with market and analytics overlays"
               fill
               quality={100}
@@ -141,7 +141,7 @@ export default function MarketingPage() {
           <div className="mt-8 grid gap-4 lg:grid-cols-[1fr_1fr] lg:gap-0">
             <div className="relative h-60 overflow-hidden border border-lime-200 bg-white sm:h-72 lg:h-72.5">
               <Image
-                src="/business-model-insights.jpg"
+                src="/home/business-model-insights.jpg"
                 alt="Aerial farmland with market and analytics overlays"
                 fill
                 className="object-cover"
@@ -176,7 +176,7 @@ export default function MarketingPage() {
 
             <div className="relative h-60 overflow-hidden border border-lime-200 bg-white sm:h-72 lg:h-72.5">
               <Image
-                src="/business-model-sharing.jpg"
+                src="/home/business-model-sharing.jpg"
                 alt="Farm machinery and field statistics overlays"
                 fill
                 className="object-cover object-center"

@@ -25,7 +25,7 @@ type ExploreSlide = {
 
 const slides: ExploreSlide[] = [
   {
-    src: '/business-model-insights.jpg',
+    src: '/home/business-model-insights.jpg',
     alt: 'Aerial farmland with market and analytics overlays',
     title: 'Real-Time Market Intelligence',
     contentItems: [
@@ -38,7 +38,7 @@ const slides: ExploreSlide[] = [
     imagePosition: 'object-center',
   },
   {
-    src: '/about-us/slide-5.jpg',
+    src: '/home/slide-5.jpg',
     alt: 'Farmers working across tea rows in the highlands',
     title: 'Connect with Buyers and Sellers',
     contentItems: [
@@ -51,7 +51,7 @@ const slides: ExploreSlide[] = [
     imagePosition: 'object-center',
   },
   {
-    src: '/about-us/slide-6.jpg',
+    src: '/home/slide-6.jpg',
     alt: 'Farmers inspecting crop quality before market delivery',
     title: 'Meet Export Standards with Confidence',
     contentItems: [
