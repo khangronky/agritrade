@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  Check,
-  Copy,
-  Database,
-  Eye,
-  EyeOff,
-  Loader2,
-  User,
-} from 'lucide-react';
+import { Eye, EyeOff, Loader2, User } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import {
@@ -48,14 +40,10 @@ import {
 } from '@/stores/settings-dialog.store';
 
 const NAV_ITEMS: { id: SettingsTab; label: string; icon: React.ElementType }[] =
-  [
-    { id: 'user', label: 'User Settings', icon: User },
-    { id: 'data-ingestion', label: 'Data Ingestion', icon: Database },
-  ];
+  [{ id: 'user', label: 'User Settings', icon: User }];
 
 const TAB_LABELS: Record<SettingsTab, string> = {
   user: 'User Settings',
-  'data-ingestion': 'Data Ingestion',
 };
 
 function UserSettingsContent() {
@@ -433,69 +421,6 @@ function UserSettingsContent() {
     </div>
   );
 }
-
-function DataIngestionContent() {
-  const [copied, setCopied] = useState(false);
-
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  const webhookUrl = `${appUrl}/api/webhooks/data`;
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(webhookUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
-  };
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="font-medium text-lg">Data Ingestion</h3>
-        <p className="text-muted-foreground text-sm">
-          Configure how external data sources connect to your application.
-        </p>
-      </div>
-      <Separator />
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="webhook-url">Webhook URL</Label>
-          <p className="text-muted-foreground text-sm">
-            Use this URL to receive data from external sources such as MQTT
-            brokers, IoT devices, or other applications. Send POST requests to
-            this endpoint to ingest data into the system.
-          </p>
-          <div className="flex gap-2">
-            <Input
-              id="webhook-url"
-              type="text"
-              value={webhookUrl}
-              disabled
-              className="flex-1 bg-muted font-mono text-sm"
-            />
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              onClick={handleCopy}
-              className="shrink-0"
-            >
-              {copied ? (
-                <Check className="size-4 text-green-500" />
-              ) : (
-                <Copy className="size-4" />
-              )}
-              <span className="sr-only">Copy webhook URL</span>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function SettingsDialog() {
   const { isOpen, activeTab, closeDialog, setActiveTab } =
     useSettingsDialogStore();
@@ -571,7 +496,6 @@ export function SettingsDialog() {
             <ScrollArea className="flex-1 overflow-auto">
               <div className="p-6">
                 {activeTab === 'user' && <UserSettingsContent />}
-                {activeTab === 'data-ingestion' && <DataIngestionContent />}
               </div>
             </ScrollArea>
           </div>

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type SettingsTab = 'user' | 'data-ingestion';
+export type SettingsTab = 'user';
 
 interface SettingsDialogState {
   isOpen: boolean;

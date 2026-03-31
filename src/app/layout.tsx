@@ -7,10 +7,10 @@ import Providers from '@/providers/providers';
 
 const font = Montserrat({ subsets: ['latin', 'vietnamese'], display: 'block' });
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
+const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(appUrl),
   title: {
     default: 'AgriTrade',
     template: '%s | AgriTrade',
