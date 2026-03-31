@@ -131,7 +131,7 @@ function ForumPostCard({ post }: { post: ForumPost }) {
                   alt={item.alt}
                   width={680}
                   height={420}
-                  className="h-52 w-full object-cover"
+                  className="h-128 w-full object-cover"
                 />
               </div>
               <figcaption className="mt-1 text-muted-foreground text-xs">

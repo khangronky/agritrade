@@ -47,7 +47,7 @@ const seedForumPosts: ForumPost[] = [
     body: 'Dua da phan loai size 0.9kg-1.2kg trai, phu hop kenh quan nuoc va sieu thi mini. Co xe lanh giao noi mien Nam.',
     media: [
       {
-        src: '/farm.jpg',
+        src: '/about-us/slide-7.jpg',
         alt: 'Dua xiem xanh tap ket tai diem thu mua',
         caption: 'Lo dua xiem xanh giao trong 48 gio',
       },
